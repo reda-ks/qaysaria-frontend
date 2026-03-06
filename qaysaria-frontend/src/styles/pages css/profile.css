@@ -1,0 +1,726 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+
+/* ================================================
+   PROFIL UTILISATEUR / PARAMÈTRES
+   ================================================ */
+
+:root {
+  --primary: #2c1f14;
+  --secondary: #D9C7B8;
+  --bg-light: #FAF7F2;
+  --bg-medium: #b0977e;
+  --bg-dark: #8c7260;
+  --border: #e8e0d5;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
+.profile-container {
+  background-color: #f9f7f3;
+  min-height: 100vh;
+  padding: 40px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ================================================
+   HEADER
+   ================================================ */
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.header-content {
+  flex: 1;
+  min-width: 300px;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.page-subtitle {
+  color: var(--bg-medium);
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Avatar */
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--bg-medium) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(217, 199, 184, 0.3);
+  border: 3px solid white;
+}
+
+.avatar-letter {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
+  font-family: 'Playfair Display', serif;
+}
+
+/* ================================================
+   MESSAGE DE SUCCÈS
+   ================================================ */
+
+.success-banner {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 2px solid var(--success);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--success);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.success-text {
+  color: #059669;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* ================================================
+   FORMULAIRE
+   ================================================ */
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Section */
+.form-section {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(44, 31, 20, 0.08);
+  overflow: hidden;
+}
+
+.section-header {
+  padding: 25px 30px;
+  border-bottom: 2px solid var(--bg-light);
+  background: linear-gradient(135deg, var(--bg-light) 0%, #f0eae2 100%);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.section-subtitle {
+  color: var(--bg-medium);
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.section-content {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Form Row */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+/* Form Field */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field-label {
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.field-input,
+.field-value {
+  flex: 1;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--primary);
+  background: #fafaf8;
+  transition: all 0.3s ease;
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: var(--secondary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(217, 199, 184, 0.15);
+}
+
+.field-value {
+  border: none;
+  background: transparent;
+  padding: 14px 0;
+  color: var(--bg-medium);
+  cursor: default;
+}
+
+.field-input.textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.6;
+}
+
+/* Edit Button */
+.edit-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  background: var(--secondary);
+  color: var(--primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-btn:hover {
+  background: var(--bg-medium);
+  color: white;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.edit-btn.active {
+  background: var(--success);
+  color: white;
+}
+
+.edit-btn.active:hover {
+  background: #059669;
+}
+
+/* Ajuster le padding du champ when edit button is present */
+.input-wrapper .field-input {
+  padding-right: 50px;
+}
+
+/* ================================================
+   FORMULAIRE MULTI-COLONNE
+   ================================================ */
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .section-content {
+    padding: 20px;
+    gap: 20px;
+  }
+}
+
+/* ================================================
+   ACTIONS
+   ================================================ */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.btn-save {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--bg-medium) 100%);
+  color: var(--primary);
+  border: none;
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 16px rgba(217, 199, 184, 0.3);
+}
+
+.btn-save:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(217, 199, 184, 0.4);
+}
+
+.btn-save:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-save:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(44, 31, 20, 0.2);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================================================
+   SECTION SÉCURITÉ
+   ================================================ */
+
+.security-section {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(44, 31, 20, 0.08);
+  overflow: hidden;
+}
+
+.security-header {
+  padding: 25px 30px;
+  border-bottom: 2px solid var(--bg-light);
+  background: linear-gradient(135deg, var(--bg-light) 0%, #f0eae2 100%);
+}
+
+.security-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.security-content {
+  padding: 0;
+}
+
+.security-item {
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  transition: background 0.3s ease;
+}
+
+.security-item:hover {
+  background: var(--bg-light);
+}
+
+.security-item.border-top {
+  border-top: 1px solid var(--border);
+}
+
+.security-info h4 {
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.security-info p {
+  color: var(--bg-medium);
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.btn-link {
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--secondary);
+  border: 2px solid var(--secondary);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.btn-link:hover {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+/* ================================================
+   RESPONSIVE DESIGN
+   ================================================ */
+
+@media (max-width: 1024px) {
+  .profile-container {
+    padding: 30px 20px;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .avatar-letter {
+    font-size: 2rem;
+  }
+
+  .form-section {
+    border-radius: 12px;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .security-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-link {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 20px 15px;
+  }
+
+  .page-title {
+    font-size: 1.6rem;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .section-header {
+    padding: 20px 20px;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .section-content {
+    padding: 20px;
+    gap: 18px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .field-input,
+  .field-value {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .field-input.textarea {
+    min-height: 100px;
+  }
+
+  .edit-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .input-wrapper .field-input {
+    padding-right: 45px;
+  }
+
+  .btn-save {
+    padding: 14px 24px;
+    font-size: 0.85rem;
+  }
+
+  .security-item {
+    padding: 18px 20px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .btn-link {
+    width: auto;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 15px 10px;
+  }
+
+  .page-title {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+
+  .page-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .profile-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .avatar-letter {
+    font-size: 1.8rem;
+  }
+
+  .success-banner {
+    padding: 14px 12px;
+    border-radius: 10px;
+  }
+
+  .success-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+
+  .success-text {
+    font-size: 0.85rem;
+  }
+
+  .profile-form {
+    gap: 20px;
+  }
+
+  .form-section {
+    border-radius: 12px;
+  }
+
+  .section-header {
+    padding: 15px 15px;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .section-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .section-content {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .form-row {
+    gap: 15px;
+  }
+
+  .form-field {
+    gap: 8px;
+  }
+
+  .field-label {
+    font-size: 0.8rem;
+  }
+
+  .field-input,
+  .field-value {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+  }
+
+  .field-input.textarea {
+    min-height: 80px;
+  }
+
+  .edit-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+    right: 8px;
+  }
+
+  .input-wrapper .field-input {
+    padding-right: 40px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-save {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 0.8rem;
+  }
+
+  .security-section {
+    border-radius: 12px;
+  }
+
+  .security-header {
+    padding: 15px 15px;
+  }
+
+  .security-header h3 {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+  }
+
+  .security-item {
+    padding: 15px 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .security-info h4 {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  .security-info p {
+    font-size: 0.8rem;
+  }
+
+  .btn-link {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+}

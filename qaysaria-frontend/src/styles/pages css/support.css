@@ -1,0 +1,629 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+
+/* ================================================
+   SUPPORT CLIENT - STYLING
+   ================================================ */
+
+:root {
+  --primary: #2c1f14;
+  --secondary: #D9C7B8;
+  --bg-light: #FAF7F2;
+  --bg-medium: #b0977e;
+  --bg-dark: #8c7260;
+  --gray-light: #f5f5f5;
+  --gray-lighter: #fafafa;
+  --accent-blue: #2563eb;
+}
+
+.support-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-light) 0%, #ffffff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 20px;
+  font-family: 'DM Sans', sans-serif;
+  gap: 60px;
+}
+
+/* ================================================
+   ILLUSTRATION CÔTÉ GAUCHE
+   ================================================ */
+
+.support-illustration {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 600px;
+  position: relative;
+}
+
+.support-text {
+  text-align: center;
+  margin-top: 40px;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.support-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.support-text p {
+  font-size: 1.1rem;
+  color: var(--bg-medium);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ================================================
+   ILLUSTRATION 3D MINIMALISTE DU CASQUE
+   ================================================ */
+
+.headset-3d {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bande du casque */
+.headset-band {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  width: 160px;
+  height: 80px;
+  border: 4px solid var(--accent-blue);
+  border-bottom: none;
+  border-radius: 160px 160px 0 0;
+  box-shadow: inset 0 -4px 0 rgba(37, 99, 235, 0.2);
+}
+
+/* Écouteurs gauche et droit */
+.headset-ear {
+  position: absolute;
+  width: 50px;
+  height: 70px;
+  border: 4px solid var(--accent-blue);
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.15);
+  top: 100px;
+}
+
+.headset-ear.left {
+  left: 25px;
+}
+
+.headset-ear.right {
+  right: 25px;
+}
+
+.headset-ear::after {
+  content: '';
+  width: 30px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, rgba(37, 99, 235, 0.6) 100%);
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+/* Microphone */
+.headset-mic {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--accent-blue) 0%, rgba(37, 99, 235, 0.6) 100%);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.headset-mic::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 12px;
+  background: var(--accent-blue);
+  border-radius: 50% 50% 0 0;
+}
+
+/* ================================================
+   FORMULAIRE
+   ================================================ */
+
+.support-form-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+.support-form-container {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  padding: 50px 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(44, 31, 20, 0.08);
+  border: 1px solid rgba(44, 31, 20, 0.05);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.form-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-subtitle {
+  color: var(--bg-medium);
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Formulaire */
+.support-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.required {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.form-select,
+.form-textarea {
+  padding: 14px 16px;
+  border: 2px solid #e8e0d5;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--primary);
+  background: var(--gray-lighter);
+  transition: all 0.3s ease;
+  resize: none;
+}
+
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232c1f14' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
+.form-textarea {
+  line-height: 1.6;
+  min-height: 150px;
+  vertical-align: top;
+}
+
+.form-textarea::placeholder {
+  color: #999;
+}
+
+.char-count {
+  font-size: 0.8rem;
+  color: #999;
+  text-align: right;
+}
+
+/* Bouton Submit */
+.btn-submit {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.4);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-submit:hover .btn-icon {
+  transform: translateX(4px);
+}
+
+/* Message de succès */
+.success-message {
+  text-align: center;
+  padding: 40px 30px;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin: 0 auto 20px;
+  animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.success-message h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--primary);
+  margin: 0 0 12px 0;
+  font-weight: 700;
+}
+
+.success-message p {
+  color: var(--bg-medium);
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Informations de contact */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid #e8e0d5;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--bg-medium);
+  font-size: 0.9rem;
+}
+
+.info-icon {
+  font-size: 1.2rem;
+  min-width: 20px;
+}
+
+.info-text {
+  font-weight: 500;
+}
+
+/* ================================================
+   RESPONSIVE DESIGN
+   ================================================ */
+
+@media (max-width: 1024px) {
+  .support-container {
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 30px;
+  }
+
+  .support-illustration {
+    min-height: 400px;
+  }
+
+  .support-text h2 {
+    font-size: 1.8rem;
+  }
+
+  .support-form-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .support-container {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+
+  .support-illustration {
+    min-height: 350px;
+  }
+
+  .headset-3d {
+    width: 160px;
+    height: 160px;
+  }
+
+  .headset-band {
+    top: 30px;
+    left: 15px;
+    width: 130px;
+    height: 65px;
+  }
+
+  .headset-ear {
+    width: 40px;
+    height: 55px;
+    top: 80px;
+  }
+
+  .headset-ear.left {
+    left: 20px;
+  }
+
+  .headset-ear.right {
+    right: 20px;
+  }
+
+  .support-text h2 {
+    font-size: 1.6rem;
+  }
+
+  .support-text p {
+    font-size: 1rem;
+  }
+
+  .form-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .support-form-container {
+    padding: 40px 30px;
+  }
+
+  .form-select,
+  .form-textarea {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .btn-submit {
+    padding: 14px 28px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .support-container {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 15px;
+  }
+
+  .support-illustration {
+    min-height: 300px;
+  }
+
+  .headset-3d {
+    width: 140px;
+    height: 140px;
+  }
+
+  .headset-band {
+    top: 25px;
+    left: 13px;
+    width: 114px;
+    height: 56px;
+    border-width: 3px;
+  }
+
+  .headset-ear {
+    width: 35px;
+    height: 50px;
+    top: 70px;
+    border-width: 3px;
+  }
+
+  .support-text h2 {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .support-text p {
+    font-size: 0.9rem;
+  }
+
+  .form-header h1 {
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+  }
+
+  .form-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .support-form-container {
+    padding: 30px 20px;
+  }
+
+  .form-label {
+    font-size: 0.85rem;
+  }
+
+  .form-select,
+  .form-textarea {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+  }
+
+  .form-textarea {
+    min-height: 120px;
+  }
+
+  .btn-submit {
+    padding: 12px 24px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+  }
+
+  .char-count {
+    font-size: 0.75rem;
+  }
+
+  .success-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  .success-message h3 {
+    font-size: 1.2rem;
+  }
+
+  .success-message p {
+    font-size: 0.85rem;
+  }
+
+  .contact-info {
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 25px;
+  }
+
+  .info-item {
+    gap: 10px;
+    font-size: 0.85rem;
+  }
+
+  .info-icon {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .support-container {
+    padding: 15px 10px;
+  }
+
+  .headset-3d {
+    width: 120px;
+    height: 120px;
+  }
+
+  .form-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .support-form-container {
+    padding: 25px 15px;
+  }
+
+  .btn-submit {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+  }
+}

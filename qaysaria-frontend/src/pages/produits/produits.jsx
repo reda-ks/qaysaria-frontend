@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import '../../styles/pages css/magasins.css';
+import '../../styles/pages css/produits.css';
 
-const Magasins = () => {
+const Produits = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const categorie = searchParams.get('categorie');
@@ -134,4 +134,4 @@ const Magasins = () => {
   );
 };
 
-export default Magasins;
+export default Produits;

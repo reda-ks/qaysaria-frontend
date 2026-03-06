@@ -15,7 +15,7 @@ const Header = () => {
         <div className="navbar-center">
           <ul className="nav-links">
             <li><Link to="/accueil">Accueil</Link></li>
-            <li><Link to="/magasins">Magasins</Link></li>
+            <li><Link to="/produits">Produits</Link></li>
             <li><Link to="/contact">Contact</Link></li>
           </ul>
         </div>

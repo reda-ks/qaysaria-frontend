@@ -36,3 +36,44 @@
     transform: rotate(360deg);
   }
 }
+
+/* ================================================
+   MAIN CONTENT LAYOUT
+   ================================================ */
+
+main {
+  min-height: calc(100vh - 140px);
+  transition: all 0.3s ease;
+}
+
+main.main-full {
+  margin-left: 0;
+  width: 100%;
+}
+
+main.main-with-sidebar {
+  margin-left: 260px;
+  width: calc(100% - 260px);
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+
+@media (max-width: 1024px) {
+  main.main-with-sidebar {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+  }
+}
+
+@media (max-width: 768px) {
+  main.main-with-sidebar {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  main {
+    min-height: calc(100vh - 110px);
+  }
+}
