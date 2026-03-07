@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../../styles//pages css/accueil.css';
 
 const Accueil = () => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
