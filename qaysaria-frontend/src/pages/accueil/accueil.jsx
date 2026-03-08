@@ -8,8 +8,16 @@ const Accueil = () => {
   const navigate = useNavigate();
 
   const handleExplorer = () => {
-    navigate('/magasins');
+    navigate('/produits');
   };
+
+  const handleSubscription = () => {
+    navigate('/register');
+  }
+
+  const handleConnexion = () => {
+    navigate('/login');
+  }
 
   const handleDevenir = () => {
     setIsModalOpen(true);
@@ -228,7 +236,7 @@ const Accueil = () => {
             </p>
             <div className="hero-buttons">
               <button className="btn btn-primary" onClick={handleExplorer}>
-                Explorer les boutiques
+                Explorer les produits
               </button>
               <button className="btn btn-outline" onClick={handleDevenir}>
                 Devenir commerçant
@@ -319,8 +327,8 @@ const Accueil = () => {
             créez un compte pour commencer.
           </p>
           <div className="modal-buttons">
-            <button className="btn btn-primary">Se connecter</button>
-            <button className="btn btn-outline">S'inscrire</button>
+            <button className="btn btn-primary" onClick={handleConnexion}>Se connecter</button>
+            <button className="btn btn-outline" onClick={handleSubscription}>S'inscrire</button>
           </div>
         </div>
       </div>
