@@ -3,10 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import '../styles/composants css/sidebar.css';
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false); // ← Changed: Default to closed on mobile
   const location = useLocation();
 
-  // Éléments du menu
+  // Menu items
   const menuItems = [
     {
       label: 'Tableau de Bord',
@@ -37,22 +37,40 @@ const Sidebar = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  // Close sidebar when navigating on mobile
+  const handleNavClick = () => {
+    // Close sidebar only on mobile (max-width: 768px)
+    if (window.innerWidth <= 768) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
-      {/* Bouton toggle mobile */}
+      {/* Mobile Toggle Button */}
       <button
         className="sidebar-toggle"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle sidebar"
+        aria-expanded={isOpen}
       >
         {isOpen ? '✕' : '☰'}
       </button>
 
-      {/* Overlay mobile */}
-      {isOpen && <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />}
+      {/* Overlay - Always rendered, hidden by default via CSS */}
+      {/* ← Changed: Always render, CSS handles display based on 'open' class */}
+      <div 
+        className={`sidebar-overlay ${isOpen ? 'open' : ''}`}
+        onClick={() => setIsOpen(false)}
+        role="presentation"
+      />
 
       {/* Sidebar */}
-      <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+      <aside 
+        className={`sidebar ${isOpen ? 'open' : ''}`}
+        role="navigation"
+        aria-label="Main navigation"
+      >
         {/* Header Sidebar */}
         <div className="sidebar-header">
           <div className="sidebar-logo">
@@ -85,11 +103,16 @@ const Sidebar = () => {
                 <Link
                   to={item.path}
                   className={`nav-link ${isActive(item.path) ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleNavClick}
+                  aria-current={isActive(item.path) ? 'page' : undefined}
                 >
-                  <span className="nav-icon">{item.icon}</span>
+                  <span className="nav-icon" aria-hidden="true">
+                    {item.icon}
+                  </span>
                   <span className="nav-label">{item.label}</span>
-                  {isActive(item.path) && <span className="nav-indicator" />}
+                  {isActive(item.path) && (
+                    <span className="nav-indicator" aria-hidden="true" />
+                  )}
                 </Link>
               </li>
             ))}
@@ -101,21 +124,29 @@ const Sidebar = () => {
 
         {/* Actions Bottom */}
         <div className="sidebar-actions">
-          <a href="/" className="action-link">
-            <span>🏠</span>
+          <a 
+            href="/" 
+            className="action-link"
+            onClick={handleNavClick}
+          >
+            <span aria-hidden="true">🏠</span>
             <span>Retour à l'accueil</span>
           </a>
-          <button className="action-link logout">
-            <span>🚪</span>
+          <button 
+            className="action-link logout"
+            onClick={(e) => {
+              e.preventDefault();
+              // Add logout logic here
+              setIsOpen(false);
+              // Example: logout and redirect
+              // navigate('/login');
+            }}
+          >
+            <span aria-hidden="true">🚪</span>
             <span>Déconnexion</span>
           </button>
         </div>
       </aside>
-
-      {/* Main content wrapper */}
-      <div className="main-content-wrapper">
-        {/* Le contenu principal sera inséré ici */}
-      </div>
     </>
   );
 };

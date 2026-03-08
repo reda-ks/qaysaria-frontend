@@ -15,8 +15,10 @@
 
 /* Page wrapper */
 .produits-page {
-  max-width: 1300px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 !important;
+  margin-left: 0 !important;
   padding: 32px 24px 60px;
   font-family: 'Nunito', sans-serif;
 }

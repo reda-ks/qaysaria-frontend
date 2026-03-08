@@ -1,3 +1,6 @@
+/* ================================================
+   STYLES REACT DE BASE
+   ================================================ */
 .App {
   text-align: center;
 }
@@ -24,56 +27,75 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* ================================================
-   MAIN CONTENT LAYOUT
+   STRUCTURE DE LA PAGE (LAYOUT)
    ================================================ */
 
+/* Main element - remove default margins/padding */
 main {
-  min-height: calc(100vh - 140px);
-  transition: all 0.3s ease;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
 }
 
-main.main-full {
-  margin-left: 0;
+/* PAGES PUBLIQUES (Accueil, Produits, etc.) */
+.main-full {
   width: 100%;
+  margin: 0 !important; /* Supprime toute marge résiduelle */
+  margin-left: 0 !important;
+  padding: 0 !important;
+  padding-left: 0 !important;
+  min-height: calc(100vh - 140px);
+  display: block;
 }
 
-main.main-with-sidebar {
-  margin-left: 260px;
-  width: calc(100% - 260px);
+/* ESPACE UTILISATEUR (Dashboard) */
+.user-dashboard-layout {
+  display: flex; /* Aligne sidebar et contenu côte à côte */
+  width: 100%;
+  background-color: #f9f9f9;
+  min-height: 80vh;
+}
+
+/* Sidebar stylisée (comme sur ton image) */
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: white;
+  border-right: 1px solid #eee;
+  padding: 20px;
+}
+
+/* Zone de contenu à droite de la sidebar */
+.content-area {
+  flex-grow: 1;
+  padding: 30px;
+  background-color: #f9f9f9;
 }
 
 /* ================================================
    RESPONSIVE
    ================================================ */
 
-@media (max-width: 1024px) {
-  main.main-with-sidebar {
-    margin-left: 220px;
-    width: calc(100% - 220px);
-  }
-}
-
 @media (max-width: 768px) {
-  main.main-with-sidebar {
-    margin-left: 0;
-    width: 100%;
+  .user-dashboard-layout {
+    flex-direction: column; /* La sidebar passe au dessus sur mobile */
   }
 
-  main {
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .main-full {
     min-height: calc(100vh - 110px);
   }
 }

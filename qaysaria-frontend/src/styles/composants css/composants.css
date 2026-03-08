@@ -14,6 +14,11 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
 }
 
 .navbar {
@@ -22,8 +27,9 @@
   align-items: center;
   gap: 40px;
   padding: 15px 40px;
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0 !important;
+  margin-left: 0 !important;
 }
 
 .navbar-brand {
@@ -120,6 +126,9 @@
   color: #FAF7F2;
   margin-top: 60px;
   font-family: 'DM Sans', sans-serif;
+  width: 100%;
+  margin: 60px 0 0 0;
+  padding: 0;
 }
 
 .footer-content {

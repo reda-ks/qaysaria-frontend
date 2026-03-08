@@ -15,7 +15,6 @@ import Profile from './pages/auth/utilisateurs/profile';
 import TableauDeBord from './pages/auth/utilisateurs/tableau_de_bord';
 import './App.css';
 
-// Routes utilisateur qui affichent la sidebar
 const USER_ROUTES = [
   '/tableau-de-bord',
   '/boutique-utilisateur',
@@ -24,32 +23,45 @@ const USER_ROUTES = [
   '/profile',
 ];
 
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Accueil />} />
+      <Route path="/accueil" element={<Accueil />} />
+      <Route path="/produits" element={<Produits />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/boutique-utilisateur" element={<BoutiqueUtilisateur />} />
+      <Route path="/commandes" element={<Commandes />} /> 
+      <Route path="/support" element={<Support />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/tableau-de-bord" element={<TableauDeBord />} />
+    </Routes>
+  );
+}
+
 function AppContent() {
   const location = useLocation();
   const isUserRoute = USER_ROUTES.includes(location.pathname);
 
   return (
-    <>
-      <Header />
-      {isUserRoute && <Sidebar />}
-      <main className={isUserRoute ? 'main-with-sidebar' : 'main-full'}>
-        <Routes>
-          <Route path="/" element={<Accueil />} />
-          <Route path="/accueil" element={<Accueil />} />
-         
-          <Route path="/produits" element={<Produits />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/boutique-utilisateur" element={<BoutiqueUtilisateur />} />
-          <Route path="/commandes" element={<Commandes />} /> 
-          <Route path="/support" element={<Support />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/tableau-de-bord" element={<TableauDeBord />} />
-        </Routes>
-      </main>
-      <Footer />
-    </>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
+      { <Header /> }
+      {isUserRoute ? (
+        <div className="user-dashboard-layout">
+          { <Sidebar /> }
+          <main className="content-area">
+            <AppRoutes />
+          </main>
+        </div>
+      ) : (
+        <>
+          <AppRoutes />
+        </>
+      )}
+      { <Footer /> }
+    </div>
   );
 }
 

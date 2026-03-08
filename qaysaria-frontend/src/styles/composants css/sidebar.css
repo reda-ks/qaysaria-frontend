@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap');
 
 /* ================================================
-   SIDEBAR NAVIGATION
+   CSS VARIABLES
    ================================================ */
 
 :root {
@@ -12,14 +12,21 @@
   --bg-dark: #8c7260;
   --accent-blue: #2563eb;
   --border: #e8e0d5;
+  --sidebar-width: 260px;
+  --sidebar-width-tablet: 220px;
+  --navbar-height: 80px;
 }
+
+/* ================================================
+   SIDEBAR NAVIGATION (DESKTOP)
+   ================================================ */
 
 .sidebar {
   position: fixed;
   left: 0;
   top: 0;
   height: 100vh;
-  width: 260px;
+  width: var(--sidebar-width);
   background: linear-gradient(180deg, white 0%, var(--bg-light) 100%);
   border-right: 2px solid var(--border);
   box-shadow: 2px 0 12px rgba(44, 31, 20, 0.1);
@@ -29,7 +36,8 @@
   transition: all 0.3s ease;
   overflow-y: auto;
   font-family: 'DM Sans', sans-serif;
-  padding-top: 60px;
+  padding: 0;
+  margin: 0;
 }
 
 /* ================================================
@@ -42,10 +50,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 60px;
+  position: relative;
   background: white;
   z-index: 10;
+  flex-shrink: 0;
 }
 
 .sidebar-logo {
@@ -100,6 +108,7 @@
   align-items: center;
   gap: 15px;
   box-shadow: 0 4px 12px rgba(44, 31, 20, 0.1);
+  flex-shrink: 0;
 }
 
 .profile-avatar {
@@ -219,6 +228,7 @@
   height: 1px;
   background: var(--border);
   margin: 0 15px;
+  flex-shrink: 0;
 }
 
 .sidebar-actions {
@@ -226,6 +236,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .action-link {
@@ -262,7 +273,7 @@
 }
 
 /* ================================================
-   TOGGLE BUTTON (MOBILE)
+   TOGGLE BUTTON & OVERLAY (MOBILE)
    ================================================ */
 
 .sidebar-toggle {
@@ -301,7 +312,7 @@
 }
 
 /* ================================================
-   SCROLLBAR SIDEBAR
+   SCROLLBAR STYLING
    ================================================ */
 
 .sidebar::-webkit-scrollbar {
@@ -335,12 +346,38 @@
 }
 
 /* ================================================
-   RESPONSIVE DESIGN
+   CRITICAL: CONTENT AREA LAYOUT FIX
+   
+   This is the KEY to prevent sidebar covering content.
+   Uses !important to override any other styles.
+   ================================================ */
+
+.content-area,
+.main-content-wrapper {
+  margin-left: var(--sidebar-width) !important;
+  width: calc(100% - var(--sidebar-width)) !important;
+  padding: 20px !important;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ================================================
+   RESPONSIVE DESIGN - TABLET (1024px and down)
    ================================================ */
 
 @media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+
   .sidebar {
-    width: 220px;
+    width: var(--sidebar-width);
+  }
+
+  .content-area,
+  .main-content-wrapper {
+    margin-left: var(--sidebar-width) !important;
+    width: calc(100% - var(--sidebar-width)) !important;
   }
 
   .logo-text {
@@ -361,30 +398,51 @@
   }
 }
 
+/* ================================================
+   RESPONSIVE DESIGN - MOBILE (768px and down)
+   Sidebar becomes overlay on mobile
+   ================================================ */
+
 @media (max-width: 768px) {
+  :root {
+    --sidebar-width: 280px;
+  }
+
+  /* Sidebar hidden by default on mobile */
   .sidebar {
-    width: 100%;
-    left: -100%;
-    top: 60px;
-    max-height: calc(100vh - 60px);
-    border-right: none;
-    border-bottom: 2px solid var(--border);
-  }
-
-  .sidebar.open {
+    position: fixed;
     left: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    max-width: 85vw;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    border-bottom: none;
   }
 
+  /* Show sidebar when open class is added */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* CRITICAL FIX: Reset content to full width on mobile */
+  .content-area,
+  .main-content-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 15px !important;
+  }
+
+  /* Show toggle button */
   .sidebar-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .sidebar-overlay {
-    display: block;
-  }
-
+  /* Overlay: hidden by default, show when sidebar open */
   .sidebar-overlay {
     display: none;
   }
@@ -393,6 +451,7 @@
     display: block;
   }
 
+  /* Show close button on mobile */
   .close-btn {
     display: flex;
     align-items: center;
@@ -426,10 +485,27 @@
   }
 }
 
+/* ================================================
+   RESPONSIVE DESIGN - SMALL MOBILE (480px and down)
+   ================================================ */
+
 @media (max-width: 480px) {
   .sidebar {
     width: 100%;
-    padding-top: 50px;
+    max-width: 100%;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Reset content sizing on small mobile */
+  .content-area,
+  .main-content-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 12px !important;
   }
 
   .sidebar-header {
@@ -509,29 +585,21 @@
     left: 15px;
   }
 
-  /* Ajuster le contenu principal pour le sidebar mobile */
+  /* Prevent body scroll when sidebar is open */
   body.sidebar-open {
     overflow: hidden;
   }
 }
 
 /* ================================================
-   MAIN CONTENT SPACING
+   Z-INDEX HIERARCHY (For reference)
+   ================================================
+   1001: Navbar (sticky)
+   1000: Sidebar (fixed)
+   999:  Overlay (fixed)
+   
+   This ensures:
+   - Navbar stays on top of sidebar
+   - Sidebar overlays content
+   - Overlay is below sidebar
    ================================================ */
-
-/* Utilisé when sidebar is on desktop */
-@media (min-width: 769px) {
-  body {
-    margin-left: 260px;
-  }
-
-  html:has(.sidebar) body {
-    margin-left: 260px;
-  }
-}
-
-@media (max-width: 1024px) and (min-width: 769px) {
-  body {
-    margin-left: 220px;
-  }
-}

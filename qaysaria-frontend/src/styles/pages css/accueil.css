@@ -173,7 +173,10 @@ body {
   min-height: 700px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0;
+  padding-left: 0;
 }
 
 .hero-pattern {
@@ -190,12 +193,15 @@ body {
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
+  margin: 0 !important;
+  margin-left: 0 !important;
+  padding: 0 !important;
+  padding-left: 0 !important;
 }
 
 .hero-left {
@@ -311,9 +317,10 @@ body {
 
 /* Categories Section */
 .categories-section {
+  width: 100%;
   padding: 80px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 !important;
+  margin-left: 0 !important;
   background-color: #FAF7F2;
   font-family: 'DM Sans', sans-serif;
   color: #2c1f14;
