@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/composants css/composants.css';
+import logo from '../assets/logo.png';
 
 const Header = () => {
   return (
@@ -8,7 +9,8 @@ const Header = () => {
       <nav className="navbar">
         <div className="navbar-brand">
           <Link to="/accueil" className="navbar-logo">
-            QAYSARIA
+            <img src={logo} alt="Qaysaria Logo" className="logo-img" />
+            <span>QAYSARIA</span>
           </Link>
         </div>
 

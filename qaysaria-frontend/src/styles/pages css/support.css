@@ -1,15 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+@import url('../theme.css');
 
 /* ================================================
    SUPPORT CLIENT - STYLING
    ================================================ */
 
+/* Color system moved to global theme.css */
 :root {
-  --primary: #2c1f14;
-  --secondary: #D9C7B8;
-  --bg-light: #FAF7F2;
-  --bg-medium: #b0977e;
-  --bg-dark: #8c7260;
   --gray-light: #f5f5f5;
   --gray-lighter: #fafafa;
   --accent-blue: #2563eb;

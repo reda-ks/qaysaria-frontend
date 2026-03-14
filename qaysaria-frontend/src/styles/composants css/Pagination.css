@@ -1,24 +1,26 @@
+@import url('../theme.css');
+
 .pagination-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 40px;
   padding: 18px 24px;
-  background: #ffffff;
-  border: 1px solid #e8e0f5;
+  background: var(--white);
+  border: 1px solid var(--light-gray);
   border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(106, 27, 154, 0.06);
+  box-shadow: 0 2px 12px rgba(33, 35, 38, 0.06);
   font-family: 'Nunito', sans-serif;
 }
 
 .pagination-info {
   font-size: 13px;
-  color: #1B5E20;
+  color: var(--dark-gray);
   font-weight: 600;
 }
 
 .pagination-info strong {
-  color: #1B5E20;
+  color: var(--dark-gray);
 }
 
 .pagination-controls {
@@ -31,9 +33,9 @@
   min-width: 38px;
   height: 38px;
   border-radius: 10px;
-  border: 1.5px solid #e0d4f5;
-  background: #faf7ff;
-  color: #1B5E20;
+  border: 1.5px solid var(--light-gray);
+  background: var(--light-gray);
+  color: var(--dark-gray);
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -46,16 +48,16 @@
 }
 
 .page-btn:hover:not(:disabled) {
-  background: #f3e5f5;
-  border-color: #4CAF50;
+  background: var(--light-gray);
+  border-color: var(--soft-red);
   transform: translateY(-1px);
 }
 
 .page-btn.active {
-  background: linear-gradient(135deg, #EBF5E9, #1B5E20);
-  border-color: #4CAF50;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(123, 31, 162, 0.35);
+  background: linear-gradient(135deg, var(--light-gray), var(--dark-gray));
+  border-color: var(--soft-red);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.35);
 }
 
 .page-btn:disabled {
@@ -65,12 +67,12 @@
 
 .nav-btn {
   font-size: 20px;
-  color: #1B5E20;
+  color: var(--dark-gray);
 }
 
 .page-dots {
   font-size: 16px;
-  color: #EBF5E9;
+  color: var(--light-gray);
   padding: 0 4px;
   line-height: 38px;
 }

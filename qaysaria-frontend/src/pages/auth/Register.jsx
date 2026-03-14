@@ -144,7 +144,7 @@ function Register() {
           <span>ou</span>
         </div>
 
-        {/* Social Signup */}
+        {/* Social Signup
         <div className="social-login">
           <button type="button" className="btn-social btn-google">
             <span>🔍</span> Google
@@ -152,7 +152,7 @@ function Register() {
           <button type="button" className="btn-social btn-facebook">
             <span>f</span> Facebook
           </button>
-        </div>
+        </div> */}
 
         {/* Footer */}
         <p className="auth-footer">

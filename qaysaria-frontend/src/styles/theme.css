@@ -1,0 +1,332 @@
+/* ========== GLOBAL COLOR THEME SYSTEM ========== */
+/* Applied across the entire Qaysaria website */
+
+:root {
+  /* ========== PRIMARY / NEUTRAL COLORS ========== */
+  /* Distribution: 70% White, 20% Gray tones, 8% Dark Gray, 2% Red accent */
+  
+  --white: #FFFFFF;
+  --light-gray: #F4F6F8;
+  --soft-gray: #E1E3E5;
+  --medium-gray: #6B7177;
+  --dark-gray: #212326;
+  
+  /* ========== ACCENT COLOR (Used Rarely - 2% only) ========== */
+  --soft-red: #E63946;
+  
+  /* ========== STATUS COLORS ========== */
+  --success-green: #2E7D32;
+  --warning-orange: #F9A825;
+  --error-red: #D32F2F;
+  --info-blue: #1E88E5;
+  
+  /* ========== BUTTON SYSTEM ========== */
+  --btn-primary-bg: #212326;
+  --btn-primary-text: #FFFFFF;
+  --btn-secondary-bg: #FFFFFF;
+  --btn-secondary-text: #212326;
+  --btn-secondary-border: #E1E3E5;
+  --btn-accent-bg: #E63946;
+  --btn-accent-text: #FFFFFF;
+  
+  /* ========== SHADOW SYSTEM ========== */
+  --shadow-sm: 0 2px 8px rgba(33, 35, 38, 0.08);
+  --shadow-md: 0 4px 15px rgba(33, 35, 38, 0.08);
+  --shadow-lg: 0 12px 30px rgba(33, 35, 38, 0.15);
+  --shadow-xl: 0 20px 60px rgba(33, 35, 38, 0.2);
+  
+  /* ========== BORDERS ========== */
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-full: 20px;
+  
+  /* ========== TRANSITIONS ========== */
+  --transition: all 0.3s ease;
+  --transition-fast: all 0.2s ease;
+  --transition-slow: all 0.5s ease;
+}
+
+/* ========== GLOBAL RESET WITH NEW THEME ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background-color: var(--white);
+  color: var(--dark-gray);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* ========== GENERAL ELEMENTS ========== */
+
+a {
+  color: var(--soft-red);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--dark-gray);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+/* ========== INPUT & FORM ELEMENTS ========== */
+
+input, textarea, select {
+  color: var(--dark-gray);
+  background-color: var(--white);
+  border: 1px solid var(--soft-gray);
+  border-radius: var(--border-radius);
+  padding: 12px 15px;
+  font-family: inherit;
+  transition: var(--transition);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--soft-red);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+input::placeholder {
+  color: var(--medium-gray);
+}
+
+/* ========== TEXT STYLES ========== */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--dark-gray);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+p {
+  color: var(--medium-gray);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* ========== BUTTON DEFAULTS ========== */
+
+.btn {
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background-color: var(--medium-gray);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: 2px solid var(--btn-secondary-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--light-gray);
+  border-color: var(--medium-gray);
+  transform: translateY(-2px);
+}
+
+.btn-accent {
+  background-color: var(--btn-accent-bg);
+  color: var(--btn-accent-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-accent:hover {
+  background-color: var(--error-red);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ========== BADGE & TAGS ========== */
+
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: var(--border-radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
+  border: 1px solid var(--soft-gray);
+}
+
+.badge-success {
+  background-color: rgba(46, 125, 50, 0.1);
+  color: var(--success-green);
+  border-color: var(--success-green);
+}
+
+.badge-warning {
+  background-color: rgba(249, 168, 37, 0.1);
+  color: var(--warning-orange);
+  border-color: var(--warning-orange);
+}
+
+.badge-error {
+  background-color: rgba(211, 47, 47, 0.1);
+  color: var(--error-red);
+  border-color: var(--error-red);
+}
+
+.badge-info {
+  background-color: rgba(30, 136, 229, 0.1);
+  color: var(--info-blue);
+  border-color: var(--info-blue);
+}
+
+.badge-accent {
+  background-color: rgba(230, 57, 70, 0.1);
+  color: var(--soft-red);
+  border-color: var(--soft-red);
+}
+
+/* ========== CARDS ========== */
+
+.card {
+  background-color: var(--white);
+  border: 1px solid var(--soft-gray);
+  border-radius: var(--border-radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ========== DIVIDERS & BORDERS ========== */
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: var(--soft-gray);
+  margin: 20px 0;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--soft-gray);
+  margin: 20px 0;
+}
+
+/* ========== UTILITIES ========== */
+
+.text-primary {
+  color: var(--dark-gray);
+}
+
+.text-secondary {
+  color: var(--medium-gray);
+}
+
+.text-accent {
+  color: var(--soft-red);
+}
+
+.text-success {
+  color: var(--success-green);
+}
+
+.text-warning {
+  color: var(--warning-orange);
+}
+
+.text-error {
+  color: var(--error-red);
+}
+
+.text-info {
+  color: var(--info-blue);
+}
+
+.bg-light {
+  background-color: var(--light-gray);
+}
+
+.bg-soft-gray {
+  background-color: var(--soft-gray);
+}
+
+.border-soft-gray {
+  border-color: var(--soft-gray);
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}

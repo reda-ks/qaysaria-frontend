@@ -1,11 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../../styles//pages css/accueil.css';
+import logo from '../../assets/logo.png';
 
 const Accueil = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+
+  // Color Palette System
+  const colorPalette = {
+    neutral: {
+      white: '#FFFFFF',
+      lightGray: '#F4F6F8',
+      softGray: '#E1E3E5',
+      mediumGray: '#6B7177',
+      darkGray: '#212326',
+    },
+    accent: {
+      softRed: '#E63946',
+    },
+    status: {
+      success: '#2E7D32',
+      warning: '#F9A825',
+      error: '#D32F2F',
+      info: '#1E88E5',
+    },
+    buttons: {
+      primary: '#212326',
+      secondary: '#FFFFFF',
+      accent: '#E63946',
+    },
+  };
 
   const handleExplorer = () => {
     navigate('/produits');
@@ -39,7 +65,7 @@ const Accueil = () => {
   const categories = [
     {
       title: 'Mode & Accessoires',
-      color: '#D9C7B8',
+      color: '#6B7177',
       shops: [
         {
           id: 1,
@@ -99,7 +125,7 @@ const Accueil = () => {
     },
     {
       title: 'Électronique & Tech',
-      color: '#b0977e',
+      color: '#6B7177',
       shops: [
         {
           id: 7,
@@ -221,6 +247,139 @@ const Accueil = () => {
 
   return (
     <>
+      {/* Color Palette Display Section */}
+      <section className="color-palette-section" style={{ display: 'none' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 style={{ marginBottom: '40px', color: '#212326', textAlign: 'center', fontSize: '2rem', fontWeight: '800' }}>
+            Design System - Color Palette
+          </h2>
+          <p style={{ textAlign: 'center', marginBottom: '50px', color: '#6B7177', fontSize: '1.1rem' }}>
+            Distribution: 70% White, 20% Gray tones, 8% Dark Gray, 2% Red accent
+          </p>
+          
+          <div className="color-palette-grid">
+            {/* Primary / Neutral Colors */}
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#FFFFFF', border: '2px solid #E1E3E5' }}></div>
+              <div className="color-name">White</div>
+              <div className="color-hex">#FFFFFF</div>
+              <div style={{ fontSize: '0.85rem', color: '#6B7177', marginTop: '8px' }}>Main Background (70%)</div>
+            </div>
+
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#F4F6F8' }}></div>
+              <div className="color-name">Light Gray</div>
+              <div className="color-hex">#F4F6F8</div>
+              <div style={{ fontSize: '0.85rem', color: '#6B7177', marginTop: '8px' }}>Section Backgrounds</div>
+            </div>
+
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#E1E3E5' }}></div>
+              <div className="color-name">Soft Gray</div>
+              <div className="color-hex">#E1E3E5</div>
+              <div style={{ fontSize: '0.85rem', color: '#6B7177', marginTop: '8px' }}>Borders & Dividers (20%)</div>
+            </div>
+
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#6B7177' }}></div>
+              <div className="color-name">Medium Gray</div>
+              <div className="color-hex">#6B7177</div>
+              <div style={{ fontSize: '0.85rem', color: '#FFFFFF', marginTop: '8px' }}>Secondary Text (20%)</div>
+            </div>
+
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#212326' }}></div>
+              <div className="color-name">Dark Gray</div>
+              <div className="color-hex">#212326</div>
+              <div style={{ fontSize: '0.85rem', color: '#FFFFFF', marginTop: '8px' }}>Main Text (8%)</div>
+            </div>
+
+            {/* Accent Color */}
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#E63946' }}></div>
+              <div className="color-name">Soft Red</div>
+              <div className="color-hex">#E63946</div>
+              <div style={{ fontSize: '0.85rem', color: '#FFFFFF', marginTop: '8px' }}>Accent Only (2%)</div>
+            </div>
+
+            {/* Status Colors */}
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#2E7D32' }}></div>
+              <div className="color-name">Success Green</div>
+              <div className="color-hex">#2E7D32</div>
+              <div style={{ fontSize: '0.85rem', color: '#FFFFFF', marginTop: '8px' }}>Success Status</div>
+            </div>
+
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#F9A825' }}></div>
+              <div className="color-name">Warning Orange</div>
+              <div className="color-hex">#F9A825</div>
+              <div style={{ fontSize: '0.85rem', color: '#212326', marginTop: '8px' }}>Warning Status</div>
+            </div>
+
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#D32F2F' }}></div>
+              <div className="color-name">Error Red</div>
+              <div className="color-hex">#D32F2F</div>
+              <div style={{ fontSize: '0.85rem', color: '#FFFFFF', marginTop: '8px' }}>Error Status</div>
+            </div>
+
+            <div className="color-block">
+              <div className="color-sample" style={{ backgroundColor: '#1E88E5' }}></div>
+              <div className="color-name">Info Blue</div>
+              <div className="color-hex">#1E88E5</div>
+              <div style={{ fontSize: '0.85rem', color: '#FFFFFF', marginTop: '8px' }}>Info Status</div>
+            </div>
+          </div>
+
+          {/* Button Examples */}
+          <div style={{ marginTop: '60px', paddingTop: '40px', borderTop: '1px solid #E1E3E5' }}>
+            <h3 style={{ marginBottom: '25px', color: '#212326', fontSize: '1.5rem', fontWeight: '700' }}>Button System</h3>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+              <div>
+                <button style={{
+                  background: '#212326',
+                  color: '#FFFFFF',
+                  padding: '12px 24px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  marginBottom: '8px'
+                }}>Primary Button</button>
+                <div style={{ fontSize: '0.85rem', color: '#6B7177' }}>#212326</div>
+              </div>
+              <div>
+                <button style={{
+                  background: '#FFFFFF',
+                  color: '#212326',
+                  padding: '12px 24px',
+                  border: '2px solid #E1E3E5',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  marginBottom: '8px'
+                }}>Secondary Button</button>
+                <div style={{ fontSize: '0.85rem', color: '#6B7177' }}>#FFFFFF</div>
+              </div>
+              <div>
+                <button style={{
+                  background: '#E63946',
+                  color: '#FFFFFF',
+                  padding: '12px 24px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  marginBottom: '8px'
+                }}>Accent Button (Rare)</button>
+                <div style={{ fontSize: '0.85rem', color: '#6B7177' }}>#E63946</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-pattern"></div>
@@ -254,7 +413,7 @@ const Accueil = () => {
           </div>
           <div className="hero-right">
             <img
-              src="https://images.unsplash.com/photo-1460925895917-adf4e565e479?w=500&h=400&fit=crop"
+              src={logo}
               alt="Hero"
               style={{
                 width: '100%',

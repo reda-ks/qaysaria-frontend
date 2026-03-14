@@ -1,20 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+@import url('../theme.css');
 
 /* ================================================
    GESTION DES COMMANDES - STYLING
    ================================================ */
 
+/* Color system moved to global theme.css */
 :root {
-  --primary: #2c1f14;
-  --secondary: #D9C7B8;
-  --bg-light: #FAF7F2;
-  --bg-medium: #b0977e;
-  --bg-dark: #8c7260;
   --accent-blue: #2563eb;
   --success: #10b981;
   --pending: #f59e0b;
   --cancelled: #ef4444;
-  --border: #e8e0d5;
 }
 
 .commandes-container {

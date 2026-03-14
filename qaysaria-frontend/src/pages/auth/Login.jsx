@@ -82,7 +82,7 @@ function Login() {
           <span>ou</span>
         </div>
 
-        {/* Social Login */}
+        {/* Social Login
         <div className="social-login">
           <button className="btn-social btn-google">
             <span>🔍</span> Google
@@ -90,7 +90,7 @@ function Login() {
           <button className="btn-social btn-facebook">
             <span>f</span> Facebook
           </button>
-        </div>
+        </div> */}
 
         {/* Footer */}
         <p className="auth-footer">
