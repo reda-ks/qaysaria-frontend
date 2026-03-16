@@ -1,0 +1,516 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+@import url('../theme.css');
+
+/* ================================================
+   QUI SOMMES NOUS - ABOUT PAGE
+   SCOPED STYLES - Only affects .qui-sommes-nous-container
+   ================================================ */
+
+.qui-sommes-nous-container {
+  background-color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+.qui-sommes-nous-container .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ================================================
+   HERO SECTION
+   ================================================ */
+
+.qui-sommes-nous-container .hero-section {
+  background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+  padding: 120px 40px;
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.qui-sommes-nous-container .hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(230, 57, 70, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.qui-sommes-nous-container .hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1750px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.qui-sommes-nous-container .hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--dark-gray);
+  text-align: center;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Bilingual Layout - French Bottom Left, Arabic Bottom Right */
+.qui-sommes-nous-container .hero-bilingual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.qui-sommes-nous-container .hero-lang {
+  padding: 40px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(33, 35, 38, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(230, 57, 70, 0.1);
+}
+
+.qui-sommes-nous-container .hero-lang:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(33, 35, 38, 0.15);
+}
+
+.qui-sommes-nous-container .hero-french {
+  text-align: left;
+  border-left: 4px solid var(--soft-red);
+}
+
+.qui-sommes-nous-container .hero-arabic {
+  text-align: right;
+  border-right: 4px solid var(--soft-red);
+  direction: rtl;
+}
+
+.qui-sommes-nous-container .hero-description {
+  font-size: 1.05rem;
+  color: var(--medium-gray);
+  line-height: 1.8;
+  margin: 0;
+  font-weight: 500;
+}
+
+.qui-sommes-nous-container .hero-description-ar {
+  font-size: 1.05rem;
+  color: var(--medium-gray);
+  line-height: 1.8;
+  margin: 0;
+  font-family: 'Arabic Typesetting', 'Arial Unicode MS', sans-serif;
+  font-weight: 500;
+}
+
+/* ================================================
+   PROBLEM/SOLUTION SECTION
+   ================================================ */
+
+.qui-sommes-nous-container .problem-solution-section {
+  padding: 100px 40px;
+  background-color: var(--white);
+}
+
+.qui-sommes-nous-container .section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--dark-gray);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.qui-sommes-nous-container .section-subtitle {
+  font-size: 1.2rem;
+  color: var(--soft-red);
+  text-align: center;
+  margin-bottom: 60px;
+  font-weight: 600;
+}
+
+.qui-sommes-nous-container .problem-solution-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 50px;
+  align-items: center;
+}
+
+.qui-sommes-nous-container .problem-card,
+.qui-sommes-nous-container .solution-card {
+  padding: 50px;
+  background-color: var(--light-gray);
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(33, 35, 38, 0.08);
+}
+
+.qui-sommes-nous-container .problem-card:hover,
+.qui-sommes-nous-container .solution-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(33, 35, 38, 0.15);
+}
+
+.qui-sommes-nous-container .card-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.qui-sommes-nous-container .problem-icon {
+  color: var(--soft-red);
+}
+
+.qui-sommes-nous-container .solution-icon {
+  color: var(--success-green);
+}
+
+.qui-sommes-nous-container .card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark-gray);
+  margin-bottom: 5px;
+}
+
+.qui-sommes-nous-container .card-title-ar {
+  font-size: 1.3rem;
+  color: var(--soft-red);
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-family: 'Arabic Typesetting', 'Arial Unicode MS', sans-serif;
+}
+
+.qui-sommes-nous-container .card-description {
+  font-size: 1rem;
+  color: var(--medium-gray);
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+.qui-sommes-nous-container .card-description-ar {
+  font-size: 1rem;
+  color: var(--medium-gray);
+  line-height: 1.8;
+  font-family: 'Arabic Typesetting', 'Arial Unicode MS', sans-serif;
+}
+
+/* ================================================
+   FEATURES SECTION
+   ================================================ */
+
+.qui-sommes-nous-container .features-section {
+  padding: 100px 40px;
+  background-color: var(--light-gray);
+}
+
+.qui-sommes-nous-container .features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+}
+
+.qui-sommes-nous-container .feature-card {
+  background-color: var(--white);
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(33, 35, 38, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.qui-sommes-nous-container .feature-card:hover {
+  border-color: var(--soft-red);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(33, 35, 38, 0.15);
+}
+
+.qui-sommes-nous-container .feature-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.qui-sommes-nous-container .feature-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--dark-gray);
+  margin-bottom: 5px;
+}
+
+.qui-sommes-nous-container .feature-title-ar {
+  font-size: 1.2rem;
+  color: var(--soft-red);
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-family: 'Arabic Typesetting', 'Arial Unicode MS', sans-serif;
+}
+
+.qui-sommes-nous-container .feature-description {
+  font-size: 0.95rem;
+  color: var(--medium-gray);
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+.qui-sommes-nous-container .feature-description-ar {
+  font-size: 0.95rem;
+  color: var(--medium-gray);
+  line-height: 1.8;
+  font-family: 'Arabic Typesetting', 'Arial Unicode MS', sans-serif;
+}
+
+/* ================================================
+   VISION SECTION
+   ================================================ */
+
+.qui-sommes-nous-container .vision-section {
+  padding: 100px 40px;
+  background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+}
+
+.qui-sommes-nous-container .vision-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.qui-sommes-nous-container .vision-text {
+  font-size: 1.1rem;
+  color: var(--dark-gray);
+  line-height: 2;
+  margin-bottom: 20px;
+  text-align: justify;
+  font-weight: 500;
+}
+
+.qui-sommes-nous-container .vision-text-ar {
+  font-size: 1.1rem;
+  color: var(--dark-gray);
+  line-height: 2;
+  margin-bottom: 40px;
+  text-align: justify;
+  font-family: 'Arabic Typesetting', 'Arial Unicode MS', sans-serif;
+  font-weight: 500;
+}
+
+.qui-sommes-nous-container .vision-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.qui-sommes-nous-container .highlight-item {
+  background-color: var(--white);
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(33, 35, 38, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.qui-sommes-nous-container .highlight-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--soft-red);
+}
+
+.qui-sommes-nous-container .highlight-text {
+  font-size: 1rem;
+  color: var(--dark-gray);
+  font-weight: 600;
+}
+
+/* ================================================
+   CALL TO ACTION SECTION
+   ================================================ */
+
+.qui-sommes-nous-container .cta-section {
+  background: linear-gradient(135deg, var(--dark-gray) 0%, #2E2E30 100%);
+  padding: 80px 40px;
+  text-align: center;
+  color: var(--white);
+}
+
+.qui-sommes-nous-container .cta-section .container {
+  max-width: 800px;
+}
+
+.qui-sommes-nous-container .cta-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.qui-sommes-nous-container .cta-section p {
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  font-family: 'Arabic Typesetting', 'Arial Unicode MS', sans-serif;
+  font-weight: 500;
+}
+
+.qui-sommes-nous-container .cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.qui-sommes-nous-container .btn {
+  padding: 15px 40px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.qui-sommes-nous-container .btn-primary {
+  background-color: var(--soft-red);
+  color: var(--white);
+}
+
+.qui-sommes-nous-container .btn-primary:hover {
+  background-color: #D32F2F;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+}
+
+.qui-sommes-nous-container .btn-secondary {
+  background-color: var(--white);
+  color: var(--dark-gray);
+  border: 2px solid var(--white);
+}
+
+.qui-sommes-nous-container .btn-secondary:hover {
+  background-color: transparent;
+  color: var(--white);
+  border-color: var(--white);
+}
+
+/* ================================================
+   RESPONSIVE DESIGN
+   ================================================ */
+
+@media (max-width: 768px) {
+  .qui-sommes-nous-container .hero-section {
+    padding: 60px 20px;
+    min-height: auto;
+  }
+
+  .qui-sommes-nous-container .hero-content {
+    gap: 40px;
+  }
+
+  .qui-sommes-nous-container .hero-title {
+    font-size: 2.2rem;
+    margin-bottom: 0;
+  }
+
+  /* Stack bilingual layout vertically on tablet */
+  .qui-sommes-nous-container .hero-bilingual {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .qui-sommes-nous-container .hero-lang {
+    padding: 30px;
+  }
+
+  .qui-sommes-nous-container .hero-description,
+  .qui-sommes-nous-container .hero-description-ar {
+    font-size: 1rem;
+  }
+
+  .qui-sommes-nous-container .hero-french {
+    border-left: 3px solid var(--soft-red);
+  }
+
+  .qui-sommes-nous-container .hero-arabic {
+    border-right: 3px solid var(--soft-red);
+  }
+
+  .qui-sommes-nous-container .problem-solution-section,
+  .qui-sommes-nous-container .features-section,
+  .qui-sommes-nous-container .vision-section {
+    padding: 60px 20px;
+  }
+
+  .qui-sommes-nous-container .section-title {
+    font-size: 2rem;
+  }
+
+  .qui-sommes-nous-container .problem-solution-grid {
+    gap: 30px;
+  }
+
+  .qui-sommes-nous-container .problem-card,
+  .qui-sommes-nous-container .solution-card,
+  .qui-sommes-nous-container .feature-card {
+    padding: 30px;
+  }
+
+  .qui-sommes-nous-container .feature-icon {
+    font-size: 3rem;
+  }
+
+  .qui-sommes-nous-container .cta-section {
+    padding: 60px 20px;
+  }
+
+  .qui-sommes-nous-container .cta-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .qui-sommes-nous-container .cta-buttons {
+    flex-direction: column;
+  }
+
+  .qui-sommes-nous-container .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .qui-sommes-nous-container .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .qui-sommes-nous-container .section-title {
+    font-size: 1.5rem;
+  }
+
+  .qui-sommes-nous-container .problem-solution-grid,
+  .qui-sommes-nous-container .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .qui-sommes-nous-container .hero-description,
+  .qui-sommes-nous-container .card-description,
+  .qui-sommes-nous-container .vision-text {
+    font-size: 0.95rem;
+  }
+}
