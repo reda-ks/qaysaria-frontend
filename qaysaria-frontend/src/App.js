@@ -7,6 +7,7 @@ import Accueil from './pages/accueil/accueil';
 import Produits from './pages/produits/produits';
 import Contact from './pages/contact/contact';
 import QuiSommesNous from './pages/quisommesnous/QuiSommesNous';
+import Howitworks from './pages/Howitworks';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import BoutiqueUtilisateur from './pages/auth/utilisateurs/boutique_utilisateur';
@@ -32,6 +33,7 @@ function AppRoutes() {
       <Route path="/produits" element={<Produits />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
+      <Route path="/Howitworks" element={<Howitworks />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/boutique-utilisateur" element={<BoutiqueUtilisateur />} />
