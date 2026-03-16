@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap');
 @import url('../theme.css');
 
+/* ================================================
+   CONTACT CONTAINER - FIXES BLANK SPACE ISSUE
+   ================================================ */
+
 .contact-container {
   width: 100%;
-  min-height: 100vh;
   background: linear-gradient(135deg, var(--light-gray) 0%, var(--light-gray) 100%);
-  padding: 60px 20px;
+  padding: 40px 20px;  /* ✅ Reduced from 60px to 40px */
   font-family: 'DM Sans', sans-serif;
   margin: 0 !important;
   margin-left: 0 !important;
@@ -13,7 +16,7 @@
 
 .contact-header {
   max-width: 800px;
-  margin: 0 auto 60px auto;
+  margin: 0 auto 40px auto;  /* ✅ Reduced from 60px to 40px */
   text-align: center;
 }
 
@@ -21,13 +24,13 @@
   font-family: 'Playfair Display', serif;
   font-size: 3rem;
   color: var(--dark-gray);
-  margin-bottom: 15px;
+  margin-bottom: 10px;  /* ✅ Reduced from 15px to 10px */
 }
 
 .contact-subtitle {
   font-size: 1.1rem;
   color: var(--medium-gray);
-  margin-bottom: 30px;
+  margin-bottom: 20px;  /* ✅ Reduced from 30px to 20px */
 }
 
 .contact-content {
@@ -35,7 +38,7 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 40px;  /* ✅ Reduced from 60px to 40px */
 }
 
 .contact-form {
@@ -46,12 +49,12 @@
 }
 
 .form-group {
-  margin-bottom: 25px;
+  margin-bottom: 20px;  /* ✅ Reduced from 25px to 20px */
 }
 
 .form-label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;  /* ✅ Reduced from 8px to 6px */
   font-weight: 600;
   color: var(--dark-gray);
   font-size: 0.95rem;
@@ -67,6 +70,7 @@
   font-size: 1rem;
   color: var(--dark-gray);
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .form-input:focus,
@@ -78,7 +82,8 @@
 
 .form-textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 100px;  /* ✅ Reduced from 120px to 100px */
+  font-family: 'DM Sans', sans-serif;
 }
 
 .form-submit {
@@ -93,6 +98,7 @@
   font-family: 'DM Sans', sans-serif;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 10px;  /* ✅ Added small top margin */
 }
 
 .form-submit:hover {
@@ -115,6 +121,18 @@
   margin-bottom: 20px;
   font-weight: 600;
   text-align: center;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .success-message.hidden {
@@ -124,12 +142,12 @@
 .contact-info {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 30px;  /* ✅ Reduced from 40px to 30px */
 }
 
 .info-block {
   background: var(--white);
-  padding: 30px;
+  padding: 25px;  /* ✅ Reduced from 30px to 25px */
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(33, 35, 38, 0.1);
 }
@@ -138,10 +156,10 @@
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
   color: var(--dark-gray);
-  margin-bottom: 15px;
+  margin-bottom: 12px;  /* ✅ Reduced from 15px to 12px */
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;  /* ✅ Reduced from 15px to 12px */
 }
 
 .info-icon {
@@ -150,7 +168,8 @@
 
 .info-text {
   color: var(--medium-gray);
-  line-height: 1.8;
+  line-height: 1.6;  /* ✅ Reduced from 1.8 to 1.6 */
+  margin: 0;
 }
 
 .info-text a {
@@ -162,12 +181,13 @@
 
 .info-text a:hover {
   color: var(--dark-gray);
+  text-decoration: underline;
 }
 
 .social-links {
   display: flex;
-  gap: 15px;
-  margin-top: 15px;
+  gap: 12px;  /* ✅ Reduced from 15px to 12px */
+  margin-top: 12px;  /* ✅ Reduced from 15px to 12px */
 }
 
 .social-link {
@@ -181,6 +201,8 @@
   text-decoration: none;
   color: var(--soft-red);
   transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .social-link:hover {
@@ -189,21 +211,109 @@
   transform: translateY(-3px);
 }
 
+/* ================================================
+   RESPONSIVE DESIGN
+   ================================================ */
+
 @media (max-width: 768px) {
+  .contact-container {
+    padding: 30px 20px;  /* ✅ Reduced from 40px to 30px */
+  }
+
+  .contact-header {
+    margin-bottom: 30px;  /* ✅ Reduced from 40px to 30px */
+  }
+
   .contact-title {
     font-size: 2rem;
   }
 
+  .contact-subtitle {
+    font-size: 1rem;
+  }
+
   .contact-content {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 30px;  /* ✅ Reduced from 40px to 30px */
   }
 
   .contact-form {
-    padding: 25px;
+    padding: 20px;  /* ✅ Reduced from 25px to 20px */
+  }
+
+  .form-group {
+    margin-bottom: 18px;  /* ✅ Reduced from 20px to 18px */
   }
 
   .info-block {
-    padding: 20px;
+    padding: 18px;  /* ✅ Reduced from 20px to 18px */
+  }
+
+  .info-title {
+    font-size: 1.2rem;
+  }
+
+  .social-link {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-container {
+    padding: 25px 15px;  /* ✅ Reduced from 30px to 25px */
+  }
+
+  .contact-header {
+    margin-bottom: 25px;  /* ✅ Reduced from 30px to 25px */
+  }
+
+  .contact-title {
+    font-size: 1.6rem;
+    margin-bottom: 8px;  /* ✅ Reduced margin */
+  }
+
+  .contact-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 15px;  /* ✅ Reduced margin */
+  }
+
+  .contact-form {
+    padding: 18px;  /* ✅ Reduced from 20px to 18px */
+  }
+
+  .form-input,
+  .form-textarea {
+    padding: 10px 12px;
+    font-size: 16px;  /* Prevents zoom on iOS */
+  }
+
+  .form-submit {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+
+  .info-title {
+    font-size: 1.1rem;
+    gap: 8px;  /* ✅ Reduced from 10px to 8px */
+  }
+
+  .info-icon {
+    font-size: 1.5rem;
+  }
+
+  .info-block {
+    padding: 16px;  /* ✅ Reduced from 18px to 16px */
+  }
+
+  .social-link {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  .info-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
   }
 }
