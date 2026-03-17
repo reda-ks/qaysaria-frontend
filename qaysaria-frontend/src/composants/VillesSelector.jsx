@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/composants css/VillesSelector.css';
 const VILLES = [
   { id: '', label: 'Tout le Maroc', emoji: '🇲🇦' },

@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styles/pages css/QuiSommesNous.css';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const QuiSommesNous = () => {

@@ -142,16 +142,16 @@ const Contact = () => {
               Suivez-nous
             </h3>
             <div className="social-links">
-              <a href="#" className="social-link" title="Facebook">
+              <a href="/" className="social-link" title="Facebook">
                 f
               </a>
-              <a href="#" className="social-link" title="Twitter">
+              <a href="/" className="social-link" title="Twitter">
                 𝕏
               </a>
-              <a href="#" className="social-link" title="Instagram">
+              <a href="/" className="social-link" title="Instagram">
                 📷
               </a>
-              <a href="#" className="social-link" title="LinkedIn">
+              <a href="/" className="social-link" title="LinkedIn">
                 in
               </a>
             </div>

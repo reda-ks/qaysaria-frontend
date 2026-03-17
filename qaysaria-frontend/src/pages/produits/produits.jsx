@@ -1,11 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import '../../styles/pages css/produits.css';
-import { useNavigate } from 'react-router-dom';
 import VillesSelector from '../../composants/VillesSelector';
 import FiltersSidebar from '../../composants/FiltersSidebar';
 import Pagination from '../../composants/Pagination';
-import '../../styles/pages css/produits.css';
 import SearchBar from '../../composants/SearchBar';
 
 const ITEMS_PER_PAGE = 6;

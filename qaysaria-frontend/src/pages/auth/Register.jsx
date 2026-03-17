@@ -12,7 +12,6 @@ function Register() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -130,7 +129,7 @@ function Register() {
               required
             />
             <label htmlFor="terms">
-              J'accepte les <a href="#" className="terms-link">Conditions d'utilisation</a> et la <a href="#" className="terms-link">Politique de confidentialité</a>
+              J'accepte les <a href="/" className="terms-link">Conditions d'utilisation</a> et la <a href="/" className="terms-link">Politique de confidentialité</a>
             </label>
           </div>
 

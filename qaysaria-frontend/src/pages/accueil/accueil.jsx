@@ -9,29 +9,7 @@ const Accueil = () => {
   const navigate = useNavigate();
 
   // Color Palette System
-  const colorPalette = {
-    neutral: {
-      white: '#FFFFFF',
-      lightGray: '#F4F6F8',
-      softGray: '#E1E3E5',
-      mediumGray: '#6B7177',
-      darkGray: '#212326',
-    },
-    accent: {
-      softRed: '#E63946',
-    },
-    status: {
-      success: '#2E7D32',
-      warning: '#F9A825',
-      error: '#D32F2F',
-      info: '#1E88E5',
-    },
-    buttons: {
-      primary: '#212326',
-      secondary: '#FFFFFF',
-      accent: '#E63946',
-    },
-  };
+
 
   const handleExplorer = () => {
     navigate('/produits');

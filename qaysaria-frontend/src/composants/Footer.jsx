@@ -15,10 +15,10 @@ const Footer = () => {
             La plateforme de commerce électronique marocaine qui connecte des millions d'acheteurs avec des vendeurs vérifiés du Maroc.
           </p>
           <div className="social-links">
-            <a href="#" className="social-icon" title="Facebook">f</a>
-            <a href="#" className="social-icon" title="Twitter">𝕏</a>
-            <a href="#" className="social-icon" title="Instagram">📷</a>
-            <a href="#" className="social-icon" title="LinkedIn">in</a>
+            <a href="/" className="social-icon" title="Facebook">f</a>
+            <a href="/" className="social-icon" title="Twitter">𝕏</a>
+            <a href="/" className="social-icon" title="Instagram">📷</a>
+            <a href="/" className="social-icon" title="LinkedIn">in</a>
           </div>
         </div>
 

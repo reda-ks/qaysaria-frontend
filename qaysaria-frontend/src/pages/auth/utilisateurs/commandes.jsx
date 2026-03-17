@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../../styles/pages css/commandes.css';
 
 const Commandes = () => {
-  const [commandes, setCommandes] = useState([
+  const [commandes] = useState([
     {
       id: 'CMD-001',
       client: 'Fatima Benali',

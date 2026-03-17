@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../../styles/pages css/tableau_de_bord.css';
 
 const TableauDeBord = () => {
@@ -234,7 +234,7 @@ const TableauDeBord = () => {
         <div className="main-section orders-section">
           <div className="section-header">
             <h2 className="section-title">📋 Dernières Commandes</h2>
-            <a href="#" className="view-all-link">Voir tout →</a>
+            <a href="/" className="view-all-link">Voir tout →</a>
           </div>
 
           <div className="orders-table">

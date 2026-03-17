@@ -8,7 +8,6 @@ function Login() {
     password: ""
   });
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -50,7 +49,7 @@ function Login() {
           <div className="form-group">
             <div className="password-label">
               <label htmlFor="password">Mot de passe</label>
-              <a href="#" className="forgot-password">Oublié?</a>
+              <a href="/" className="forgot-password">Oublié?</a>
             </div>
             <div className="password-input-wrapper">
               <input
