@@ -1,41 +1,28 @@
 import React, { useState } from 'react';
+import {
+  LayoutGrid, Tag, SlidersHorizontal, Ruler, Palette,
+  ChevronDown, ChevronRight, RotateCcw, Check
+} from 'lucide-react';
 import '../styles/composants css/FiltersSidebar.css';
 
-/* ─────────────────────────────────────────────────────────
-   CATEGORIES — Catégories produits QAISARYA
-───────────────────────────────────────────────────────── */
 const CATEGORIES = [
+  { id: '',           label: 'Toutes catégories', sub: [] },
   {
-    id: '',
-    label: 'Toutes catégories',
-    icon: '',
-    sub: [],
-  },
-  {
-    id: 'vetements',
-    label: 'Vêtements',
-    icon: '',
-    sub: [
+    id: 'vetements',  label: 'Vêtements', sub: [
       { id: 'vetements-hommes',  label: 'Hommes'  },
       { id: 'vetements-femmes',  label: 'Femmes'  },
       { id: 'vetements-enfants', label: 'Enfants' },
     ],
   },
   {
-    id: 'accessoires',
-    label: 'Accessoires',
-    icon: '',
-    sub: [
+    id: 'accessoires', label: 'Accessoires', sub: [
       { id: 'accessoires-sacs',   label: 'Sacs & Maroquinerie' },
       { id: 'accessoires-bijoux', label: 'Bijoux & Montres'    },
       { id: 'accessoires-autres', label: 'Ceintures & Divers'  },
     ],
   },
   {
-    id: 'artisanat',
-    label: 'Artisanat ',
-    icon: '',
-    sub: [
+    id: 'artisanat',  label: 'Artisanat 🔥', sub: [
       { id: 'artisanat-zellige',  label: 'Zellige & Céramique' },
       { id: 'artisanat-cuir',     label: 'Cuir tanné'          },
       { id: 'artisanat-tapis',    label: 'Tapis & Tissage'     },
@@ -44,14 +31,11 @@ const CATEGORIES = [
     ],
   },
   {
-    id: 'chaussures',
-    label: 'Chaussures',
-    icon: '',
-    sub: [
-      { id: 'chaussures-hommes',   label: 'Hommes'              },
-      { id: 'chaussures-femmes',   label: 'Femmes'              },
-      { id: 'chaussures-enfants',  label: 'Enfants'             },
-      { id: 'chaussures-babouches',label: 'Babouches '        },
+    id: 'chaussures', label: 'Chaussures', sub: [
+      { id: 'chaussures-hommes',    label: 'Hommes'         },
+      { id: 'chaussures-femmes',    label: 'Femmes'         },
+      { id: 'chaussures-enfants',   label: 'Enfants'        },
+      { id: 'chaussures-babouches', label: 'Babouches 🥿'   },
     ],
   },
 ];
@@ -75,32 +59,32 @@ const COULEURS = [
   { id: 'marron',      label: 'Marron',      hex: '#795548' },
   { id: 'beige',       label: 'Beige',       hex: '#d7c4a3' },
   { id: 'bordeaux',    label: 'Bordeaux',    hex: '#7b1c2e' },
-  { id: 'multicolore', label: 'Multicolore', hex: 'linear-gradient(135deg,#EF3B3C,#fdd835,#43a047,#1e88e5)' },
+  { id: 'multicolore', label: 'Multicolore', hex: 'conic-gradient(#EF3B3C,#fdd835,#43a047,#1e88e5,#EF3B3C)' },
 ];
 
-/* ─────────────────────────────────────────────────────────
-   Collapsible Section
-───────────────────────────────────────────────────────── */
-const Section = ({ title, icon, children, defaultOpen = true }) => {
+/* Collapsible section */
+const Section = ({ title, Icon, children, defaultOpen = true }) => {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="filter-section">
       <button className="filter-section-header" onClick={() => setOpen(!open)}>
         <span className="filter-section-title">
-          <span>{icon}</span> {title}
+          <Icon size={14} strokeWidth={2} color="#888" />
+          {title}
         </span>
-        <span className={`filter-chevron ${open ? 'open' : ''}`}>‹</span>
+        <ChevronDown
+          size={14}
+          strokeWidth={2}
+          color="#888"
+          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .28s' }}
+        />
       </button>
       {open && <div className="filter-section-body">{children}</div>}
     </div>
   );
 };
 
-/* ─────────────────────────────────────────────────────────
-   FiltersSidebar
-───────────────────────────────────────────────────────── */
 const FiltersSidebar = ({ filters, onFiltersChange }) => {
-  /* Track which parent category is expanded to show subcategories */
   const [expandedCat, setExpandedCat] = useState('');
 
   const toggle = (key, value) => {
@@ -112,33 +96,21 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
   };
 
   const handlePrix = (e, bound) => {
-    onFiltersChange({
-      ...filters,
-      prix: { ...filters.prix, [bound]: Number(e.target.value) },
-    });
+    onFiltersChange({ ...filters, prix: { ...filters.prix, [bound]: Number(e.target.value) } });
   };
 
-  /* Select a category or subcategory */
   const handleCategory = (id, parentId = null) => {
-    /* If clicking same → clear */
     if (filters.category === id) {
       onFiltersChange({ ...filters, category: '' });
       setExpandedCat('');
       return;
     }
     onFiltersChange({ ...filters, category: id });
-    /* Expand the parent if a sub was clicked */
     if (parentId) setExpandedCat(parentId);
   };
 
   const handleReset = () => {
-    onFiltersChange({
-      category: '',
-      marques: [],
-      tailles: [],
-      couleurs: [],
-      prix: { min: 0, max: 15000 },
-    });
+    onFiltersChange({ category: '', marques: [], tailles: [], couleurs: [], prix: { min: 0, max: 15000 } });
     setExpandedCat('');
   };
 
@@ -147,60 +119,56 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
   return (
     <aside className="filters-sidebar">
 
-      {/* ── TOP ── */}
       <div className="filters-top">
-        <h2 className="filters-title"> Filtres</h2>
+        <h2 className="filters-title">
+          <SlidersHorizontal size={15} strokeWidth={2} color="#1A1A1A" />
+          Filtres
+        </h2>
         <button className="filters-reset" onClick={handleReset}>
+          <RotateCcw size={11} strokeWidth={2.5} />
           Réinitialiser
         </button>
       </div>
 
-      {/* ════ CATÉGORIES ════ */}
-      <Section title="Catégories" icon="" defaultOpen={true}>
+      {/* CATEGORIES */}
+      <Section title="Catégories" Icon={LayoutGrid} defaultOpen={true}>
         <ul className="filter-category-list">
-
-          {/* "Toutes catégories" */}
-          <li key="">
+          <li>
             <button
               className={`filter-category-item ${filters.category === '' ? 'active' : ''}`}
               onClick={() => handleCategory('')}
             >
-              <span className="cat-icon"></span>
               <span className="cat-label">Toutes catégories</span>
-              {filters.category === '' && <span className="check">✓</span>}
+              {filters.category === '' && <Check size={12} strokeWidth={3} color="#EF3B3C" />}
             </button>
           </li>
 
-          {/* Parent categories with optional subcategories */}
           {CATEGORIES.filter(c => c.id !== '').map((cat) => {
-            const isParentActive = filters.category === cat.id ||
-              cat.sub.some(s => s.id === filters.category);
+            const isParentActive = filters.category === cat.id || cat.sub.some(s => s.id === filters.category);
             const isExpanded = expandedCat === cat.id || isParentActive;
 
             return (
               <li key={cat.id} className="cat-group">
-
-                {/* Parent row */}
                 <div className="cat-parent-row">
                   <button
                     className={`filter-category-item ${isParentActive ? 'active' : ''}`}
-                    onClick={() => {
-                      handleCategory(cat.id);
-                      setExpandedCat(isExpanded ? '' : cat.id);
-                    }}
+                    onClick={() => { handleCategory(cat.id); setExpandedCat(isExpanded ? '' : cat.id); }}
                   >
-                    <span className="cat-icon">{cat.icon}</span>
                     <span className="cat-label">{cat.label}</span>
                     <span className="cat-right">
-                      {isParentActive && <span className="check">✓</span>}
+                      {isParentActive && <Check size={11} strokeWidth={3} color="#EF3B3C" />}
                       {cat.sub.length > 0 && (
-                        <span className={`sub-arrow ${isExpanded ? 'open' : ''}`}>›</span>
+                        <ChevronRight
+                          size={13}
+                          strokeWidth={2}
+                          color="#888"
+                          style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform .25s' }}
+                        />
                       )}
                     </span>
                   </button>
                 </div>
 
-                {/* Subcategories */}
                 {cat.sub.length > 0 && isExpanded && (
                   <ul className="filter-subcategory-list">
                     {cat.sub.map((sub) => (
@@ -211,21 +179,20 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
                         >
                           <span className="sub-dot" />
                           <span>{sub.label}</span>
-                          {filters.category === sub.id && <span className="check">✓</span>}
+                          {filters.category === sub.id && <Check size={11} strokeWidth={3} color="#EF3B3C" style={{ marginLeft: 'auto' }} />}
                         </button>
                       </li>
                     ))}
                   </ul>
                 )}
-
               </li>
             );
           })}
         </ul>
       </Section>
 
-      {/* ════ PRIX ════ */}
-      <Section title="Prix (MAD)" icon="" defaultOpen={true}>
+      {/* PRIX */}
+      <Section title="Prix (MAD)" Icon={Tag} defaultOpen={true}>
         <div className="filter-price">
           <div className="price-range-display">
             <span>{prix.min.toLocaleString()} MAD</span>
@@ -234,46 +201,18 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
           <div className="price-inputs">
             <label>
               <span>Min</span>
-              <input
-                type="range" min="0" max="15000" step="50"
-                value={prix.min}
-                onChange={(e) => handlePrix(e, 'min')}
-                className="range-slider"
-              />
+              <input type="range" min="0" max="15000" step="50" value={prix.min} onChange={(e) => handlePrix(e, 'min')} className="range-slider" />
             </label>
             <label>
               <span>Max</span>
-              <input
-                type="range" min="0" max="15000" step="50"
-                value={prix.max}
-                onChange={(e) => handlePrix(e, 'max')}
-                className="range-slider"
-              />
+              <input type="range" min="0" max="15000" step="50" value={prix.max} onChange={(e) => handlePrix(e, 'max')} className="range-slider" />
             </label>
           </div>
         </div>
       </Section>
 
-      {/* ════ MARQUE ════ */}
-      <Section title="Marque" icon="" defaultOpen={false}>
-        <div className="filter-checkboxes">
-          {MARQUES.map((marque) => (
-            <label key={marque} className="filter-checkbox-label">
-              <input
-                type="checkbox"
-                checked={(filters.marques || []).includes(marque)}
-                onChange={() => toggle('marques', marque)}
-                className="filter-checkbox"
-              />
-              <span className="checkbox-custom" />
-              <span>{marque}</span>
-            </label>
-          ))}
-        </div>
-      </Section>
-
-      {/* ════ TAILLE ════ */}
-      <Section title="Taille" icon="" defaultOpen={false}>
+      {/* TAILLE */}
+      <Section title="Taille" Icon={Ruler} defaultOpen={false}>
         <div className="filter-sizes">
           {TAILLES.map((t) => (
             <button
@@ -287,8 +226,8 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
         </div>
       </Section>
 
-      {/* ════ COULEURS ════ */}
-      <Section title="Couleurs" icon="" defaultOpen={false}>
+      {/* COULEURS */}
+      <Section title="Couleurs" Icon={Palette} defaultOpen={false}>
         <div className="filter-colors">
           {COULEURS.map((c) => (
             <button
@@ -299,25 +238,26 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
             >
               <span
                 className="color-dot"
-                style={{
-                  background: c.hex,
-                  border: c.id === 'blanc' ? '1.5px solid #ddd' : 'none',
-                }}
+                style={{ background: c.hex, border: c.id === 'blanc' ? '1.5px solid #ddd' : 'none' }}
               />
               {(filters.couleurs || []).includes(c.id) && (
-                <span className="color-check">✓</span>
+                <span className="color-check">
+                  <Check size={10} strokeWidth={3} color="#fff" />
+                </span>
               )}
             </button>
           ))}
         </div>
-        {/* Color labels below */}
+
         <div className="filter-colors-labels">
           {(filters.couleurs || []).map(id => {
             const c = COULEURS.find(x => x.id === id);
             return c ? (
               <span key={id} className="color-label-tag">
                 {c.label}
-                <button onClick={() => toggle('couleurs', id)}>✕</button>
+                <button onClick={() => toggle('couleurs', id)}>
+                  <Check size={9} strokeWidth={3} />
+                </button>
               </span>
             ) : null;
           })}

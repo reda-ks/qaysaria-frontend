@@ -25,14 +25,13 @@ const Accueil = () => {
   };
 
   const stats = [
-    { number: '12+',  label: 'Villes'     },
-    { number: '500+', label: 'Boutiques'  },
-    { number: '15k',  label: 'Produits'   },
-    { number: '98%',  label: 'Satisfaits' },
-    { number: 'CMI',  label: 'Accrédité'  },
-    { number: '24/7', label: 'Support'    },
+  { number: '12+',  label: 'Villes'     },
+  { number: '500+', label: 'Boutiques'  },
+  { number: '15k',  label: 'Produits'   },
+  { number: '98%',  label: 'Satisfaits' },
+  { number: '2k+',  label: 'Clients'    },
+  { number: '24/7', label: 'Support'    },
   ];
-
   const benefits = [
     { icon: '🚚', title: 'Livraison Rapide',  sub: 'Partout au Maroc'       },
     { icon: '🔄', title: 'Retours Faciles',    sub: 'Garantie 30 jours'      },
@@ -176,7 +175,7 @@ const Accueil = () => {
       {/* oooooooooooooooooooooooooooooooooooooooooo */}
       {/* ════ FEATURED MOSAIC ════ */}
       <section className="featured-section">
-                <h2 className="titre_top">tendances de la mode </h2>
+                <h2 className="titre_top">Tendances De La Mode </h2>
 
         <div className="featured-inner">
 

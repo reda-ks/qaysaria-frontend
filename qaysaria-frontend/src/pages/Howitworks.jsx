@@ -1,81 +1,38 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import {
+  Search, MessageCircle, Package, Star,
+  Store, Camera, ShoppingBag, Banknote,
+  CheckCircle, Lock, Truck, RotateCcw, Hammer, Users,
+  ArrowRight
+} from 'lucide-react';
 import '../styles/pages css/Howitworks.css';
 
-
-
+/* ─── DATA ── */
 const STEPS_ACHETEUR = [
-  {
-    number: '01',
-    icon: '🔍',
-    title: 'Explorez',
-    subtitle: 'Trouvez ce que vous cherchez',
-    desc: 'Parcourez des milliers de produits et boutiques vérifiées à travers tout le Maroc. Filtrez par ville, catégorie, marque ou prix.',
-  },
-  {
-    number: '02',
-    icon: '🛒',
-    title: 'Commandez',
-    subtitle: 'En quelques clics',
-    desc: 'Ajoutez vos articles au panier et finalisez votre commande en toute sécurité. Paiement en ligne ou à la livraison disponible.',
-  },
-  {
-    number: '03',
-    icon: '📦',
-    title: 'Recevez',
-    subtitle: 'Livraison partout au Maroc',
-    desc: 'Suivez votre commande en temps réel. Livraison rapide à domicile dans toutes les villes du Royaume.',
-  },
-  {
-    number: '04',
-    icon: '⭐',
-    title: 'Évaluez',
-    subtitle: 'Partagez votre expérience',
-    desc: 'Notez votre achat et aidez la communauté Qaysaria à identifier les meilleures boutiques.',
-  },
+  { number: '01', Icon: Search,        title: 'Explorez',  subtitle: 'Trouvez ce que vous cherchez', desc: 'Parcourez des milliers de produits et boutiques vérifiées à travers tout le Maroc. Filtrez par ville, catégorie ou prix.' },
+  { number: '02', Icon: MessageCircle, title: 'Contactez', subtitle: 'Direct via WhatsApp',           desc: 'Un clic suffit pour ouvrir WhatsApp et discuter directement avec le vendeur — négocier, poser vos questions, confirmer votre commande.' },
+  { number: '03', Icon: Package,       title: 'Recevez',   subtitle: 'Livraison partout au Maroc',    desc: 'Le vendeur organise la livraison avec vous. Rapide, simple, sans intermédiaire inutile — partout au Royaume.' },
+  { number: '04', Icon: Star,          title: 'Évaluez',   subtitle: 'Partagez votre expérience',     desc: 'Notez votre achat et aidez la communauté QAISARYA à identifier les meilleures boutiques de votre ville.' },
 ];
 
 const STEPS_VENDEUR = [
-  {
-    number: '01',
-    icon: '🏪',
-    title: 'Créez votre boutique',
-    subtitle: 'Inscription gratuite',
-    desc: 'Ouvrez votre boutique en ligne en quelques minutes. Renseignez vos informations, choisissez vos catégories et téléchargez votre logo.',
-  },
-  {
-    number: '02',
-    icon: '📸',
-    title: 'Listez vos produits',
-    subtitle: 'Catalogue illimité',
-    desc: 'Ajoutez vos articles avec photos, descriptions et prix. Notre interface intuitive vous guide à chaque étape.',
-  },
-  {
-    number: '03',
-    icon: '💬',
-    title: 'Gérez vos commandes',
-    subtitle: 'Tableau de bord complet',
-    desc: 'Recevez les commandes, communiquez avec vos clients et gérez vos livraisons depuis votre espace vendeur.',
-  },
-  {
-    number: '04',
-    icon: '💰',
-    title: 'Encaissez',
-    subtitle: 'Paiement sécurisé & rapide',
-    desc: 'Recevez vos paiements directement sur votre compte. Commissions transparentes, zéro surprise.',
-  },
+  { number: '01', Icon: Store,         title: 'Créez votre boutique', subtitle: 'Inscription gratuite',      desc: 'Ouvrez votre boutique en quelques minutes. Renseignez vos informations, choisissez vos catégories et ajoutez votre logo.' },
+  { number: '02', Icon: Camera,        title: 'Listez vos produits',  subtitle: 'Catalogue illimité',        desc: 'Ajoutez vos articles avec photos, descriptions et prix. Notre interface intuitive vous guide à chaque étape.' },
+  { number: '03', Icon: MessageCircle, title: 'Recevez les demandes', subtitle: 'Directement sur WhatsApp',  desc: 'Les acheteurs vous contactent via WhatsApp. Confirmez les commandes et gérez tout depuis votre téléphone.' },
+  { number: '04', Icon: Banknote,      title: 'Encaissez',            subtitle: 'Paiement direct & rapide',  desc: 'Recevez vos paiements directement, sans intermédiaire. Commissions transparentes, zéro surprise.' },
 ];
 
 const FEATURES = [
-  { icon: '', title: 'Boutiques vérifiées', desc: 'Chaque vendeur est contrôlé et validé par notre équipe.' },
-  { icon: '', title: 'Paiement sécurisé', desc: 'Transactions protégées par chiffrement SSL 256 bits.' },
-  { icon: '', title: 'Livraison nationale', desc: 'Réseau logistique couvrant toutes les villes du Maroc.' },
-  { icon: '', title: 'Retour facile', desc: 'Politique de retour sous 14 jours sans questions posées.' },
-  { icon: '', title: 'Support 7j/7', desc: 'Notre équipe est disponible pour vous aider à tout moment.' },
-  { icon: '', title: 'Communauté locale', desc: 'Soutenez les artisans et commerçants marocains.' },
+  { Icon: CheckCircle, title: 'Boutiques vérifiées',   desc: 'Chaque vendeur est contrôlé et validé par notre équipe avant de publier.' },
+  { Icon: Lock,        title: 'Plateforme sécurisée',  desc: 'Vos données sont protégées. Naviguez et achetez en toute confiance.' },
+  { Icon: Truck,       title: 'Livraison nationale',   desc: 'Réseau logistique couvrant toutes les villes du Maroc sans exception.' },
+  { Icon: MessageCircle, title: 'Contact WhatsApp',    desc: 'Parlez directement au vendeur — rapide, humain, sans formulaire compliqué.' },
+  { Icon: Hammer,      title: 'Artisanat authentique', desc: 'Des produits marocains uniques, du zellige au cuir tanné de Fès.' },
+  { Icon: Users,       title: 'Communauté locale',     desc: 'Soutenez les artisans et commerçants marocains en achetant local.' },
 ];
 
+/* ─── HOOK ── */
 const useInView = (threshold = 0.15) => {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -90,33 +47,35 @@ const useInView = (threshold = 0.15) => {
   return [ref, visible];
 };
 
-const StepCard = ({ step, index, side }) => {
+/* ─── STEP CARD ── */
+const StepCard = ({ step, index }) => {
   const [ref, visible] = useInView();
+  const { Icon } = step;
   return (
     <div
       ref={ref}
-      className={`step-card ${visible ? 'visible' : ''} side-${side}`}
-      style={{ animationDelay: `${index * 0.12}s` }}
+      className={`hiw-step-card ${visible ? 'visible' : ''}`}
+      style={{ animationDelay: `${index * 0.1}s` }}
     >
-      <div className="step-number">{step.number}</div>
-      <div className="step-icon-wrap">
-        <span className="step-icon">{step.icon}</span>
+      <div className="hiw-step-num">{step.number}</div>
+      <div className="hiw-step-icon">
+        <Icon size={26} strokeWidth={1.7} color="#EF3B3C" />
       </div>
-      <div className="step-body">
-        <h3 className="step-title">{step.title}</h3>
-        <span className="step-subtitle">{step.subtitle}</span>
-        <p className="step-desc">{step.desc}</p>
+      <div className="hiw-step-body">
+        <h3 className="hiw-step-title">{step.title}</h3>
+        <span className="hiw-step-sub">{step.subtitle}</span>
+        <p className="hiw-step-desc">{step.desc}</p>
       </div>
     </div>
   );
 };
 
+/* ─── MAIN ── */
 const HowItWorks = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState('acheteur');
-  const [heroRef, heroVisible] = useInView(0.1);
   const [featRef, featVisible] = useInView(0.1);
-  const [ctaRef, ctaVisible] = useInView(0.1);
+  const [ctaRef,  ctaVisible]  = useInView(0.1);
 
   const steps = tab === 'acheteur' ? STEPS_ACHETEUR : STEPS_VENDEUR;
 
@@ -124,113 +83,90 @@ const HowItWorks = () => {
     <div className="hiw-page">
 
       {/* ── HERO ── */}
-      <section ref={heroRef} className={`hiw-hero ${heroVisible ? 'visible' : ''}`}>
-        <div className="hiw-hero-bg">
-          <div className="hiw-orb hiw-orb-1" />
-          <div className="hiw-orb hiw-orb-2" />
-          <div className="hiw-orb hiw-orb-3" />
-          <div className="hiw-geo hiw-geo-1">◆</div>
-          <div className="hiw-geo hiw-geo-2">◈</div>
-          <div className="hiw-geo hiw-geo-3">◇</div>
-        </div>
-        <div className="hiw-hero-content">
-          <div className="hiw-badge">🇲🇦 Plateforme digitale nationale</div>
-          <h1 className="hiw-hero-title">
-            Comment ça<br />
-            <span className="hiw-gradient-text">marche ?</span>
-          </h1>
-          <p className="hiw-hero-subtitle">
-            Simple, rapide et sécurisé. Découvrez comment Qaysaria connecte<br />
-            acheteurs et vendeurs à travers tout le Royaume.
+      <section className="hiw-hero">
+        <div className="hiw-hero-inner">
+          <span className="hiw-hero-tag">🇲🇦 Guide d'utilisation QAISARYA</span>
+          <h1 className="hiw-hero-title">Comment ça marche ?</h1>
+          <p className="hiw-hero-sub">
+            Simple, rapide et sans complication. Découvrez comment QAISARYA
+            connecte acheteurs et vendeurs à travers tout le Maroc.
           </p>
           <div className="hiw-hero-stats">
-            <div className="hiw-stat">
-              <span className="hiw-stat-num">+500</span>
-              <span className="hiw-stat-label">Boutiques</span>
-            </div>
-            <div className="hiw-stat-divider" />
-            <div className="hiw-stat">
-              <span className="hiw-stat-num">+15k</span>
-              <span className="hiw-stat-label">Produits</span>
-            </div>
-            <div className="hiw-stat-divider" />
-            <div className="hiw-stat">
-              <span className="hiw-stat-num">12</span>
-              <span className="hiw-stat-label">Villes</span>
-            </div>
+            <div className="hiw-hero-stat"><strong>500+</strong> Boutiques vérifiées</div>
+            <div className="hiw-hero-stat"><strong>15k</strong> Produits disponibles</div>
+            <div className="hiw-hero-stat"><strong>12+</strong> Villes couvertes</div>
           </div>
-        </div>
-        <div className="hiw-scroll-hint">
-          <span>Défiler</span>
-          <div className="hiw-scroll-arrow" />
         </div>
       </section>
 
       {/* ── TABS ── */}
       <section className="hiw-steps-section">
-        <div className="hiw-tabs">
-          <button
-            className={`hiw-tab ${tab === 'acheteur' ? 'active' : ''}`}
-            onClick={() => setTab('acheteur')}
-          >
-            🛍️ Je suis acheteur
-          </button>
-          <button
-            className={`hiw-tab ${tab === 'vendeur' ? 'active' : ''}`}
-            onClick={() => setTab('vendeur')}
-          >
-            🏪 Je suis vendeur
-          </button>
-        </div>
+        <div className="hiw-container">
 
-        <div className="hiw-steps-label">
-          {tab === 'acheteur'
-            ? 'Achetez en 4 étapes simples'
-            : 'Vendez en 4 étapes simples'}
-        </div>
+          <div className="hiw-tabs-wrap">
+            <button
+              className={`hiw-tab ${tab === 'acheteur' ? 'active' : ''}`}
+              onClick={() => setTab('acheteur')}
+            >
+              <ShoppingBag size={15} strokeWidth={2} />
+              Je suis acheteur
+            </button>
+            <button
+              className={`hiw-tab ${tab === 'vendeur' ? 'active' : ''}`}
+              onClick={() => setTab('vendeur')}
+            >
+              <Store size={15} strokeWidth={2} />
+              Je suis vendeur
+            </button>
+          </div>
 
-        <div className="hiw-steps-grid" key={tab}>
-          {steps.map((step, i) => (
-            <StepCard key={step.number} step={step} index={i} side={i % 2 === 0 ? 'left' : 'right'} />
-          ))}
+          <p className="hiw-steps-label">
+            {tab === 'acheteur' ? 'Achetez en 4 étapes simples' : 'Vendez en 4 étapes simples'}
+          </p>
+
+          <div className="hiw-steps-grid" key={tab}>
+            {steps.map((step, i) => <StepCard key={step.number} step={step} index={i} />)}
+          </div>
+
         </div>
       </section>
 
       {/* ── FEATURES ── */}
       <section ref={featRef} className={`hiw-features-section ${featVisible ? 'visible' : ''}`}>
-        <div className="hiw-section-header">
-          <span className="hiw-section-eyebrow">Pourquoi Qaysaria ?</span>
-          <h2 className="hiw-section-title">Tout ce qui rend<br />notre plateforme unique</h2>
-        </div>
-        <div className="hiw-features-grid">
-          {FEATURES.map((f, i) => (
-            <div
-              key={f.title}
-              className="hiw-feature-card"
-              style={{ animationDelay: `${i * 0.08}s` }}
-            >
-              <div className="hiw-feature-icon">{f.icon}</div>
-              <h4 className="hiw-feature-title">{f.title}</h4>
-              <p className="hiw-feature-desc">{f.desc}</p>
-            </div>
-          ))}
+        <div className="hiw-container">
+
+          <div className="hiw-section-head">
+            <span className="hiw-section-tag">Pourquoi QAISARYA ?</span>
+            <h2 className="hiw-section-title">Tout ce qui rend notre plateforme unique</h2>
+            <p className="hiw-section-sub">Chaque fonctionnalité a été pensée pour simplifier la vente et sécuriser l'achat au Maroc.</p>
+          </div>
+
+          <div className="hiw-features-grid">
+            {FEATURES.map(({ Icon, title, desc }, i) => (
+              <div key={title} className="hiw-feature-card" style={{ animationDelay: `${i * 0.08}s` }}>
+                <div className="hiw-feature-icon">
+                  <Icon size={22} strokeWidth={1.8} color="#EF3B3C" />
+                </div>
+                <h4 className="hiw-feature-title">{title}</h4>
+                <p className="hiw-feature-desc">{desc}</p>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
       {/* ── CTA ── */}
       <section ref={ctaRef} className={`hiw-cta-section ${ctaVisible ? 'visible' : ''}`}>
         <div className="hiw-cta-inner">
-          <div className="hiw-cta-deco">🇲🇦</div>
-          <h2 className="hiw-cta-title">Prêt à rejoindre<br />Qaysaria ?</h2>
-          <p className="hiw-cta-sub">
-            Des milliers de Marocains achètent et vendent déjà sur notre plateforme.
-          </p>
-          <div className="hiw-cta-buttons">
-            <button className="hiw-btn-primary" onClick={() => navigate('/produits')}>
-              🛍️ Commencer à acheter
+          <h2 className="hiw-cta-title">Prêt à rejoindre QAISARYA ?</h2>
+          <p className="hiw-cta-sub">Des milliers de Marocains achètent et vendent déjà sur notre plateforme.</p>
+          <div className="hiw-cta-btns">
+            <button className="btn btn-primary" onClick={() => navigate('/produits')}>
+              <ShoppingBag size={15} /> Commencer à acheter
             </button>
-            <button className="hiw-btn-secondary" onClick={() => navigate('/register')}>
-              🏪 Ouvrir ma boutique
+            <button className="btn btn-secondary" onClick={() => navigate('/register')}>
+              <Store size={15} /> Ouvrir ma boutique
             </button>
           </div>
         </div>

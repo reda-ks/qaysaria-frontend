@@ -27,8 +27,8 @@
   --gray-600:   #666666;
   --gray-900:   #1A1A1A;
 
-  --font-h:  'Syne', system-ui, sans-serif;
-  --font-b:  'Nunito Sans', system-ui, sans-serif;
+  --font-h: 'Poppins', system-ui, sans-serif;
+  --font-b: 'Inter', system-ui, sans-serif;
 
   --max-w:   1320px;
   --gap:     48px;
