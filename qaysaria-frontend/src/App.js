@@ -4,10 +4,19 @@ import Header from './composants/Header';
 import Footer from './composants/Footer';
 import Sidebar from './composants/Sidebar';
 import Accueil from './pages/accueil/accueil';
-import Produits from './pages/produits/produits';
-import Contact from './pages/contact/contact';
-import QuiSommesNous from './pages/quisommesnous/QuiSommesNous';
-import Howitworks from './pages/Howitworks';
+
+import Produits from './pages/produits/produits_fr/produits';
+import ProduitsAr from './pages/produits/produits_ar/produits';
+
+import Contact from './pages/contact/contact_fr/contact';
+import Contact_ar from './pages/contact/contact_ar/contact';
+
+import QuiSommesNous from './pages/quisommesnous/QuiSommesNous_fr/QuiSommesNous';
+import QuiSommesNousAr from './pages/quisommesnous/QuiSommesNous_ar/QuiSommesNous';
+
+import Howitworks from './pages/Howitworks/Howitworks_fr/Howitworks';
+import Howitworks_ar from './pages/Howitworks/Howitworks_ar/Howitworks';
+
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import BoutiqueUtilisateur from './pages/auth/utilisateurs/boutique_utilisateur';
@@ -30,10 +39,20 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Accueil />} />
       <Route path="/accueil" element={<Accueil />} />
+      {/* produits */}
       <Route path="/produits" element={<Produits />} />
+      <Route path="/منتجات" element={<ProduitsAr />} />
+
+      {/* contact */}
       <Route path="/contact" element={<Contact />} />
+      <Route path="/اتصل-بنا" element={<Contact_ar />} />
+      {/*QuiSommesNous */}
       <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
+      <Route path="/من-نحن" element={<QuiSommesNousAr />} />
+      {/*Howitworks */}
       <Route path="/Howitworks" element={<Howitworks />} />
+      <Route path="/كيف-يعمل" element={<Howitworks_ar />} />
+
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/boutique-utilisateur" element={<BoutiqueUtilisateur />} />

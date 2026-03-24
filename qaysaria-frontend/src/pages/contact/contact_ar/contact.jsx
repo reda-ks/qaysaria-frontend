@@ -1,18 +1,24 @@
-
 import React, { useState } from 'react';
 import {
   MapPin, Phone, Mail, Clock, Send, Loader2, CheckCircle2,
-  Facebook, Instagram, Linkedin, Twitter, MessageCircle, ChevronRight
+  Facebook, Instagram, Linkedin, Twitter, MessageCircle
 } from 'lucide-react';
-import '../../styles/pages css/contact.css';
+import '../../../styles/pages css/contact.css';
 
+/* ─── Cairo Font ── */
+const cairoFontStyle = `
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+`;
+const ArFontInjector = () => <style>{cairoFontStyle}</style>;
+
+/* ─── WhatsApp Icon ── */
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
 );
 
-const Contact = () => {
+const ContactAr = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '', type: 'acheteur' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -36,46 +42,53 @@ const Contact = () => {
   };
 
   const handleWhatsApp = () => {
-    const msg = encodeURIComponent("Bonjour QAISARYA ! Je voudrais obtenir de l'aide.");
+    const msg = encodeURIComponent('مرحباً قيسارية! أريد الحصول على مساعدة.');
     window.open(`https://wa.me/212600000000?text=${msg}`, '_blank');
   };
 
   const INFO = [
-    { Icon: MapPin,  title: 'Adresse',        lines: ['QAISARYA Platform', 'Casablanca, Maroc — 20000'] },
-    { Icon: Phone,   title: 'Téléphone',       lines: ['+212 6 12 34 56 78'], sub: 'Lundi – Vendredi : 9h à 18h' },
-    { Icon: Mail,    title: 'Email',            lines: ['support@qaisarya.com', 'contact@qaisarya.com'] },
-    { Icon: Clock,   title: 'Disponibilité',   lines: ['Lun – Ven : 9h – 18h', 'Sam : 10h – 14h'], sub: 'Réponse sous 24h' },
+    { Icon: MapPin, title: 'العنوان',       lines: ['منصة قيسارية', 'الدار البيضاء، المغرب — 20000'] },
+    { Icon: Phone,  title: 'الهاتف',        lines: ['+212 6 12 34 56 78'], sub: 'الاثنين – الجمعة: 9ص إلى 6م' },
+    { Icon: Mail,   title: 'البريد الإلكتروني', lines: ['support@qaisarya.com', 'contact@qaisarya.com'] },
+    { Icon: Clock,  title: 'أوقات التوفر',  lines: ['الاثنين – الجمعة: 9ص – 6م', 'السبت: 10ص – 2م'], sub: 'الرد خلال 24 ساعة' },
   ];
 
   const SOCIALS = [
-    { Icon: Facebook,  label: 'Facebook',    href: '#' },
-    { Icon: Instagram, label: 'Instagram',   href: '#' },
-    { Icon: Linkedin,  label: 'LinkedIn',    href: '#' },
-    { Icon: Twitter,   label: 'Twitter / X', href: '#' },
+    { Icon: Facebook,  label: 'فيسبوك',    href: '#' },
+    { Icon: Instagram, label: 'إنستغرام',  href: '#' },
+    { Icon: Linkedin,  label: 'لينكدإن',   href: '#' },
+    { Icon: Twitter,   label: 'تويتر / X', href: '#' },
   ];
 
   const TYPE_OPTIONS = [
-    { value: 'acheteur', label: 'Acheteur',  Icon: () => <span>🛍️</span> },
-    { value: 'vendeur',  label: 'Vendeur',   Icon: () => <span>🏪</span> },
-    { value: 'autre',    label: 'Autre',     Icon: MessageCircle },
+    { value: 'acheteur', label: 'مشترٍ',   Icon: () => <span>🛍️</span> },
+    { value: 'vendeur',  label: 'بائع',    Icon: () => <span>🏪</span> },
+    { value: 'autre',    label: 'أخرى',    Icon: MessageCircle },
   ];
 
+  const arStyle = {
+    fontFamily: "'Cairo', sans-serif",
+    fontSize: '18px',
+    lineHeight: '1.8',
+  };
+
   return (
-    <div className="contact-page">
+    <div className="contact-page" dir="rtl" lang="ar" style={arStyle}>
+      <ArFontInjector />
 
       {/* ── HERO ── */}
       <section className="contact-hero">
         <div className="contact-hero-inner">
-          <span className="contact-hero-tag">🇲🇦 Support QAISARYA</span>
-          <h1 className="contact-hero-title">Nous sommes là pour vous</h1>
+          <span className="contact-hero-tag">🇲🇦 دعم قيسارية</span>
+          <h1 className="contact-hero-title">نحن هنا من أجلك</h1>
           <p className="contact-hero-sub">
-            Une question, un problème ou une suggestion ? Notre équipe vous
-            répond dans les 24 heures ouvrées.
+            لديك سؤال، مشكلة أو اقتراح؟ فريقنا يردّ عليك
+            خلال 24 ساعة عمل.
           </p>
           <div className="contact-hero-stats">
-            <div className="contact-hero-stat"><strong>&lt; 24h</strong> Temps de réponse</div>
-            <div className="contact-hero-stat"><strong>7j/7</strong> Support WhatsApp</div>
-            <div className="contact-hero-stat"><strong>100%</strong> Satisfaction garantie</div>
+            <div className="contact-hero-stat"><strong>أقل من 24س</strong> وقت الاستجابة</div>
+            <div className="contact-hero-stat"><strong>7 أيام</strong> دعم واتساب</div>
+            <div className="contact-hero-stat"><strong>%100</strong> رضا مضمون</div>
           </div>
         </div>
       </section>
@@ -84,12 +97,12 @@ const Contact = () => {
       <div className="contact-wa-bar">
         <div className="contact-wa-bar-inner">
           <div className="contact-wa-bar-text">
-            <strong>Besoin d'une réponse rapide ?</strong>
-            <span>Contactez-nous directement sur WhatsApp — réponse immédiate.</span>
+            <strong>تريد ردًّا سريعًا؟</strong>
+            <span>تواصل معنا مباشرةً على واتساب — رد فوري.</span>
           </div>
           <button className="btn-wa-lg" onClick={handleWhatsApp}>
             <WhatsAppIcon />
-            Écrire sur WhatsApp
+            الكتابة على واتساب
           </button>
         </div>
       </div>
@@ -101,16 +114,16 @@ const Contact = () => {
           {/* FORM */}
           <div className="contact-form-wrap">
             <div className="contact-form-head">
-              <span className="contact-form-tag">Message</span>
-              <h2 className="contact-form-title">Envoyez-nous un message</h2>
-              <p className="contact-form-sub">Remplissez le formulaire et nous vous répondrons très rapidement.</p>
+              <span className="contact-form-tag">رسالة</span>
+              <h2 className="contact-form-title">أرسل لنا رسالة</h2>
+              <p className="contact-form-sub">املأ النموذج وسنردّ عليك في أقرب وقت ممكن.</p>
             </div>
 
             {submitted ? (
               <div className="contact-success">
                 <CheckCircle2 size={52} color="#25D366" strokeWidth={1.5} />
-                <h3>Message envoyé !</h3>
-                <p>Merci pour votre message. Notre équipe vous contactera dans les 24 heures.</p>
+                <h3>تم إرسال رسالتك!</h3>
+                <p>شكراً على تواصلك. سيتصل بك فريقنا خلال 24 ساعة.</p>
               </div>
             ) : (
               <form className="contact-form" onSubmit={handleSubmit}>
@@ -127,29 +140,29 @@ const Contact = () => {
 
                 <div className="form-row-2">
                   <div className="form-group">
-                    <label className="form-label">Nom complet <span>*</span></label>
-                    <input type="text" className="form-input" name="name" value={formData.name} onChange={handleChange} required placeholder="Mohammed Alami" />
+                    <label className="form-label">الاسم الكامل <span>*</span></label>
+                    <input type="text" className="form-input" name="name" value={formData.name} onChange={handleChange} required placeholder="محمد العلمي" />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Email <span>*</span></label>
-                    <input type="email" className="form-input" name="email" value={formData.email} onChange={handleChange} required placeholder="votre@email.com" />
+                    <label className="form-label">البريد الإلكتروني <span>*</span></label>
+                    <input type="email" className="form-input" name="email" value={formData.email} onChange={handleChange} required placeholder="بريدك@example.com" />
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Sujet <span>*</span></label>
-                  <input type="text" className="form-input" name="subject" value={formData.subject} onChange={handleChange} required placeholder="Ex : Problème de commande, question sur une boutique…" />
+                  <label className="form-label">الموضوع <span>*</span></label>
+                  <input type="text" className="form-input" name="subject" value={formData.subject} onChange={handleChange} required placeholder="مثال: مشكلة في الطلب، سؤال حول متجر…" />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Message <span>*</span></label>
-                  <textarea className="form-textarea" name="message" value={formData.message} onChange={handleChange} required rows={5} placeholder="Décrivez votre demande en détail…" />
+                  <label className="form-label">الرسالة <span>*</span></label>
+                  <textarea className="form-textarea" name="message" value={formData.message} onChange={handleChange} required rows={5} placeholder="اشرح طلبك بالتفصيل…" />
                 </div>
 
                 <button type="submit" className="form-submit" disabled={loading}>
                   {loading
-                    ? <><Loader2 size={16} className="spin-icon" /> Envoi en cours…</>
-                    : <><Send size={15} /> Envoyer le message</>
+                    ? <><Loader2 size={16} className="spin-icon" /> جارٍ الإرسال…</>
+                    : <><Send size={15} /> إرسال الرسالة</>
                   }
                 </button>
 
@@ -160,8 +173,8 @@ const Contact = () => {
           {/* INFO COL */}
           <aside className="contact-info-col">
             <div className="contact-info-head">
-              <span className="contact-form-tag">Coordonnées</span>
-              <h2 className="contact-form-title">Retrouvez-nous</h2>
+              <span className="contact-form-tag">معلومات التواصل</span>
+              <h2 className="contact-form-title">تواصل معنا</h2>
             </div>
 
             <div className="contact-info-cards">
@@ -180,7 +193,7 @@ const Contact = () => {
             </div>
 
             <div className="contact-social">
-              <p className="contact-social-label">Suivez-nous</p>
+              <p className="contact-social-label">تابعنا</p>
               <div className="contact-social-row">
                 {SOCIALS.map(({ Icon, label, href }) => (
                   <a key={label} href={href} className="contact-social-btn" title={label}>
@@ -197,4 +210,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default ContactAr;

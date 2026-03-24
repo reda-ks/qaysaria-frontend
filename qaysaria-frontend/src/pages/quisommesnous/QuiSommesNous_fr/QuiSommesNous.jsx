@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, ShieldCheck, BarChart3, ArrowRight, Percent, Infinity, Lock } from 'lucide-react';
-import '../../styles/pages css/QuiSommesNous.css';
+import '../../../styles/pages css/QuiSommesNous.css';
 
 const QuiSommesNous = () => {
   const navigate = useNavigate();

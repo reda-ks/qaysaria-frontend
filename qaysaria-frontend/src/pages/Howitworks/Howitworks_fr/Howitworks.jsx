@@ -6,7 +6,7 @@ import {
   CheckCircle, Lock, Truck, RotateCcw, Hammer, Users,
   ArrowRight
 } from 'lucide-react';
-import '../styles/pages css/Howitworks.css';
+import '../../../styles/pages css/Howitworks.css';
 
 /* ─── DATA ── */
 const STEPS_ACHETEUR = [

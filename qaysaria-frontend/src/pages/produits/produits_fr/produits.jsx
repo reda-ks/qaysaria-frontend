@@ -1,15 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import '../../styles/pages css/produits.css';
-import VillesSelector from '../../composants/VillesSelector';
-import FiltersSidebar from '../../composants/FiltersSidebar';
-import Pagination from '../../composants/Pagination';
-import SearchBar from '../../composants/SearchBar';
+import '../../../styles/pages css/produits.css';
+
+import VillesSelector from '../../../composants/VillesSelector';
+import FiltersSidebar from '../../../composants/FiltersSidebar';
+import Pagination from '../../../composants/Pagination';
+import SearchBar from '../../../composants/SearchBar';
 
 const ITEMS_PER_PAGE = 6;
 
-/* ─────────────────────────────────────────────────────────
-data fake ───────────────────────────────────────────────────────── */
+/* ───────────────────────data fake ──────────────────────── */
 const allShops = [
   /* ── MODE & ACCESSOIRES ── */
   {
