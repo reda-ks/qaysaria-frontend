@@ -40,10 +40,10 @@ const CATEGORIES = [
   },
 ];
 
-const MARQUES = [
-  'Artisan Local', 'Maison Zhor', 'Atlas Craft', 'Tannerie Chouara',
-  'Souk El Khair', 'Sahara Wool', 'Zellige Fès', 'Poteries Safi',
-];
+// const MARQUES = [
+//   'Artisan Local', 'Maison Zhor', 'Atlas Craft', 'Tannerie Chouara',
+//   'Souk El Khair', 'Sahara Wool', 'Zellige Fès', 'Poteries Safi',
+// ];
 
 const TAILLES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
@@ -110,7 +110,7 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
   };
 
   const handleReset = () => {
-    onFiltersChange({ category: '', marques: [], tailles: [], couleurs: [], prix: { min: 0, max: 15000 } });
+    onFiltersChange({ category: '', /*marques: [],*/ tailles: [], couleurs: [], prix: { min: 0, max: 15000 } });
     setExpandedCat('');
   };
 

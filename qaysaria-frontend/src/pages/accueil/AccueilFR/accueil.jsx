@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import '../../styles//pages css/accueil.css';
-import logo from '../../assets/logo.png';
+import '../../../styles//pages css/accueil.css';
+import logo from '../../../assets/logo.png';
 
 const Accueil = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,11 +32,11 @@ const Accueil = () => {
   { number: '2k+',  label: 'Clients'    },
   { number: '24/7', label: 'Support'    },
   ];
-  const benefits = [
-    { icon: '🚚', title: 'Livraison Rapide',  sub: 'Partout au Maroc'       },
-    { icon: '🔄', title: 'Retours Faciles',    sub: 'Garantie 30 jours'      },
-    { icon: '🔒', title: 'Paiement Sécurisé',  sub: 'CMI & Cartes bancaires' },
-  ];
+  // const benefits = [
+  //   { icon: '🚚', title: 'Livraison Rapide',  sub: 'Partout au Maroc'       },
+  //   { icon: '🔄', title: 'Retours Faciles',    sub: 'Garantie 30 jours'      },
+  //   { icon: '🔒', title: 'Paiement Sécurisé',  sub: 'CMI & Cartes bancaires' },
+  // ];
 
   // Featured mosaic data
   const featured = [

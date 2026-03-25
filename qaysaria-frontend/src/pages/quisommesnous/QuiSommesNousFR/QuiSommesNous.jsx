@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, ShieldCheck, BarChart3, ArrowRight, Percent, Infinity, Lock } from 'lucide-react';
+import { MapPin, ShieldCheck, BarChart3, ArrowRight/*, Percent, Infinity*/ , Lock } from 'lucide-react';
 import '../../../styles/pages css/QuiSommesNous.css';
 
 const QuiSommesNous = () => {
@@ -27,11 +27,11 @@ const QuiSommesNous = () => {
     },
   ];
 
-  const HIGHLIGHTS = [
-    { Icon: Percent,  num: '100%', label: 'Marocain'    },
-    { Icon: Infinity, num: '∞',    label: 'Possibilités' },
-    { Icon: Lock,     num: '🔒',   label: 'Sécurisé'    },
-  ];
+  // const HIGHLIGHTS = [
+  //   { Icon: Percent,  num: '100%', label: 'Marocain'    },
+  //   { Icon: Infinity, num: '∞',    label: 'Possibilités' },
+  //   { Icon: Lock,     num: '🔒',   label: 'Sécurisé'    },
+  // ];
 
   return (
     <div className="qui-sommes-nous-container">
@@ -153,7 +153,7 @@ const QuiSommesNous = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>  
       </section>
 
       {/* ── CTA ── */}

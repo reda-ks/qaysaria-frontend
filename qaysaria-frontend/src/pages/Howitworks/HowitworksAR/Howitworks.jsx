@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   Search, MessageCircle, Package, Star,
   Store, Camera, ShoppingBag, Banknote,
-  CheckCircle, Lock, Truck, RotateCcw, Hammer, Users,
-  ArrowRight
+  CheckCircle, Lock, Truck/*, RotateCcw*/ , Hammer, Users
+  /*,ArrowRight*/
 } from 'lucide-react';
 import '../../../styles/pages css/Howitworks.css';
 

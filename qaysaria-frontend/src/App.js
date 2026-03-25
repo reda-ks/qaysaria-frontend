@@ -3,19 +3,21 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Header from './composants/Header';
 import Footer from './composants/Footer';
 import Sidebar from './composants/Sidebar';
-import Accueil from './pages/accueil/accueil';
 
-import Produits from './pages/produits/produits_fr/produits';
-import ProduitsAr from './pages/produits/produits_ar/produits';
+import Accueil from './pages/accueil/AccueilFR/accueil';
+import AccueilAR from './pages/accueil/AccueilAR/accueil_ar';
 
-import Contact from './pages/contact/contact_fr/contact';
-import Contact_ar from './pages/contact/contact_ar/contact';
+import Produits from './pages/produits/produitsFR/produits';
+import ProduitsAr from './pages/produits/produitsAR/produits';
 
-import QuiSommesNous from './pages/quisommesnous/QuiSommesNous_fr/QuiSommesNous';
-import QuiSommesNousAr from './pages/quisommesnous/QuiSommesNous_ar/QuiSommesNous';
+import Contact from './pages/contact/ContactFR/contact';
+import ContactAR from './pages/contact/ContactAR/contact';
 
-import Howitworks from './pages/Howitworks/Howitworks_fr/Howitworks';
-import Howitworks_ar from './pages/Howitworks/Howitworks_ar/Howitworks';
+import QuiSommesNous from './pages/quisommesnous/QuiSommesNousFR/QuiSommesNous';
+import QuiSommesNousAr from './pages/quisommesnous/QuiSommesNousAR/QuiSommesNous';
+
+import Howitworks from './pages/Howitworks/HowitworksFR/Howitworks';
+import HowItWorksAr from './pages/Howitworks/HowitworksAR/Howitworks';
 
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -37,21 +39,21 @@ const USER_ROUTES = [
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Accueil />} />
       <Route path="/accueil" element={<Accueil />} />
+      <Route path="/الرئيسية" element={<AccueilAR />} />
       {/* produits */}
       <Route path="/produits" element={<Produits />} />
       <Route path="/منتجات" element={<ProduitsAr />} />
 
       {/* contact */}
       <Route path="/contact" element={<Contact />} />
-      <Route path="/اتصل-بنا" element={<Contact_ar />} />
+      <Route path="/اتصل-بنا" element={<ContactAR />} />
       {/*QuiSommesNous */}
       <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
       <Route path="/من-نحن" element={<QuiSommesNousAr />} />
       {/*Howitworks */}
       <Route path="/Howitworks" element={<Howitworks />} />
-      <Route path="/كيف-يعمل" element={<Howitworks_ar />} />
+      <Route path="/كيف-يعمل" element={<HowItWorksAr />} />
 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
