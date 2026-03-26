@@ -1,21 +1,20 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+
 import Header from './composants/Header';
+import HeaderAR from './composantsAR/HeaderAR';
 import Footer from './composants/Footer';
+import FooterAR from './composantsAR/FooterAR';
 import Sidebar from './composants/Sidebar';
 
 import Accueil from './pages/accueil/AccueilFR/accueil';
 import AccueilAR from './pages/accueil/AccueilAR/accueil_ar';
-
 import Produits from './pages/produits/produitsFR/produits';
 import ProduitsAr from './pages/produits/produitsAR/produits';
-
 import Contact from './pages/contact/ContactFR/contact';
 import ContactAR from './pages/contact/ContactAR/contact';
-
 import QuiSommesNous from './pages/quisommesnous/QuiSommesNousFR/QuiSommesNous';
 import QuiSommesNousAr from './pages/quisommesnous/QuiSommesNousAR/QuiSommesNous';
-
 import Howitworks from './pages/Howitworks/HowitworksFR/Howitworks';
 import HowItWorksAr from './pages/Howitworks/HowitworksAR/Howitworks';
 
@@ -41,20 +40,14 @@ function AppRoutes() {
     <Routes>
       <Route path="/accueil" element={<Accueil />} />
       <Route path="/الرئيسية" element={<AccueilAR />} />
-      {/* produits */}
       <Route path="/produits" element={<Produits />} />
       <Route path="/منتجات" element={<ProduitsAr />} />
-
-      {/* contact */}
       <Route path="/contact" element={<Contact />} />
       <Route path="/اتصل-بنا" element={<ContactAR />} />
-      {/*QuiSommesNous */}
       <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
       <Route path="/من-نحن" element={<QuiSommesNousAr />} />
-      {/*Howitworks */}
       <Route path="/Howitworks" element={<Howitworks />} />
       <Route path="/كيف-يعمل" element={<HowItWorksAr />} />
-
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/boutique-utilisateur" element={<BoutiqueUtilisateur />} />
@@ -62,30 +55,48 @@ function AppRoutes() {
       <Route path="/support" element={<Support />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/tableau-de-bord" element={<TableauDeBord />} />
+      <Route path="/" element={<Accueil />} /> {/* Route par défaut */}
     </Routes>
   );
 }
 
 function AppContent() {
+  const [language, setLanguage] = useState('fr');
   const location = useLocation();
+  const navigate = useNavigate();
   const isUserRoute = USER_ROUTES.includes(location.pathname);
 
+  const toggleLanguage = (lang) => {
+    setLanguage(lang);
+    if (lang === 'ar') {
+      document.body.dir = "rtl";
+      navigate('/الرئيسية');
+    } else {
+      document.body.dir = "ltr";
+      navigate('/accueil');
+    }
+  };
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%', margin: 0, padding: 0 }}>
-      { <Header /> }
+    <div className={`app-container ${language}`} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {language === 'fr' ? (
+        <Header currentLang={language} switchLang={toggleLanguage} />
+      ) : (
+        <HeaderAR currentLang={language} switchLang={toggleLanguage} />
+      )}
+
       {isUserRoute ? (
         <div className="user-dashboard-layout">
-          { <Sidebar /> }
+          <Sidebar />
           <main className="content-area">
             <AppRoutes />
           </main>
         </div>
       ) : (
-        <>
-          <AppRoutes />
-        </>
+        <AppRoutes />
       )}
-      { <Footer /> }
+
+      {language === 'fr' ? <Footer /> : <FooterAR />}
     </div>
   );
 }

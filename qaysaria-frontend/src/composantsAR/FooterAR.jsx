@@ -6,64 +6,65 @@ const FooterAR = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="footer">
+    <footer className="footer" dir="rtl">
       <div className="footer-content">
         {/* Column 1: Brand */}
         <div className="footer-column">
-          <h3 className="footer-title">QAYSARIA</h3>
+          <h3 className="footer-title">قيسارية</h3>
           <p className="footer-description">
-            La plateforme de commerce électronique marocaine qui connecte des millions d'acheteurs avec des vendeurs vérifiés du Maroc.
+            منصة التجارة الإلكترونية المغربية التي تجمع ملايين المشترين مع بائعين موثوقين من جميع أنحاء المغرب.
           </p>
           <div className="social-links">
-            <a href="#" className="social-icon" title="Facebook">f</a>
-            <a href="#" className="social-icon" title="Twitter">𝕏</a>
-            <a href="#" className="social-icon" title="Instagram">📷</a>
-            <a href="#" className="social-icon" title="LinkedIn">in</a>
+            <a href="/" className="social-icon" title="فيسبوك">f</a>
+            <a href="/" className="social-icon" title="تويتر">𝕏</a>
+            <a href="/" className="social-icon" title="إنستغرام">📷</a>
+            <a href="/" className="social-icon" title="لينكد إن">in</a>
           </div>
         </div>
 
         {/* Column 2: Navigation */}
         <div className="footer-column">
-          <h4 className="footer-subtitle">Navigation</h4>
+          <h4 className="footer-subtitle">التنقل</h4>
           <ul className="footer-links">
-            <li><Link to="/accueil">Accueil</Link></li>
-            <li><Link to="/magasins">Magasins</Link></li>
-            <li><Link to="/contact">Nous Contacter</Link></li>
-            <li><Link to="/login">Connexion</Link></li>
-            <li><Link to="/register">S'inscrire</Link></li>
+            <li><Link to="/الرئيسية">الرئيسية</Link></li>
+            <li><Link to="/منتجات">المنتجات</Link></li>
+            <li><Link to="/من-نحن">من نحن؟</Link></li>
+            <li><Link to="/كيف-يعمل">كيفية العمل</Link></li>
+            <li><Link to="/اتصل-بنا">اتصل بنا</Link></li>
           </ul>
         </div>
 
         {/* Column 3: Categories */}
         <div className="footer-column">
-          <h4 className="footer-subtitle">Catégories</h4>
+          <h4 className="footer-subtitle">الفئات</h4>
           <ul className="footer-links">
-            <li><a href="#mode">Mode & Accessoires</a></li>
-            <li><a href="#tech">Électronique & Tech</a></li>
-            <li><a href="#maison">Maison & Décoration</a></li>
-            <li><a href="#boutiques">Toutes les Boutiques</a></li>
+            <li><a href="#mode">الموضة والإكسسوارات</a></li>
+            <li><a href="#tech">الإلكترونيات والتكنولوجيا</a></li>
+            <li><a href="#maison">المنزل والديكور</a></li>
+            <li><a href="#boutiques">جميع المحلات</a></li>
           </ul>
         </div>
 
         {/* Column 4: Legal & Support */}
         <div className="footer-column">
-          <h4 className="footer-subtitle">Assistance</h4>
+          <h4 className="footer-subtitle">المساعدة</h4>
           <ul className="footer-links">
-            <li><a href="#help">Centre d'aide</a></li>
-            <li><a href="#terms">Conditions d'utilisation</a></li>
-            <li><a href="#privacy">Politique de confidentialité</a></li>
-            <li><a href="#contact">Support Client</a></li>
+            <li><a href="#help">مركز المساعدة</a></li>
+            <li><a href="#terms">شروط الاستخدام</a></li>
+            <li><a href="#privacy">سياسة الخصوصية</a></li>
+            <li><a href="#contact">دعم العملاء</a></li>
           </ul>
         </div>
 
         {/* Column 5: Info */}
         <div className="footer-column">
-          <h4 className="footer-subtitle">À Propos</h4>
+          <h4 className="footer-subtitle">حول الشركة</h4>
           <ul className="footer-links">
-            <li><a href="#about">À Propos de nous</a></li>
-            <li><a href="#blog">Blog</a></li>
-            <li><a href="#careers">Carrières</a></li>
-            <li><a href="#partnership">Partenaires</a></li>
+            <li><Link to="/login">تسجيل الدخول</Link></li>
+            <li><Link to="/register">إنشاء حساب</Link></li>
+            <li><a href="#blog">المدونة</a></li>
+            <li><a href="#careers">الوظائف</a></li>
+            <li><a href="#partnership">الشركاء</a></li>
           </ul>
         </div>
       </div>
@@ -72,11 +73,11 @@ const FooterAR = () => {
       <div className="footer-bottom">
         <div className="footer-info">
           <p>
-            Casablanca, Maroc • Téléphone: <a href="tel:+212612345678">+212 6 12 34 56 78</a> • Email: <a href="mailto:support@qaysaria.com">support@qaysaria.com</a>
+            الدار البيضاء، المغرب • هاتف: <a href="tel:+212612345678">78 56 34 12 6 212+</a> • بريد إلكتروني: <a href="mailto:support@qaysaria.com">support@qaysaria.com</a>
           </p>
         </div>
         <div className="footer-copyright">
-          <p>&copy; {currentYear} QAYSARIA. Tous droits réservés. 🇲🇦</p>
+          <p>&copy; {currentYear} قيسارية. جميع الحقوق محفوظة. 🇲🇦</p>
         </div>
       </div>
     </footer>

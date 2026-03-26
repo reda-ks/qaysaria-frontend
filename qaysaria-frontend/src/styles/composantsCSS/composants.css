@@ -408,3 +408,47 @@
     font-size: 12px;
   }
 }
+/* ============================================
+   LANGUAGE SWITCHER (Global Style)
+   ============================================ */
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa; /* Fond très léger */
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid #e9ecef;
+  margin-right: 10px;
+}
+
+.lang-switcher span {
+  padding: 5px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  user-select: none;
+  text-transform: uppercase;
+}
+
+.lang-switcher span:hover:not(.active-lang) {
+  color: var(--dark-gray);
+  background-color: #e9ecef;
+}
+
+/* ÉTAT ACTIF : ROUGE, GRAS, ITALIQUE */
+.lang-switcher .active-lang {
+  background-color: var(--soft-red) !important;
+  color: white !important;
+  font-style: italic;
+  font-weight: 900;
+  box-shadow: 0 2px 4px rgba(230, 57, 70, 0.2);
+}
+
+.lang-switcher .separator {
+  display: none; /* On cache le trait vertical car on utilise des boutons */
+}

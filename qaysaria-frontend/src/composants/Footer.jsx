@@ -26,11 +26,11 @@ const Footer = () => {
         <div className="footer-column">
           <h4 className="footer-subtitle">Navigation</h4>
           <ul className="footer-links">
-            <li><Link to="/accueil">Accueil</Link></li>
-            <li><Link to="/magasins">Magasins</Link></li>
-            <li><Link to="/contact">Nous Contacter</Link></li>
-            <li><Link to="/login">Connexion</Link></li>
-            <li><Link to="/register">S'inscrire</Link></li>
+             <li><Link to="/accueil">Accueil</Link></li>
+             <li><Link to="/produits">Produits</Link></li>
+             <li><Link to="/qui-sommes-nous">Qui Sommes Nous?</Link></li>
+             <li><Link to="/Howitworks">Comment ça marche</Link></li>
+             <li><Link to="/contact">Contact</Link></li>
           </ul>
         </div>
 
