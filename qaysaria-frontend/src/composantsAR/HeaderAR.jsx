@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/composants css/composants.css';
+import '../styles/composantsCSS/composants.css';
 import logo from '../assets/logo.png';
 
-const Header_ar = () => {
+const HeaderAR = () => {
   return (
     <header className="header" dir="rtl"> {/* dir="rtl" flips the layout */}
       <nav className="navbar">
@@ -45,6 +45,6 @@ const Header_ar = () => {
   );
 };
 
-export default Header_ar;
+export default HeaderAR;
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/composants css/Pagination.css';
+import '../styles/composantsCSS/Pagination.css';
 // Composant de pagination pour les listes de produits
 const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPerPage }) => {
   if (totalPages <= 1) return null;

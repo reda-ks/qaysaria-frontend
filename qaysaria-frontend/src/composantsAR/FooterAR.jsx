@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/composants css/composants.css';
+import '../styles/composantsCSS/composants.css';
 
-const Footer = () => {
+const FooterAR = () => {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -83,4 +83,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default FooterAR;

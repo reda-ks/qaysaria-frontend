@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/composants css/FiltersSidebar.css';
+import '../styles/composantsCSS/FiltersSidebar.css';
 const CATEGORIES = [
   { id: '', label: 'Toutes catégories' },
   { id: 'mode-accessoires', label: 'Mode & Accessoires' },
@@ -39,7 +39,7 @@ const Section = ({ title, icon, children, defaultOpen = true }) => {
   );
 };
 // Composant principal de la sidebar de filtres
-const FiltersSidebar = ({ filters, onFiltersChange }) => {
+const FiltersSidebarAR = ({ filters, onFiltersChange }) => {
   const toggle = (key, value) => {
     const current = filters[key] || [];
     const updated = current.includes(value)
@@ -177,4 +177,4 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
   );
 };
 
-export default FiltersSidebar;
+export default FiltersSidebarAR;

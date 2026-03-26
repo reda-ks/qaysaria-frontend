@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import '../styles/composants css/SearchBar.css';
+import '../styles/composantsCSS/SearchBar.css';
 const SUGGESTIONS = [
   'Nike Rabat', 'Zara Casablanca', 'Apple Store', 'Décor Marrakech',
   'Mode Fès', 'Samsung', 'Sport Meknès', 'Beauté Agadir', 'Adidas Tanger',

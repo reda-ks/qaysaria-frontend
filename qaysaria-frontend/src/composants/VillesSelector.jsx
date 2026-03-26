@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/composants css/VillesSelector.css';
+import '../styles/composantsCSS/VillesSelector.css';
 const VILLES = [
   { id: '', label: 'Tout le Maroc', emoji: '🇲🇦' },
   { id: 'casablanca', label: 'Casablanca', emoji: '' },

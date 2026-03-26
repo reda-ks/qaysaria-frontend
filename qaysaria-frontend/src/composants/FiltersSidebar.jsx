@@ -3,7 +3,7 @@ import {
   LayoutGrid, Tag, SlidersHorizontal, Ruler, Palette,
   ChevronDown, ChevronRight, RotateCcw, Check
 } from 'lucide-react';
-import '../styles/composants css/FiltersSidebar.css';
+import '../styles/composantsCSS/FiltersSidebar.css';
 
 const CATEGORIES = [
   { id: '',           label: 'Toutes catégories', sub: [] },
