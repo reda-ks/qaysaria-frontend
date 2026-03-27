@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import Header from './composants/Header';
@@ -55,24 +55,33 @@ function AppRoutes() {
       <Route path="/support" element={<Support />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/tableau-de-bord" element={<TableauDeBord />} />
-      <Route path="/" element={<Accueil />} /> {/* Route par défaut */}
+      {/* Changement de la route par défaut vers l'Arabe */}
+      <Route path="/" element={<AccueilAR />} /> 
     </Routes>
   );
 }
 
 function AppContent() {
-  const [language, setLanguage] = useState('fr');
+  // 1. Initialisation sur 'ar'
+  const [language, setLanguage] = useState('ar');
   const location = useLocation();
   const navigate = useNavigate();
   const isUserRoute = USER_ROUTES.includes(location.pathname);
 
+  // 2. useEffect pour appliquer le RTL dès le premier chargement
+  useEffect(() => {
+    if (language === 'ar') {
+      document.body.dir = "rtl";
+    } else {
+      document.body.dir = "ltr";
+    }
+  }, [language]);
+
   const toggleLanguage = (lang) => {
     setLanguage(lang);
     if (lang === 'ar') {
-      document.body.dir = "rtl";
       navigate('/الرئيسية');
     } else {
-      document.body.dir = "ltr";
       navigate('/accueil');
     }
   };

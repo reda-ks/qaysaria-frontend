@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  LayoutGrid, Tag, SlidersHorizontal, Ruler, Palette,
+  LayoutGrid, Tag, SlidersHorizontal, Ruler, /*Palette,*/
   ChevronDown, ChevronRight, RotateCcw, Check
 } from 'lucide-react';
 import '../styles/composantsCSS/FiltersSidebar.css';
@@ -47,20 +47,20 @@ const CATEGORIES = [
 
 const TAILLES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
-const COULEURS = [
-  { id: 'noir',        label: 'Noir',        hex: '#1a1a1a' },
-  { id: 'blanc',       label: 'Blanc',       hex: '#f0f0f0' },
-  { id: 'rouge',       label: 'Rouge',       hex: '#e53935' },
-  { id: 'bleu',        label: 'Bleu',        hex: '#1e88e5' },
-  { id: 'vert',        label: 'Vert',        hex: '#43a047' },
-  { id: 'jaune',       label: 'Jaune',       hex: '#fdd835' },
-  { id: 'rose',        label: 'Rose',        hex: '#e91e8c' },
-  { id: 'gris',        label: 'Gris',        hex: '#9e9e9e' },
-  { id: 'marron',      label: 'Marron',      hex: '#795548' },
-  { id: 'beige',       label: 'Beige',       hex: '#d7c4a3' },
-  { id: 'bordeaux',    label: 'Bordeaux',    hex: '#7b1c2e' },
-  { id: 'multicolore', label: 'Multicolore', hex: 'conic-gradient(#EF3B3C,#fdd835,#43a047,#1e88e5,#EF3B3C)' },
-];
+// const COULEURS = [
+//   { id: 'noir',        label: 'Noir',        hex: '#1a1a1a' },
+//   { id: 'blanc',       label: 'Blanc',       hex: '#f0f0f0' },
+//   { id: 'rouge',       label: 'Rouge',       hex: '#e53935' },
+//   { id: 'bleu',        label: 'Bleu',        hex: '#1e88e5' },
+//   { id: 'vert',        label: 'Vert',        hex: '#43a047' },
+//   { id: 'jaune',       label: 'Jaune',       hex: '#fdd835' },
+//   { id: 'rose',        label: 'Rose',        hex: '#e91e8c' },
+//   { id: 'gris',        label: 'Gris',        hex: '#9e9e9e' },
+//   { id: 'marron',      label: 'Marron',      hex: '#795548' },
+//   { id: 'beige',       label: 'Beige',       hex: '#d7c4a3' },
+//   { id: 'bordeaux',    label: 'Bordeaux',    hex: '#7b1c2e' },
+//   { id: 'multicolore', label: 'Multicolore', hex: 'conic-gradient(#EF3B3C,#fdd835,#43a047,#1e88e5,#EF3B3C)' },
+// ];
 
 /* Collapsible section */
 const Section = ({ title, Icon, children, defaultOpen = true }) => {
@@ -110,7 +110,7 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
   };
 
   const handleReset = () => {
-    onFiltersChange({ category: '', /*marques: [],*/ tailles: [], couleurs: [], prix: { min: 0, max: 15000 } });
+    onFiltersChange({ category: '', /*marques: [],*/ tailles: []/**, couleurs: [] */, prix: { min: 0, max: 15000 } });
     setExpandedCat('');
   };
 
@@ -227,7 +227,7 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
       </Section>
 
       {/* COULEURS */}
-      <Section title="Couleurs" Icon={Palette} defaultOpen={false}>
+      {/* <Section title="Couleurs" Icon={Palette} defaultOpen={false}>
         <div className="filter-colors">
           {COULEURS.map((c) => (
             <button
@@ -262,7 +262,7 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
             ) : null;
           })}
         </div>
-      </Section>
+      </Section> */}
 
     </aside>
   );
