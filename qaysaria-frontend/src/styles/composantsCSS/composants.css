@@ -3,10 +3,16 @@
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+
+/* ============================================
+   COMPONENTS STYLING (Header & Footer)
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap');
 @import url('../theme.css');
 
 /* ============================================
-   HEADER STYLING
+   HEADER STYLING — ORIGINAL (inchangé)
    ============================================ */
 
 .header {
@@ -157,6 +163,225 @@
   background-color: var(--medium-gray);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   LANGUAGE SWITCHER — ORIGINAL (inchangé)
+   ============================================ */
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid #e9ecef;
+  margin-right: 10px;
+}
+
+.lang-switcher span {
+  padding: 5px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  user-select: none;
+  text-transform: uppercase;
+}
+
+.lang-switcher span:hover:not(.active-lang) {
+  color: var(--dark-gray);
+  background-color: #e9ecef;
+}
+
+.lang-switcher .active-lang {
+  background-color: var(--soft-red) !important;
+  color: white !important;
+  font-style: italic;
+  font-weight: 900;
+  box-shadow: 0 2px 4px rgba(230, 57, 70, 0.2);
+}
+
+.lang-switcher .separator {
+  display: none;
+}
+
+/* ============================================
+   HAMBURGER BUTTON — ajout mobile
+   ============================================ */
+
+.hamburger-btn {
+  display: none; /* caché sur desktop */
+  background: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--dark-gray);
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.hamburger-btn:hover {
+  background-color: var(--light-gray, #F4F6F8);
+  color: var(--soft-red, #E63946);
+}
+
+/* ============================================
+   MOBILE MENU DROPDOWN — ajout mobile
+   ============================================ */
+
+.mobile-menu {
+  background-color: var(--white, #fff);
+  border-top: 1px solid var(--soft-gray, #E1E3E5);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+  animation: mobileMenuIn 0.22s ease;
+}
+
+@keyframes mobileMenuIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-menu--rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.mobile-links {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+}
+
+.mobile-links li a {
+  display: block;
+  padding: 14px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--dark-gray, #212326);
+  text-decoration: none;
+  border-bottom: 1px solid #f4f4f4;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mobile-links li:last-child a {
+  border-bottom: none;
+}
+
+.mobile-links li a:hover {
+  background-color: #F4F6F8;
+  color: var(--soft-red, #E63946);
+  padding-left: 36px; /* indent on hover LTR */
+}
+
+.mobile-menu--rtl .mobile-links li a:hover {
+  padding-left: 28px;
+  padding-right: 36px; /* indent on hover RTL */
+}
+
+/* Login link in mobile menu */
+.mobile-login a {
+  margin: 10px 20px 14px !important;
+  padding: 13px 20px !important;
+  background-color: var(--dark-gray, #212326) !important;
+  color: white !important;
+  border-radius: 8px !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+  border-bottom: none !important;
+  display: block;
+  transition: background 0.2s !important;
+}
+
+.mobile-login a:hover {
+  background-color: var(--soft-red, #E63946) !important;
+  color: white !important;
+  padding-left: 20px !important;  /* override the hover indent */
+  padding-right: 20px !important;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS — ajouts seulement
+   ============================================ */
+
+/* 1100px — légère compression */
+@media (max-width: 1100px) {
+  .navbar {
+    padding: 15px 24px;
+    gap: 20px;
+  }
+  .nav-links { gap: 18px; }
+  .nav-links a { font-size: 13px; }
+}
+
+/* 900px — encore plus compact */
+@media (max-width: 900px) {
+  .navbar { padding: 12px 20px; gap: 14px; }
+  .nav-links { gap: 12px; }
+  .nav-links a { font-size: 12.5px; }
+  .btn-connexion { padding: 9px 16px; font-size: 13px; }
+}
+
+/* 768px — basculer vers hamburger */
+@media (max-width: 768px) {
+  /* Grille : logo à gauche | actions à droite */
+  .navbar {
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    padding: 12px 20px;
+  }
+
+  /* Cacher les liens desktop */
+  .navbar-center {
+    display: none;
+  }
+
+  /* Afficher le hamburger */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  /* Cacher le bouton Connexion desktop (remplacé dans le menu mobile) */
+  .btn-connexion {
+    display: none;
+  }
+
+  /* Actions alignées à droite */
+  .navbar-right {
+    gap: 8px;
+  }
+}
+
+/* 480px — logo texte caché */
+@media (max-width: 480px) {
+  .navbar { padding: 10px 14px; }
+
+  /* Garder seulement le logo image */
+  .navbar-logo span { display: none; }
+  .logo-img { height: 32px; }
+
+  /* Lang switcher plus compact */
+  .lang-switcher { margin-right: 4px; }
+  .lang-switcher span { padding: 4px 8px; font-size: 11px; }
+
+  /* Search plus petit */
+  .search-button { width: 34px; height: 34px; }
+}
+
+/* 360px — cacher la recherche */
+@media (max-width: 360px) {
+  .navbar { padding: 10px 10px; }
+  .search-button { display: none; }
 }
 
 /* ============================================
@@ -407,48 +632,4 @@
     height: 35px;
     font-size: 12px;
   }
-}
-/* ============================================
-   LANGUAGE SWITCHER (Global Style)
-   ============================================ */
-
-.lang-switcher {
-  display: flex;
-  align-items: center;
-  background-color: #f8f9fa; /* Fond très léger */
-  padding: 4px;
-  border-radius: 30px;
-  border: 1px solid #e9ecef;
-  margin-right: 10px;
-}
-
-.lang-switcher span {
-  padding: 5px 12px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: #6c757d;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 20px;
-  user-select: none;
-  text-transform: uppercase;
-}
-
-.lang-switcher span:hover:not(.active-lang) {
-  color: var(--dark-gray);
-  background-color: #e9ecef;
-}
-
-/* ÉTAT ACTIF : ROUGE, GRAS, ITALIQUE */
-.lang-switcher .active-lang {
-  background-color: var(--soft-red) !important;
-  color: white !important;
-  font-style: italic;
-  font-weight: 900;
-  box-shadow: 0 2px 4px rgba(230, 57, 70, 0.2);
-}
-
-.lang-switcher .separator {
-  display: none; /* On cache le trait vertical car on utilise des boutons */
 }

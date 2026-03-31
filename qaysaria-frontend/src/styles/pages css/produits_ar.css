@@ -27,7 +27,7 @@
   --g900:  #1A1A1A;
 
   --max-w:  1380px;
-  --gap:    40px;
+  --gap:    48px;
   --r-sm:   6px;
   --r-md:   10px;
   --r-lg:   16px;
@@ -61,7 +61,7 @@
   background: linear-gradient(120deg, var(--red) 0%, var(--red-dark) 50%, var(--red-deep) 100%);
   position:   relative;
   overflow:   hidden;
-  padding:    56px var(--gap) 60px;
+  padding:    10px var(--gap) 60px;
 }
 
 /* Dot grid overlay */
