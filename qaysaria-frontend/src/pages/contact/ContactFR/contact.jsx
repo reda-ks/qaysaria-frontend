@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import {
   MapPin, Phone, Mail, Clock, Send, Loader2, CheckCircle2,
-  Facebook, Instagram, Linkedin, Twitter, MessageCircle, ChevronRight
+  Facebook, Instagram, Linkedin, Twitter, MessageCircle/*, ChevronRight*/ 
 } from 'lucide-react';
 import '../../../styles/pages css/contact.css';
 

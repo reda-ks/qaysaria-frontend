@@ -18,7 +18,7 @@ const WhatsAppIcon = () => (
   </svg>
 );
 
-const ContactAr = () => {
+const ContactAR = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '', type: 'acheteur' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -210,4 +210,4 @@ const ContactAr = () => {
   );
 };
 
-export default ContactAr;
+export default ContactAR;

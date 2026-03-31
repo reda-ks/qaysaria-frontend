@@ -36,12 +36,12 @@ const VILLES_AR = {
   fes: 'فاس', rabat: 'الرباط', tanger: 'طنجة', agadir: 'أكادير',
   errachidia: 'الراشيدية', khenifra: 'خنيفرة', safi: 'آسفي',
 };
-const COULEUR_AR = {
-  beige: 'بيج', bordeaux: 'بوردو', marron: 'بني', rouge: 'أحمر',
-  camel: 'كمل', or: 'ذهبي', noir: 'أسود', blanc: 'أبيض',
-  gris: 'رمادي', multicolore: 'متعدد الألوان', cuivre: 'نحاسي',
-  bleu: 'أزرق', vert: 'أخضر', violet: 'بنفسجي',
-};
+// const COULEUR_AR = {
+//   beige: 'بيج', bordeaux: 'بوردو', marron: 'بني', rouge: 'أحمر',
+//   camel: 'كمل', or: 'ذهبي', noir: 'أسود', blanc: 'أبيض',
+//   gris: 'رمادي', multicolore: 'متعدد الألوان', cuivre: 'نحاسي',
+//   bleu: 'أزرق', vert: 'أخضر', violet: 'بنفسجي',
+// };
 
 /* ─── Products Data ── */
 const allShops = [
@@ -85,7 +85,7 @@ const VillesSelectorAr = ({ selectedVille, onVilleChange }) => (
 
 const FiltersSidebarAr = ({ filters, onFiltersChange, shops }) => {
   const allTailles  = [...new Set(shops.flatMap((s) => s.taille))].filter(Boolean);
-  const allCouleurs = [...new Set(shops.map((s) => s.couleur))].filter(Boolean);
+  // const allCouleurs = [...new Set(shops.map((s) => s.couleur))].filter(Boolean);
 
   const toggle = (key, value) => {
     const arr = filters[key];
@@ -146,7 +146,7 @@ const FiltersSidebarAr = ({ filters, onFiltersChange, shops }) => {
       )}
 
       {/* Couleurs */}
-      <div className="ar-filter-block">
+      {/* <div className="ar-filter-block">
         <h4 className="ar-filter-label">اللون</h4>
         <div className="ar-check-list">
           {allCouleurs.map((c) => (
@@ -156,7 +156,7 @@ const FiltersSidebarAr = ({ filters, onFiltersChange, shops }) => {
             </label>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

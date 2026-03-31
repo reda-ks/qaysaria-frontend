@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../styles/composantsCSS/Pagination.css';
 // Composant de pagination pour les listes de produits
-const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPerPage }) => {
+const PaginationAR = ({ currentPage, totalPages, onPageChange, totalItems, itemsPerPage }) => {
   if (totalPages <= 1) return null;
 // Génère la liste des pages à afficher en fonction du nombre total de pages et de la page courante
   const getPages = () => {
@@ -71,4 +71,4 @@ const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPe
   );
 };
 
-export default Pagination;
+export default PaginationAR;

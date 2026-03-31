@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/composantsCSS/sidebar.css';
 
-const Sidebar = () => {
+const SidebarAR = () => {
   const [isOpen, setIsOpen] = useState(false); // ← Changed: Default to closed on mobile
   const location = useLocation();
 
@@ -151,4 +151,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SidebarAR;

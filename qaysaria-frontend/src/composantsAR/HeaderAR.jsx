@@ -1,27 +1,26 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/composantsCSS/composants.css';
 import logo from '../assets/logo.png';
 
-const Header = ({ currentLang, switchLang }) => {
+const HeaderAR = ({ currentLang, switchLang }) => {
   return (
-    <header className="header">
+    <header className="header" dir="rtl">
       <nav className="navbar">
         <div className="navbar-brand">
-          <Link to="/accueil" className="navbar-logo">
-            <img src={logo} alt="Qaysaria Logo" className="logo-img" />
-            <span>QAYSARIA</span>
+          <Link to="/الرئيسية" className="navbar-logo">
+            <img src={logo} alt="شعار قيسارية" className="logo-img" />
+            <span>قيسارية</span>
           </Link>
         </div>
 
         <div className="navbar-center">
           <ul className="nav-links">
-            <li><Link to="/accueil">Accueil</Link></li>
-            <li><Link to="/produits">Produits</Link></li>
-            <li><Link to="/qui-sommes-nous">Qui Sommes Nous?</Link></li>
-            <li><Link to="/Howitworks">Comment ça marche</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/الرئيسية">الرئيسية</Link></li>
+            <li><Link to="/منتجات">المنتجات</Link></li>
+            <li><Link to="/من-نحن">من نحن؟</Link></li>
+            <li><Link to="/كيف-يعمل">كيفية العمل</Link></li>
+            <li><Link to="/اتصل-بنا">اتصل بنا</Link></li>
           </ul>
         </div>
 
@@ -44,7 +43,7 @@ const Header = ({ currentLang, switchLang }) => {
             </svg>
           </button>
           <Link to="/login" style={{ textDecoration: 'none' }}>
-            <button className="btn-connexion">Connexion</button>
+            <button className="btn-connexion">تسجيل الدخول</button>
           </Link>
         </div>
       </nav>
@@ -52,4 +51,4 @@ const Header = ({ currentLang, switchLang }) => {
   );
 };
 
-export default Header;
+export default HeaderAR;

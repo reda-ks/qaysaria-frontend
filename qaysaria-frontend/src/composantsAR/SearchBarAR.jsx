@@ -5,7 +5,7 @@ const SUGGESTIONS = [
   'Mode Fès', 'Samsung', 'Sport Meknès', 'Beauté Agadir', 'Adidas Tanger',
 ];
 
-const SearchBar = ({ value, onChange, onSearch }) => {
+const SearchBarAR = ({ value, onChange, onSearch }) => {
   const [focused, setFocused] = useState(false);
   const [inputVal, setInputVal] = useState(value || '');
   const inputRef = useRef(null);
@@ -97,4 +97,4 @@ const SearchBar = ({ value, onChange, onSearch }) => {
   );
 };
 
-export default SearchBar;
+export default SearchBarAR;

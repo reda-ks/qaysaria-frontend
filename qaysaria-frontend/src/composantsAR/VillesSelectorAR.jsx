@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/composantsCSS/VillesSelector.css';
 const VILLES = [
   { id: '', label: 'Tout le Maroc', emoji: '🇲🇦' },
@@ -12,7 +12,7 @@ const VILLES = [
   { id: 'oujda', label: 'Oujda', emoji: '' },
 ];
 
-const VillesSelector = ({ selectedVille, onVilleChange }) => {
+const VillesSelectorAR = ({ selectedVille, onVilleChange }) => {
   return (
     <div className="villes-selector">
       <div className="villes-label">Ville</div>
@@ -32,4 +32,4 @@ const VillesSelector = ({ selectedVille, onVilleChange }) => {
   );
 };
 
-export default VillesSelector;
+export default VillesSelectorAR;

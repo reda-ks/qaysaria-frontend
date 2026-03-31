@@ -276,7 +276,7 @@ const Produits = () => {
     category: categorieFromUrl,
     marques: [],
     tailles: [],
-    couleurs: [],
+    // couleurs: [],
     prix: { min: 0, max: 15000 },
   });
 
@@ -313,7 +313,7 @@ const Produits = () => {
       if (filters.category && shop.category !== filters.category) return false;
       if (filters.marques.length > 0 && !filters.marques.includes(shop.marque)) return false;
       if (filters.tailles.length > 0 && !filters.tailles.some((t) => shop.taille.includes(t))) return false;
-      if (filters.couleurs.length > 0 && !filters.couleurs.includes(shop.couleur)) return false;
+      // if (filters.couleurs.length > 0 && !filters.couleurs.includes(shop.couleur)) return false;
       if (shop.prix < filters.prix.min || shop.prix > filters.prix.max) return false;
       return true;
     });
@@ -434,7 +434,7 @@ const Produits = () => {
               <div className="empty-icon">🔍</div>
               <h3>Aucun produit trouvé</h3>
               <p>Essayez d'ajuster vos filtres ou votre recherche</p>
-              <button className="btn-reset" onClick={() => { handleSearch(''); handleVilleChange(''); handleFiltersChange({ category: '', marques: [], tailles: [], couleurs: [], prix: { min: 0, max: 15000 } }); }}>
+              <button className="btn-reset" onClick={() => { handleSearch(''); handleVilleChange(''); handleFiltersChange({ category: '', marques: [], tailles: []/*, couleurs: [] */, prix: { min: 0, max: 15000 } }); }}>
                 Réinitialiser les filtres
               </button>
             </div>
