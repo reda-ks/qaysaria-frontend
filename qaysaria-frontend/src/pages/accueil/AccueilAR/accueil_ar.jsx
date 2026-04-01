@@ -133,7 +133,7 @@ const AccueilAR = () => {
   );
 
   return (
-    <div dir="rtl" lang="ar">
+    <div dir="rtl" class="ar-home" lang="ar">
 
       {/* ════ HERO ════ */}
       <section className="ar-hero-section">

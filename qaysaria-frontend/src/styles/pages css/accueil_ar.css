@@ -43,10 +43,13 @@
 }
 
 /* ── إعادة الضبط ── */
-[dir="rtl"] *, [dir="rtl"] *::before, [dir="rtl"] *::after {
-  box-sizing: border-box; margin: 0; padding: 0;
+.ar-home * ,
+.ar-home *::before,
+.ar-home *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
 [dir="rtl"] {
   font-family: var(--ar-font);
   background: var(--ar-cream);
