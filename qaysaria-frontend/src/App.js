@@ -35,6 +35,21 @@ const USER_ROUTES = [
   '/profile',
 ];
 
+const ROUTE_MAP = {
+  // Français vers Arabe
+  '/accueil': '/الرئيسية',
+  '/produits': '/منتجات',
+  '/contact': '/اتصل-بنا',
+  '/qui-sommes-nous': '/من-نحن',
+  '/Howitworks': '/كيف-يعمل',
+  // Arabe vers Français
+  '/الرئيسية': '/accueil',
+  '/منتجات': '/produits',
+  '/اتصل-بنا': '/contact',
+  '/من-نحن': '/qui-sommes-nous',
+  '/كيف-يعمل': '/Howitworks',
+};
+
 function AppRoutes() {
   return (
     <Routes>
@@ -55,34 +70,33 @@ function AppRoutes() {
       <Route path="/support" element={<Support />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/tableau-de-bord" element={<TableauDeBord />} />
-      {/* Changement de la route par défaut vers l'Arabe */}
       <Route path="/" element={<AccueilAR />} /> 
     </Routes>
   );
 }
 
 function AppContent() {
-  // 1. Initialisation sur 'ar'
   const [language, setLanguage] = useState('ar');
   const location = useLocation();
   const navigate = useNavigate();
   const isUserRoute = USER_ROUTES.includes(location.pathname);
 
-  // 2. useEffect pour appliquer le RTL dès le premier chargement
   useEffect(() => {
-    if (language === 'ar') {
-      document.body.dir = "rtl";
-    } else {
-      document.body.dir = "ltr";
-    }
+    document.body.dir = language === 'ar' ? "rtl" : "ltr";
   }, [language]);
 
   const toggleLanguage = (lang) => {
+    // decodeURIComponent transforme "%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA" en "منتجات"
+    const currentPath = decodeURIComponent(location.pathname);
+    const nextPath = ROUTE_MAP[currentPath];
+
     setLanguage(lang);
-    if (lang === 'ar') {
-      navigate('/الرئيسية');
+
+    if (nextPath) {
+      navigate(nextPath);
     } else {
-      navigate('/accueil');
+      // Si on ne trouve pas (ou si on est sur la racine /), on va à l'accueil
+      navigate(lang === 'ar' ? '/الرئيسية' : '/accueil');
     }
   };
 
