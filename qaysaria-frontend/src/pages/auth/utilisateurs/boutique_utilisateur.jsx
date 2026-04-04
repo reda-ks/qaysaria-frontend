@@ -1,188 +1,252 @@
 import React, { useState } from 'react';
+import {
+  MapPin, Phone, Star, Instagram, Facebook,
+  Twitter, MessageCircle, SlidersHorizontal,
+  RotateCcw, Package, ShoppingBag, Tag, Ruler,PlusCircle
+} from 'lucide-react';
 import '../../../styles/pages css/boutique_utilisateur.css';
 
 const BoutiqueUtilisateur = () => {
   const [filters, setFilters] = useState({
     category: '',
-    priceRange: [0, 500],
+    maxPrice: 5000,
     size: '',
   });
 
-  // Données fictives de la boutique
+  /* ─── بيانات البوتيك ─── */
   const boutique = {
-    nom: 'Qaysaria Luxury',
-    photo: 'https://via.placeholder.com/120',
-    localisation: 'Casablanca',
+    nom: 'قيصرية لوكس',
+    localisation: 'الدار البيضاء',
     telephone: '+212 6 12 34 56 78',
     note: 4,
     reseaux: {
       instagram: 'https://instagram.com',
-      facebook: 'https://facebook.com',
-      twitter: 'https://twitter.com',
-      whatsapp: 'https://whatsapp.com',
+      facebook:  'https://facebook.com',
+      twitter:   'https://twitter.com',
+      whatsapp:  'https://wa.me/212612345678',
     },
   };
 
-  // Produits fictifs
+  /* ─── المنتجات ─── */
   const produits = [
-    { id: 1, nom: 'Robe Élégante', categorie: 'Vêtements', prix: 299, taille: 'M', image: 'https://via.placeholder.com/200' },
-    { id: 2, nom: 'Sac Luxe', categorie: 'Accessoires', prix: 450, taille: '', image: 'https://via.placeholder.com/200' },
-    { id: 3, nom: 'Chemise Premium', categorie: 'Vêtements', prix: 189, taille: 'L', image: 'https://via.placeholder.com/200' },
-    { id: 4, nom: 'Bijoux Dorés', categorie: 'Accessoires', prix: 120, taille: '', image: 'https://via.placeholder.com/200' },
-    { id: 5, nom: 'Pantalon Classique', categorie: 'Vêtements', prix: 199, taille: 'M', image: 'https://via.placeholder.com/200' },
-    { id: 6, nom: 'Ceinture en Cuir', categorie: 'Accessoires', prix: 99, taille: '', image: 'https://via.placeholder.com/200' },
-    { id: 7, nom: 'Veste Chic', categorie: 'Vêtements', prix: 399, taille: 'S', image: 'https://via.placeholder.com/200' },
-    { id: 8, nom: 'Montre Élégante', categorie: 'Accessoires', prix: 350, taille: '', image: 'https://via.placeholder.com/200' },
+    { id:1, nom:'جلابة رجالية فاخرة',     categorie:'ملابس',      prix:850,  taille:'M',  image:'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=320&fit=crop' },
+    { id:2, nom:'حقيبة جلد تقليدية',        categorie:'إكسسوارات', prix:580,  taille:'',   image:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=320&fit=crop' },
+    { id:3, nom:'قفطان سهرة مطرز',          categorie:'ملابس',      prix:1400, taille:'L',  image:'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=400&h=320&fit=crop' },
+    { id:4, nom:'مجوهرات ذهبية',             categorie:'إكسسوارات', prix:320,  taille:'',   image:'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&h=320&fit=crop' },
+    { id:5, nom:'بنطلون كلاسيكي',            categorie:'ملابس',      prix:420,  taille:'M',  image:'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=320&fit=crop' },
+    { id:6, nom:'حزام جلد مصنوع يدوياً',    categorie:'إكسسوارات', prix:210,  taille:'',   image:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=320&fit=crop' },
+    { id:7, nom:'جاكيت عصري أنيق',           categorie:'ملابس',      prix:760,  taille:'S',  image:'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&h=320&fit=crop' },
+    { id:8, nom:'ساعة أنيقة',                categorie:'إكسسوارات', prix:1290, taille:'',   image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=320&fit=crop' },
   ];
 
-  // Filtrer les produits
-  const produitsFiltres = produits.filter((produit) => {
-    if (filters.category && produit.categorie !== filters.category) return false;
-    if (produit.prix < filters.priceRange[0] || produit.prix > filters.priceRange[1]) return false;
-    if (filters.size && produit.taille && produit.taille !== filters.size) return false;
+  /* ─── فلترة ─── */
+  const filtered = produits.filter(p => {
+    if (filters.category && p.categorie !== filters.category) return false;
+    if (p.prix > filters.maxPrice) return false;
+    if (filters.size && p.taille && p.taille !== filters.size) return false;
     return true;
   });
 
-  const renderStars = (note) => {
-    return (
-      <div className="stars-container">
-        {[...Array(5)].map((_, i) => (
-          <span key={i} className={`star ${i < note ? 'filled' : 'empty'}`}>
-            ★
-          </span>
-        ))}
-      </div>
-    );
-  };
+  const handleReset = () =>
+    setFilters({ category: '', maxPrice: 5000, size: '' });
 
-  const handleFilterChange = (type, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [type]: value,
-    }));
+  /* ─── نجوم التقييم ─── */
+  const Stars = ({ note }) => (
+    <div className="bu-stars">
+      {[1,2,3,4,5].map(i => (
+        <Star
+          key={i}
+          size={15}
+          strokeWidth={1.5}
+          fill={i <= note ? '#EF3B3C' : 'none'}
+          color={i <= note ? '#EF3B3C' : '#D1D1D1'}
+        />
+      ))}
+      <span className="bu-stars-text">{note}.0 / 5</span>
+    </div>
+  );
+
+  /* ─── واتساب ─── */
+  const handleWhatsApp = (product) => {
+    const msg = encodeURIComponent(
+      `مرحباً ! أنا مهتم بـ :\n🛍️ *${product.nom}*\n💰 ${product.prix} درهم\nهل يمكنك مساعدتي ؟`
+    );
+    window.open(`https://wa.me/212612345678?text=${msg}`, '_blank');
   };
 
   return (
-    <div className="boutique-container">
-      {/* Header Boutique */}
-      <div className="boutique-header">
-        <div className="boutique-header-content">
-          <img src={boutique.photo} alt={boutique.nom} className="profile-photo" />
-          <div className="boutique-info">
-            <h1 className="boutique-nom">{boutique.nom}</h1>
-            <div className="boutique-meta">
-              <div className="location">
-                <span className="icon">📍</span>
-                <span>{boutique.localisation}</span>
-              </div>
-              <div className="phone">
-                <span className="icon">📞</span>
-                <span>{boutique.telephone}</span>
-              </div>
+    <div className="bu-page" dir="rtl" lang="ar">
+
+      {/* ══ رأس البوتيك ══ */}
+      <div className="bu-header">
+        <div className="bu-header-inner">
+
+          {/* الشعار + المعلومات */}
+          <div className="bu-profile">
+            <div className="bu-avatar-wrap">
+              <div className="bu-avatar">ق</div>
+              <span className="bu-avatar-badge">✓</span>
             </div>
-            <div className="boutique-rating">
-              {renderStars(boutique.note)}
-              <span className="note-text">{boutique.note}.0/5</span>
+            <div className="bu-info">
+              <h1 className="bu-name">{boutique.nom}</h1>
+              <div className="bu-meta">
+                <span className="bu-meta-item">
+                  <MapPin size={13} strokeWidth={2} /> {boutique.localisation}
+                </span>
+                <span className="bu-meta-item">
+                  <Phone size={13} strokeWidth={2} /> {boutique.telephone}
+                </span>
+              </div>
+              <Stars note={boutique.note} />
             </div>
           </div>
-        </div>
 
-        {/* Réseaux Sociaux */}
-        <div className="social-networks">
-          <a href={boutique.reseaux.instagram} target="_blank" rel="noopener noreferrer" className="social-btn instagram">
-            📷
-          </a>
-          <a href={boutique.reseaux.facebook} target="_blank" rel="noopener noreferrer" className="social-btn facebook">
-            f
-          </a>
-          <a href={boutique.reseaux.twitter} target="_blank" rel="noopener noreferrer" className="social-btn twitter">
-            𝕏
-          </a>
-          <a href={boutique.reseaux.whatsapp} target="_blank" rel="noopener noreferrer" className="social-btn whatsapp">
-            💬
-          </a>
+          {/* الشبكات الاجتماعية */}
+          
+
+          <div className="bu-socials">
+            
+            <a href={boutique.reseaux.whatsapp} className="bu-social bu-social--wa" target="_blank" rel="noopener noreferrer" title="واتساب">
+              <MessageCircle size={17} strokeWidth={2} />
+            </a>
+            <a href={boutique.reseaux.instagram} className="bu-social" target="_blank" rel="noopener noreferrer" title="إنستغرام">
+              <Instagram size={17} strokeWidth={1.8} />
+            </a>
+            <a href={boutique.reseaux.facebook} className="bu-social" target="_blank" rel="noopener noreferrer" title="فيسبوك">
+              <Facebook size={17} strokeWidth={1.8} />
+            </a>
+            <a href={boutique.reseaux.twitter} className="bu-social" target="_blank" rel="noopener noreferrer" title="تويتر">
+              <Twitter size={17} strokeWidth={1.8} />
+            </a>
+          </div>
+
         </div>
       </div>
 
-      {/* Contenu Principal */}
-      <div className="boutique-body">
-        {/* Barre de Filtres */}
-        <aside className="filters-sidebar">
-          <div className="filter-group">
-            <h3 className="filter-title">Trier par</h3>
-            
-            <div className="filter-item">
-              <label>Catégorie</label>
-              <select
-                value={filters.category}
-                onChange={(e) => handleFilterChange('category', e.target.value)}
-              >
-                <option value="">Toutes</option>
-                <option value="Vêtements">Vêtements</option>
-                <option value="Accessoires">Accessoires</option>
-              </select>
-            </div>
+      {/* ══ المحتوى الرئيسي ══ */}
+      <div className="bu-body">
 
-            <div className="filter-item">
-              <label>Plage de Prix</label>
-              <input
-                type="range"
-                min="0"
-                max="500"
-                value={filters.priceRange[1]}
-                onChange={(e) =>
-                  handleFilterChange('priceRange', [filters.priceRange[0], parseInt(e.target.value)])
-                }
-              />
-              <div className="price-display">0 DH - {filters.priceRange[1]} DH</div>
-            </div>
+        {/* ── الفلاتر — يمين ── */}
+        <aside className="bu-filters">
 
-            <div className="filter-item">
-              <label>Taille</label>
-              <select
-                value={filters.size}
-                onChange={(e) => handleFilterChange('size', e.target.value)}
-              >
-                <option value="">Toutes</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-              </select>
+          <div className="bu-filters-top">
+            <h3 className="bu-filters-title">
+              <SlidersHorizontal size={15} strokeWidth={2} color="#EF3B3C" />
+              الفلاتر
+            </h3>
+            <button className="bu-filters-reset" onClick={handleReset}>
+              <RotateCcw size={11} strokeWidth={2.5} />
+              إعادة ضبط
+            </button>
+          </div>
+
+          {/* الفئة */}
+          <div className="bu-filter-group">
+            <label className="bu-filter-label">
+              <Tag size={13} strokeWidth={2} /> الفئة
+            </label>
+            <div className="bu-filter-options">
+              {['', 'ملابس', 'إكسسوارات'].map(cat => (
+                <button
+                  key={cat}
+                  className={`bu-filter-chip ${filters.category === cat ? 'active' : ''}`}
+                  onClick={() => setFilters(f => ({ ...f, category: cat }))}
+                >
+                  {cat || 'الكل'}
+                </button>
+              ))}
             </div>
           </div>
+
+          {/* السعر */}
+          <div className="bu-filter-group">
+            <label className="bu-filter-label">
+              <Tag size={13} strokeWidth={2} /> السعر الأقصى
+            </label>
+            <div className="bu-price-display">
+              <span>0 درهم</span>
+              <span className="bu-price-max">{filters.maxPrice.toLocaleString()} درهم</span>
+            </div>
+            <input
+              type="range"
+              className="bu-range"
+              min="0" max="5000" step="50"
+              value={filters.maxPrice}
+              onChange={e => setFilters(f => ({ ...f, maxPrice: +e.target.value }))}
+              dir="ltr"
+            />
+          </div>
+
+          {/* المقاس */}
+          <div className="bu-filter-group">
+            <label className="bu-filter-label">
+              <Ruler size={13} strokeWidth={2} /> المقاس
+            </label>
+            <div className="bu-filter-options bu-filter-options--sizes">
+              {['', 'S', 'M', 'L', 'XL'].map(s => (
+                <button
+                  key={s}
+                  className={`bu-size-btn ${filters.size === s ? 'active' : ''}`}
+                  onClick={() => setFilters(f => ({ ...f, size: s }))}
+                >
+                  {s || 'الكل'}
+                </button>
+              ))}
+            </div>
+          </div>
+
         </aside>
 
-        {/* Grille de Produits */}
-        <main className="products-section">
-          <div className="products-header">
-            <h2>Nos Produits</h2>
-            <span className="product-count">{produitsFiltres.length} produits</span>
+        {/* ── المنتجات — يسار ── */}
+        <main className="bu-products">
+         
+          <div className="bu-products-bar">
+            <h2 className="bu-products-title">
+              <ShoppingBag size={18} strokeWidth={1.8} />
+              منتجاتنا
+            </h2>
+            <span className="bu-products-count">
+              <strong>{filtered.length}</strong> منتج
+            </span>
+            {/* button ajouter produit */}
+            <div className="bu-actions">
+          <button className="tdb-quick-btn">
+                            <PlusCircle size={17} strokeWidth={2} />
+                            Ajouter un Produit
+                          </button>
+          </div>
           </div>
 
-          {produitsFiltres.length > 0 ? (
-            <div className="products-grid">
-              {produitsFiltres.map((produit) => (
-                <div key={produit.id} className="product-card">
-                  <div className="product-image">
-                    <img src={produit.image} alt={produit.nom} />
-                    <div className="product-overlay">
-                      <button className="btn-add-cart">Ajouter au panier</button>
-                    </div>
+          {filtered.length > 0 ? (
+            <div className="bu-grid">
+              {filtered.map(p => (
+                <div key={p.id} className="bu-card">
+                  <div className="bu-card-img-wrap">
+                    <img src={p.image} alt={p.nom} className="bu-card-img" />
+                    
                   </div>
-                  <div className="product-info">
-                    <h3>{produit.nom}</h3>
-                    <p className="product-category">{produit.categorie}</p>
-                    {produit.taille && <p className="product-size">Taille: {produit.taille}</p>}
-                    <p className="product-price">{produit.prix} DH</p>
+                  <div className="bu-card-body">
+                    <span className="bu-card-cat">{p.categorie}</span>
+                    <h3 className="bu-card-name">{p.nom}</h3>
+                    {p.taille && (
+                      <span className="bu-card-size">المقاس: {p.taille}</span>
+                    )}
+                   
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="no-products">
-              <p>Aucun produit ne correspond à vos critères.</p>
+            <div className="bu-empty">
+              <Package size={48} strokeWidth={1.2} color="#D1D1D1" />
+              <h3>لا توجد منتجات مطابقة</h3>
+              <p>جرّب تعديل الفلاتر للحصول على نتائج أخرى</p>
+              <button className="bu-empty-btn" onClick={handleReset}>
+                إعادة تعيين الفلاتر
+              </button>
             </div>
           )}
+
         </main>
       </div>
     </div>

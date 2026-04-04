@@ -5,7 +5,7 @@ import Header from './composants/Header';
 import HeaderAR from './composantsAR/HeaderAR';
 import Footer from './composants/Footer';
 import FooterAR from './composantsAR/FooterAR';
-import Sidebar from './composants/Sidebar';
+import SidebarAR from './composantsAR/SidebarAR';
 
 import Accueil from './pages/accueil/AccueilFR/accueil';
 import AccueilAR from './pages/accueil/AccueilAR/accueil_ar';
@@ -107,10 +107,11 @@ function AppContent() {
       ) : (
         <HeaderAR currentLang={language} switchLang={toggleLanguage} />
       )}
+      
 
       {isUserRoute ? (
         <div className="user-dashboard-layout">
-          <Sidebar />
+          <SidebarAR />
           <main className="content-area">
             <AppRoutes />
           </main>

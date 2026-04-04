@@ -43,7 +43,19 @@
 }
 
 /* ── إعادة الضبط ── */
-.ar-home * ,
+.ar-home *, .ar-home *::before, .ar-home *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.ar-home {
+  font-family: var(--ar-font);
+  background: var(--ar-cream);
+  color: var(--ar-g900);
+  overflow-x: hidden;
+}
+/* .ar-home * ,
 .ar-home *::before,
 .ar-home *::after {
   box-sizing: border-box;
@@ -58,7 +70,12 @@
   overflow-x: hidden;
   direction: rtl;
 }
-
+.ar-home {
+  font-family: var(--ar-font);
+  background: var(--ar-cream);
+  color: var(--ar-g900);
+  overflow-x: hidden;
+} */
 /* ════════════════════════════════════════════════════════
    الأزرار — نفس الفرنسية
 ═══════════════════════════════════════════════════════════ */

@@ -1,587 +1,630 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@400;500;700&display=swap');
-@import url('../theme.css');
+/* ============================================================
+   قيصرية — boutique_utilisateur.css
+   صفحة بوتيك المستخدم — عربي RTL
+   ============================================================ */
 
-/* ================================================
-   BOUTIQUE UTILISATEUR - STYLING
-   ================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&display=swap');
 
-/* Color system moved to global theme.css */
 :root {
-  --accent-gold: #D4AF37;
+  --red:        #EF3B3C;
+  --red-dark:   #B32125;
+  --red-deep:   #931B1D;
+  --red-muted:  #7F4D4D;
+  --pink:       #F0CFD5;
+  --cream:      #FEFCFC;
+  --wa:         #25D366;
+  --wa-dark:    #128C7E;
+
+  --g50:        #F8F8F8;
+  --g100:       #F1F1F1;
+  --g200:       #E4E4E4;
+  --g300:       #CCCCCC;
+  --g500:       #888888;
+  --g700:       #444444;
+  --g900:       #1A1A1A;
+
+  --font-ar:    'Noto Kufi Arabic', 'Amiri', system-ui, sans-serif;
+
+  --r-sm:       6px;
+  --r-md:       10px;
+  --r-lg:       16px;
+
+  --sh-sm:      0 2px 10px rgba(0,0,0,.06);
+  --sh-md:      0 6px 28px rgba(0,0,0,.09);
+  --sh-red:     0 4px 16px rgba(239,59,60,.28);
+  --sh-wa:      0 4px 14px rgba(37,211,102,.32);
+
+  --ease:       cubic-bezier(.4,0,.2,1);
+  --tf:         .18s var(--ease);
+  --tb:         .28s var(--ease);
 }
 
-.boutique-container {
-  background-color: #f9f7f3;
+/* ── إعادة الضبط ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+img    { display: block; max-width: 100%; }
+a      { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; font-family: var(--font-ar); }
+
+/* ════════════════════════════════════════════════════════
+   الصفحة الرئيسية
+═══════════════════════════════════════════════════════════ */
+.bu-page {
   min-height: 100vh;
-  font-family: 'DM Sans', sans-serif;
+  background: var(--g50);
+  font-family: var(--font-ar);
+  direction: rtl;
+  color: var(--g900);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ================================================
-   BOUTIQUE HEADER
-   ================================================ */
+/* ════════════════════════════════════════════════════════
+   رأس البوتيك
+═══════════════════════════════════════════════════════════ */
+.bu-header {
+  background: #fff;
+  border-bottom: 1px solid var(--g200);
+  box-shadow: var(--sh-sm);
+  position: relative;
+}
 
-.boutique-header {
-  background: linear-gradient(135deg, #FAF7F2 0%, #f0eae2 100%);
-  padding: 40px;
-  border-bottom: 2px solid var(--secondary);
-  margin-bottom: 40px;
+/* خط أحمر أعلى الرأس */
+.bu-header::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(to left, var(--red), var(--red-dark));
+}
+
+.bu-header-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 24px 32px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
+  gap: 20px;
   flex-wrap: wrap;
-  gap: 30px;
 }
 
-.boutique-header-content {
+/* الشعار + المعلومات */
+.bu-profile {
   display: flex;
-  align-items: flex-start;
-  gap: 30px;
-  flex: 1;
-  min-width: 300px;
+  align-items: center;
+  gap: 18px;
 }
 
-.profile-photo {
-  width: 120px;
-  height: 120px;
+.bu-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bu-avatar {
+  width: 72px; height: 72px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--secondary);
-  box-shadow: 0 4px 15px rgba(44, 31, 20, 0.15);
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-deep) 100%);
+  color: #fff;
+  font-family: var(--font-ar);
+  font-size: 1.8rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(239,59,60,.3);
+  border: 3px solid #fff;
 }
 
-.boutique-info {
+.bu-avatar-badge {
+  position: absolute;
+  bottom: 2px; left: 2px;
+  width: 20px; height: 20px;
+  background: var(--wa);
+  border-radius: 50%;
+  font-size: .65rem;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.bu-info {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 6px;
 }
 
-.boutique-nom {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
+.bu-name {
+  font-family: var(--font-ar);
+  font-size: 1.45rem;
   font-weight: 800;
-  color: var(--primary);
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  color: var(--g900);
+  line-height: 1.1;
 }
 
-.boutique-meta {
+.bu-meta {
   display: flex;
-  gap: 30px;
+  align-items: center;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
-.location,
-.phone {
+.bu-meta-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 1rem;
-  color: var(--primary);
+  gap: 5px;
+  font-size: .8rem;
+  color: var(--g500);
   font-weight: 500;
 }
+.bu-meta-item svg { color: var(--red); flex-shrink: 0; }
 
-.location .icon,
-.phone .icon {
-  font-size: 1.3rem;
-}
-
-/* Étoiles */
-.boutique-rating {
+/* النجوم */
+.bu-stars {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 10px;
+  gap: 3px;
 }
 
-.stars-container {
+.bu-stars-text {
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--g500);
+  margin-right: 6px;
+}
+
+/* الشبكات */
+.bu-socials {
   display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bu-social {
+  width: 38px; height: 38px;
+  border-radius: var(--r-md);
+  background: var(--g100);
+  border: 1px solid var(--g200);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--g700);
+  transition: all var(--tf);
+}
+.bu-social:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: var(--sh-red);
+}
+
+.bu-social--wa:hover {
+  background: var(--wa) !important;
+  border-color: var(--wa) !important;
+  box-shadow: var(--sh-wa) !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   الجسم الرئيسي — فلاتر يمين · منتجات يسار
+═══════════════════════════════════════════════════════════ */
+.bu-body {
+  max-width: 1380px;
+  margin: 24px auto 60px;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  align-items: start;
+  direction: rtl;
+}
+
+/* ── الفلاتر — يمين ── */
+.bu-filters {
+  background: #fff;
+  border: 1px solid var(--g200);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--sh-sm);
+  position: sticky;
+  top: 90px;
+}
+
+.bu-filters-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 14px;
+  border-bottom: 2px solid var(--g100);
+  position: relative;
+}
+
+.bu-filters-top::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; right: 18px;
+  width: 40px; height: 2px;
+  background: var(--red);
+}
+
+.bu-filters-title {
+  font-family: var(--font-ar);
+  font-size: .92rem;
+  font-weight: 800;
+  color: var(--g900);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.bu-filters-reset {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-ar);
+  font-size: .7rem;
+  font-weight: 600;
+  color: var(--red-muted);
+  background: none;
+  border: 1px solid var(--pink);
+  padding: 4px 10px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all var(--tf);
+}
+.bu-filters-reset:hover { background: var(--pink); color: var(--red-deep); }
+
+/* مجموعة فلتر */
+.bu-filter-group {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--g100);
+}
+.bu-filter-group:last-child { border-bottom: none; }
+
+.bu-filter-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ar);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--g500);
+  margin-bottom: 10px;
+}
+.bu-filter-label svg { color: var(--red); }
+
+/* خيارات الفئة */
+.bu-filter-options {
+  display: flex;
+  flex-direction: column;
   gap: 4px;
 }
 
-.star {
-  font-size: 1.3rem;
-  transition: all 0.3s ease;
-}
-
-.star.filled {
-  color: var(--accent-gold);
-  text-shadow: 0 0 3px rgba(212, 175, 55, 0.3);
-}
-
-.star.empty {
-  color: #ddd;
-}
-
-.note-text {
-  font-weight: 600;
-  color: var(--primary);
-  font-size: 0.95rem;
-}
-
-/* Réseaux Sociaux */
-.social-networks {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-
-.social-btn {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: var(--secondary);
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-size: 1.3rem;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-  cursor: pointer;
-}
-
-.social-btn:hover {
-  background-color: var(--primary);
-  color: var(--secondary);
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(44, 31, 20, 0.2);
-}
-
-.social-btn.instagram:hover {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.social-btn.facebook:hover {
-  background: #1877f2;
-  color: white;
-}
-
-.social-btn.twitter:hover {
-  background: #000;
-  color: white;
-}
-
-.social-btn.whatsapp:hover {
-  background: #25d366;
-  color: white;
-}
-
-/* ================================================
-   BOUTIQUE BODY (Layout Principal)
-   ================================================ */
-
-.boutique-body {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 40px;
-  padding: 0 40px 60px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-/* ================================================
-   SIDEBAR FILTRES
-   ================================================ */
-
-.filters-sidebar {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  border: 1px solid #e8e0d5;
-  box-shadow: 0 2px 8px rgba(44, 31, 20, 0.08);
-  height: fit-content;
-  position: sticky;
-  top: 100px;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.filter-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin: 0 0 10px 0;
-  text-transform: uppercase;
-}
-
-.filter-item {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.filter-item label {
-  font-weight: 600;
-  color: var(--primary);
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.filter-item select,
-.filter-item input[type="range"] {
-  padding: 10px 12px;
-  border: 1px solid #e0d5c7;
-  border-radius: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.9rem;
-  color: var(--primary);
-  transition: all 0.3s ease;
-}
-
-.filter-item select:hover,
-.filter-item input[type="range"]:hover {
-  border-color: var(--secondary);
-}
-
-.filter-item select:focus,
-.filter-item input[type="range"]:focus {
-  outline: none;
-  border-color: var(--secondary);
-  box-shadow: 0 0 0 2px rgba(217, 199, 184, 0.2);
-}
-
-.filter-item select {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232c1f14' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 18px;
-  padding-right: 30px;
-}
-
-.price-display {
-  font-size: 0.85rem;
-  color: var(--bg-dark);
+.bu-filter-chip {
+  font-family: var(--font-ar);
+  font-size: .8rem;
   font-weight: 500;
-  text-align: center;
-  padding-top: 8px;
-  border-top: 1px solid #e8e0d5;
+  color: var(--g700);
+  background: none;
+  border: none;
+  text-align: right;
+  padding: 7px 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: all var(--tf);
+  width: 100%;
 }
+.bu-filter-chip:hover { background: var(--g50); color: var(--g900); }
+.bu-filter-chip.active { background: var(--pink); color: var(--red-deep); font-weight: 700; }
 
-/* ================================================
-   SECTION PRODUITS
-   ================================================ */
-
-.products-section {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  border: 1px solid #e8e0d5;
-  box-shadow: 0 2px 8px rgba(44, 31, 20, 0.08);
-}
-
-.products-header {
+/* نطاق السعر */
+.bu-price-display {
   display: flex;
   justify-content: space-between;
+  font-family: var(--font-ar);
+  font-size: .78rem;
+  color: var(--g500);
+  margin-bottom: 8px;
+}
+.bu-price-max { font-weight: 700; color: var(--red); }
+
+.bu-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--g200);
+  outline: none;
+  cursor: pointer;
+  direction: ltr;
+}
+.bu-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--red);
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(239,59,60,.35);
+  transition: transform var(--tf);
+}
+.bu-range::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+/* أزرار المقاس */
+.bu-filter-options--sizes {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bu-size-btn {
+  min-width: 38px; height: 34px;
+  padding: 0 10px;
+  border: 1.5px solid var(--g200);
+  border-radius: var(--r-sm);
+  background: #fff;
+  font-family: var(--font-ar);
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--g700);
+  cursor: pointer;
+  transition: all var(--tf);
+}
+.bu-size-btn:hover  { border-color: var(--red); color: var(--red); }
+.bu-size-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* ════════════════════════════════════════════════════════
+   المنتجات — يسار
+═══════════════════════════════════════════════════════════ */
+.bu-products { display: flex; flex-direction: column; gap: 18px; }
+
+.bu-products-bar {
+  display: flex;
   align-items: center;
-  margin-bottom: 30px;
-  border-bottom: 2px solid var(--secondary);
-  padding-bottom: 20px;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid var(--g200);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  box-shadow: var(--sh-sm);
 }
 
-.products-header h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+.bu-products-title {
+  font-family: var(--font-ar);
+  font-size: .95rem;
   font-weight: 800;
-  color: var(--primary);
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  color: var(--g900);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+.bu-products-title svg { color: var(--red); }
 
-.product-count {
-  font-size: 0.9rem;
-  color: var(--bg-dark);
-  font-weight: 600;
-  background-color: var(--bg-light);
-  padding: 6px 14px;
-  border-radius: 20px;
+.bu-products-count {
+  font-family: var(--font-ar);
+  font-size: .82rem;
+  color: var(--g500);
 }
+.bu-products-count strong { color: var(--red); font-weight: 800; font-size: .95rem; }
 
-/* Grille de produits */
-.products-grid {
+/* شبكة المنتجات */
+.bu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
-/* Carte Produit */
-.product-card {
-  border: 1px solid #e8e0d5;
-  border-radius: 10px;
+/* بطاقة منتج */
+.bu-card {
+  background: #fff;
+  border: 1px solid var(--g200);
+  border-radius: var(--r-lg);
   overflow: hidden;
-  transition: all 0.3s ease;
-  background: white;
-  box-shadow: 0 2px 8px rgba(44, 31, 20, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: all var(--tb);
+}
+.bu-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sh-md);
+  border-color: var(--pink);
 }
 
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 25px rgba(44, 31, 20, 0.15);
-  border-color: var(--secondary);
-}
-
-.product-image {
+/* صورة البطاقة */
+.bu-card-img-wrap {
   position: relative;
   overflow: hidden;
-  height: 250px;
-  background-color: #f5f1eb;
+  background: var(--g50);
 }
 
-.product-image img {
-  width: 100%;
-  height: 100%;
+.bu-card-img {
+  width: 100%; height: 210px;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  display: block;
+  transition: transform .45s var(--ease);
 }
+.bu-card:hover .bu-card-img { transform: scale(1.06); }
 
-.product-card:hover .product-image img {
-  transform: scale(1.05);
-}
-
-.product-overlay {
+/* Overlay واتساب */
+.bu-card-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(44, 31, 20, 0.85);
+  inset: 0;
+  background: rgba(147,27,29,.82);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--tb);
 }
+.bu-card:hover .bu-card-overlay { opacity: 1; }
 
-.product-card:hover .product-overlay {
-  opacity: 1;
-}
-
-.btn-add-cart {
-  background-color: var(--secondary);
-  color: var(--primary);
+.bu-wa-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--wa);
+  color: #fff;
+  font-family: var(--font-ar);
+  font-size: .8rem;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: var(--r-sm);
   border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
-  font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  transition: all var(--tf);
 }
+.bu-wa-btn:hover { background: var(--wa-dark); }
 
-.btn-add-cart:hover {
-  background-color: var(--primary);
-  color: var(--secondary);
-  transform: scale(1.05);
-}
-
-/* Info Produit */
-.product-info {
-  padding: 20px;
+/* محتوى البطاقة */
+.bu-card-body {
+  padding: 14px 16px 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+  flex: 1;
+  text-align: right;
 }
 
-.product-info h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
+.bu-card-cat {
+  font-size: .62rem;
   font-weight: 700;
-  color: var(--primary);
-  margin: 0;
+  color: var(--red-muted);
+  background: var(--pink);
+  padding: 3px 9px;
+  border-radius: 100px;
+  width: fit-content;
+  align-self: flex-end;
 }
 
-.product-category {
-  font-size: 0.85rem;
-  color: var(--secondary);
-  font-weight: 600;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.bu-card-name {
+  font-family: var(--font-ar);
+  font-size: .93rem;
+  font-weight: 700;
+  color: var(--g900);
+  line-height: 1.3;
 }
 
-.product-size {
-  font-size: 0.85rem;
-  color: var(--bg-dark);
-  margin: 0;
+.bu-card-size {
+  font-size: .72rem;
+  color: var(--g500);
+  font-weight: 500;
 }
 
-.product-price {
+.bu-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.bu-card-price {
+  font-family: var(--font-ar);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--red);
+}
+.bu-card-price small { font-size: .6rem; font-weight: 600; color: var(--g500); }
+
+/* زر واتساب صغير */
+.bu-card-wa-sm {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--wa);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--tf);
+}
+.bu-card-wa-sm:hover { background: var(--wa-dark); transform: scale(1.1); box-shadow: var(--sh-wa); }
+
+/* حالة فارغة */
+.bu-empty {
+  background: #fff;
+  border: 1px solid var(--g200);
+  border-radius: var(--r-lg);
+  padding: 64px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--sh-sm);
+}
+.bu-empty h3 {
+  font-family: var(--font-ar);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--primary);
-  margin: 5px 0 0 0;
+  color: var(--g900);
+}
+.bu-empty p { font-size: .85rem; color: var(--g500); line-height: 1.7; }
+.bu-empty-btn {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-ar);
+  font-size: .8rem;
+  font-weight: 700;
+  padding: 11px 22px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  border: none;
+  transition: all var(--tb);
+}
+.bu-empty-btn:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: var(--sh-red); }
+
+/* ════════════════════════════════════════════════════════
+   استجابة Responsive
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1100px) {
+  .bu-body { padding: 0 24px; }
+  .bu-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ================================================
-   AUCUN PRODUIT
-   ================================================ */
+@media (max-width: 900px) {
+  .bu-body { grid-template-columns: 1fr; gap: 16px; padding: 0 18px; }
+  .bu-filters { position: static; }
 
-.no-products {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--bg-dark);
-}
+  /* الفلاتر أفقية */
+  .bu-filter-group { display: inline-flex; flex-direction: column; }
+  .bu-filters > .bu-filters-top { display: flex; }
 
-.no-products p {
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-/* ================================================
-   RESPONSIVE DESIGN
-   ================================================ */
-
-@media (max-width: 1024px) {
-  .boutique-body {
-    grid-template-columns: 1fr;
-    padding: 0 30px 40px;
-  }
-
-  .filters-sidebar {
-    position: static;
-  }
-
-  .boutique-nom {
-    font-size: 2rem;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
-  }
+  .bu-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 }
 
 @media (max-width: 768px) {
-  .boutique-header {
-    padding: 25px;
-    margin-bottom: 30px;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+  .bu-header-inner { padding: 18px 20px; }
+  .bu-avatar { width: 58px; height: 58px; font-size: 1.4rem; }
+  .bu-name { font-size: 1.2rem; }
+  .bu-body { padding: 0 14px; margin-top: 16px; }
+}
 
-  .boutique-header-content {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  .boutique-nom {
-    font-size: 1.6rem;
-  }
-
-  .boutique-meta {
-    justify-content: center;
-    gap: 20px;
-  }
-
-  .social-networks {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .boutique-body {
-    padding: 0 20px 30px;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
-  }
-
-  .products-header h2 {
-    font-size: 1.5rem;
-  }
-
-  .filter-item select,
-  .filter-item input[type="range"] {
-    padding: 8px 10px;
-    font-size: 0.85rem;
-  }
-
-  .filter-title {
-    font-size: 1.1rem;
-  }
+@media (max-width: 600px) {
+  .bu-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .bu-card-img { height: 160px; }
+  .bu-card-body { padding: 10px 12px 12px; }
+  .bu-card-name { font-size: .85rem; }
 }
 
 @media (max-width: 480px) {
-  .boutique-header {
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  .profile-photo {
-    width: 100px;
-    height: 100px;
-  }
-
-  .boutique-nom {
-    font-size: 1.3rem;
-  }
-
-  .boutique-meta {
-    gap: 15px;
-    font-size: 0.9rem;
-  }
-
-  .location,
-  .phone {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .social-btn {
-    width: 45px;
-    height: 45px;
-    font-size: 1.1rem;
-  }
-
-  .boutique-body {
-    padding: 0 15px 20px;
-  }
-
-  .filters-sidebar {
-    padding: 20px;
-  }
-
-  .products-section {
-    padding: 20px;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 12px;
-  }
-
-  .product-image {
-    height: 180px;
-  }
-
-  .product-info {
-    padding: 15px;
-    gap: 8px;
-  }
-
-  .products-header h2 {
-    font-size: 1.3rem;
-  }
-
-  .product-count {
-    font-size: 0.8rem;
-  }
+  .bu-header-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .bu-grid { grid-template-columns: 1fr; gap: 10px; }
+  .bu-card-img { height: 200px; }
+  .bu-body { padding: 0 12px; }
 }
+
+@media (max-width: 360px) {
+  .bu-avatar { width: 48px; height: 48px; font-size: 1.2rem; }
+  .bu-name { font-size: 1rem; }
+  .bu-card-price { font-size: .95rem; }
+}
+
+/* ── شريط التمرير ── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: var(--g100); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+::selection { background: var(--pink); color: var(--red-deep); }

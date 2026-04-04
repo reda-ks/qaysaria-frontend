@@ -1,151 +1,117 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import '../styles/composantsCSS/sidebar.css';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  LayoutDashboard, Store, ShoppingBag,
+  HeadphonesIcon, Settings, Home, LogOut,
+  Menu, X, ChevronLeft
+} from 'lucide-react';
+import '../styles/composantsCSS/sidebar_ar.css';
+
+const MENU_AR = [
+  { label: 'لوحة التحكم',  path: '/tableau-de-bord',     Icon: LayoutDashboard },
+  { label: 'متجري',         path: '/boutique-utilisateur', Icon: Store           },
+  { label: 'الطلبات',       path: '/commandes',            Icon: ShoppingBag     },
+  { label: 'الدعم',         path: '/support',              Icon: HeadphonesIcon  },
+  { label: 'الإعدادات',     path: '/profile',              Icon: Settings        },
+];
 
 const SidebarAR = () => {
-  const [isOpen, setIsOpen] = useState(false); // ← Changed: Default to closed on mobile
-  const location = useLocation();
-
-  // Menu items
-  const menuItems = [
-    {
-      label: 'Tableau de Bord',
-      path: '/tableau-de-bord',
-      icon: '📊',
-    },
-    {
-      label: 'Ma Boutique',
-      path: '/boutique-utilisateur',
-      icon: '🏪',
-    },
-    {
-      label: 'Commandes',
-      path: '/commandes',
-      icon: '📦',
-    },
-    {
-      label: 'Support',
-      path: '/support',
-      icon: '💬',
-    },
-    {
-      label: 'Paramètres',
-      path: '/profile',
-      icon: '⚙️',
-    },
-  ];
+  const [isOpen, setIsOpen]   = useState(false);
+  const location  = useLocation();
+  const navigate  = useNavigate();
 
   const isActive = (path) => location.pathname === path;
 
-  // Close sidebar when navigating on mobile
-  const handleNavClick = () => {
-    // Close sidebar only on mobile (max-width: 768px)
-    if (window.innerWidth <= 768) {
-      setIsOpen(false);
-    }
+  const handleNav = () => {
+    if (window.innerWidth <= 768) setIsOpen(false);
+  };
+
+  const handleLogout = () => {
+    setIsOpen(false);
+    navigate('/login');
   };
 
   return (
     <>
-      {/* Mobile Toggle Button */}
+      {/* ── زر الهامبرغر موبايل ── */}
       <button
-        className="sidebar-toggle"
+        className="sbar-toggle"
         onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle sidebar"
-        aria-expanded={isOpen}
+        aria-label="فتح القائمة"
       >
-        {isOpen ? '✕' : '☰'}
+        <Menu size={20} strokeWidth={2} />
       </button>
 
-      {/* Overlay - Always rendered, hidden by default via CSS */}
-      {/* ← Changed: Always render, CSS handles display based on 'open' class */}
-      <div 
-        className={`sidebar-overlay ${isOpen ? 'open' : ''}`}
+      {/* ── طبقة الخلفية موبايل ── */}
+      <div
+        className={`sbar-overlay ${isOpen ? 'sbar-overlay--open' : ''}`}
         onClick={() => setIsOpen(false)}
-        role="presentation"
       />
 
-      {/* Sidebar */}
-      <aside 
-        className={`sidebar ${isOpen ? 'open' : ''}`}
-        role="navigation"
-        aria-label="Main navigation"
-      >
-        {/* Header Sidebar */}
-        <div className="sidebar-header">
-          <div className="sidebar-logo">
-            <span className="logo-icon">🏬</span>
-            <span className="logo-text">Qaysaria</span>
+      {/* ══ الشريط الجانبي ══ */}
+      <aside className={`sbar ${isOpen ? 'sbar--open' : ''}`} dir="rtl">
+
+        {/* ── العلامة التجارية ── */}
+        <div className="sbar-header">
+          <div className="sbar-brand">
+            <div className="sbar-brand-icon">ق</div>
+            <span className="sbar-brand-name">قيصرية</span>
           </div>
-          <button
-            className="close-btn"
-            onClick={() => setIsOpen(false)}
-            aria-label="Close sidebar"
-          >
-            ✕
+          <button className="sbar-close" onClick={() => setIsOpen(false)}>
+            <X size={17} strokeWidth={2} />
           </button>
         </div>
 
-        {/* Profile Card */}
-        <div className="profile-card">
-          <div className="profile-avatar">F</div>
-          <div className="profile-info">
-            <h3>Fatima Benali</h3>
-            <p>Qaysaria Luxury</p>
+        {/* ── بطاقة الملف الشخصي ── */}
+        <div className="sbar-profile">
+          <div className="sbar-avatar">ف</div>
+          <div className="sbar-profile-info">
+            <strong>فاطمة بنعلي</strong>
+            <span>قيصرية لوكس</span>
           </div>
+          <span className="sbar-online" title="متصل" />
         </div>
 
-        {/* Menu Navigation */}
-        <nav className="sidebar-nav">
-          <ul className="nav-list">
-            {menuItems.map((item) => (
-              <li key={item.path} className="nav-item">
+        {/* ── التنقل ── */}
+        <nav className="sbar-nav">
+          <p className="sbar-nav-label">القائمة</p>
+          <ul className="sbar-list">
+            {MENU_AR.map(({ label, path, Icon }) => (
+              <li key={path}>
                 <Link
-                  to={item.path}
-                  className={`nav-link ${isActive(item.path) ? 'active' : ''}`}
-                  onClick={handleNavClick}
-                  aria-current={isActive(item.path) ? 'page' : undefined}
+                  to={path}
+                  className={`sbar-link ${isActive(path) ? 'sbar-link--active' : ''}`}
+                  onClick={handleNav}
+                  aria-current={isActive(path) ? 'page' : undefined}
                 >
-                  <span className="nav-icon" aria-hidden="true">
-                    {item.icon}
-                  </span>
-                  <span className="nav-label">{item.label}</span>
-                  {isActive(item.path) && (
-                    <span className="nav-indicator" aria-hidden="true" />
+                  {isActive(path) && (
+                    <ChevronLeft size={13} strokeWidth={2.5} className="sbar-arrow" />
                   )}
+                  <span className="sbar-link-label">{label}</span>
+                  <span className="sbar-link-icon">
+                    <Icon size={18} strokeWidth={isActive(path) ? 2.2 : 1.8} />
+                  </span>
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        {/* Divider */}
-        <div className="sidebar-divider" />
+        <div className="sbar-spacer" />
 
-        {/* Actions Bottom */}
-        <div className="sidebar-actions">
-          <a 
-            href="/" 
-            className="action-link"
-            onClick={handleNavClick}
-          >
-            <span aria-hidden="true">🏠</span>
-            <span>Retour à l'accueil</span>
-          </a>
-          <button 
-            className="action-link logout"
-            onClick={(e) => {
-              e.preventDefault();
-              // Add logout logic here
-              setIsOpen(false);
-              // Example: logout and redirect
-              // navigate('/login');
-            }}
-          >
-            <span aria-hidden="true">🚪</span>
-            <span>Déconnexion</span>
+        {/* ── الأزرار السفلية ── */}
+        <div className="sbar-bottom">
+          <div className="sbar-divider" />
+          <Link to="/الرئيسية" className="sbar-action" onClick={handleNav}>
+            <span>العودة للرئيسية</span>
+            <Home size={15} strokeWidth={1.8} />
+          </Link>
+          <button className="sbar-action sbar-action--logout" onClick={handleLogout}>
+            <span>تسجيل الخروج</span>
+            <LogOut size={15} strokeWidth={1.8} />
           </button>
         </div>
+
       </aside>
     </>
   );

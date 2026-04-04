@@ -144,7 +144,7 @@ const Profile = () => {
 
           <div className="section-content">
             <div className="form-row">
-              {renderField('Nom de la Boutique', 'nomBoutique', profileData.nomBoutique)}
+              {renderField('Nom de la Boutique', 'no', profileData.nomBoutique)}
               {renderField('Catégorie', 'categorie', profileData.categorie)}
             </div>
 
