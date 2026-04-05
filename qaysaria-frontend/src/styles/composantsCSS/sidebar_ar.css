@@ -21,7 +21,7 @@
   --font-ar:   'Noto Kufi Arabic', system-ui, sans-serif;
 
   --sbar-w:    260px;
-  --hdr-h:     68px;
+  --hdr-h:     73px;
   --ease:      cubic-bezier(.4,0,.2,1);
   --tf:        .18s var(--ease);
   --tb:        .30s var(--ease);
