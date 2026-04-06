@@ -66,13 +66,13 @@ const BoutiqueUtilisateur = () => {
     </div>
   );
 
-  /* ─── واتساب ─── */
-  const handleWhatsApp = (product) => {
-    const msg = encodeURIComponent(
-      `مرحباً ! أنا مهتم بـ :\n🛍️ *${product.nom}*\n💰 ${product.prix} درهم\nهل يمكنك مساعدتي ؟`
-    );
-    window.open(`https://wa.me/212612345678?text=${msg}`, '_blank');
-  };
+  /* ─── واتساب     khassha tbadl ─── */
+  // const handleWhatsApp = (product) => {
+  //   const msg = encodeURIComponent(
+  //     `مرحباً ! أنا مهتم بـ :\n🛍️ *${product.nom}*\n💰 ${product.prix} درهم\nهل يمكنك مساعدتي ؟`
+  //   );
+  //   window.open(`https://wa.me/212612345678?text=${msg}`, '_blank');
+  // };
 
   return (
     <div className="bu-page" dir="rtl" lang="ar">

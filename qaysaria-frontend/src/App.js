@@ -11,6 +11,8 @@ import Accueil from './pages/accueil/AccueilFR/accueil';
 import AccueilAR from './pages/accueil/AccueilAR/accueil_ar';
 import Produits from './pages/produits/produitsFR/produits';
 import ProduitsAr from './pages/produits/produitsAR/produits';
+import ProduitDetailAR from './pages/detailleProduit/DetailProduitAR/ProduitDetail_ar';
+import ProduitDetail from './pages/detailleProduit/DetailProduitFR/ProduitDetail_fr';
 import Contact from './pages/contact/ContactFR/contact';
 import ContactAR from './pages/contact/ContactAR/contact';
 import QuiSommesNous from './pages/quisommesnous/QuiSommesNousFR/QuiSommesNous';
@@ -57,6 +59,8 @@ function AppRoutes() {
       <Route path="/الرئيسية" element={<AccueilAR />} />
       <Route path="/produits" element={<Produits />} />
       <Route path="/منتجات" element={<ProduitsAr />} />
+      <Route path="/منتج/:id" element={<ProduitDetailAR />} />
+      <Route path="/produit/:id" element={<ProduitDetail />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/اتصل-بنا" element={<ContactAR />} />
       <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />

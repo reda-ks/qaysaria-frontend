@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams ,useNavigate} from 'react-router-dom';
 import '../../../styles/pages css/produits_ar.css';
-
 
 const ITEMS_PER_PAGE = 6;
 
@@ -186,6 +185,8 @@ const ProduitsAr = () => {
   const [selectedVille, setSelectedVille] = useState('');
   const [currentPage, setCurrentPage]     = useState(1);
   const [sidebarOpen, setSidebarOpen]     = useState(false);
+  const navigate = useNavigate();
+
   const [filters, setFilters] = useState({
     category: searchParams.get('categorie') || '',
     marques: [], tailles: [], couleurs: [],
@@ -287,7 +288,10 @@ const ProduitsAr = () => {
           {paginated.length > 0 ? (
             <div className="ar-produits-grid">
               {paginated.map((product) => (
-                <div key={product.id} className="ar-p-card">
+                <div className="ar-p-card"
+  onClick={() => navigate(`/منتج/${product.id}`)}
+  style={{ cursor: 'pointer' }}
+>
 
                   <div className="ar-p-card-img-wrap">
                     <img src={product.image} alt={product.nom} className="ar-p-card-img" loading="lazy" />
