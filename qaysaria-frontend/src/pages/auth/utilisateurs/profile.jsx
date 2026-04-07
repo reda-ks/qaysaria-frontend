@@ -1,224 +1,233 @@
 import React, { useState } from 'react';
+import {
+  User, Store, Lock, Save, Check,
+  Pencil, X, ShieldCheck, Smartphone,
+  Loader2, CheckCircle2
+} from 'lucide-react';
 import '../../../styles/pages css/profile.css';
 
-const Profile = () => {
-  const [isEditing, setIsEditing] = useState({});
-  const [isSaving, setIsSaving] = useState(false);
+/* ════════════════════════════════════════════════════════
+   المكوّن الرئيسي
+═══════════════════════════════════════════════════════════ */
+const ProfileAR = () => {
+  const [editing,     setEditing]     = useState({});
+  const [isSaving,    setIsSaving]    = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  const [profileData, setProfileData] = useState({
-    // Informations Personnelles
-    nom: 'Benali',
-    prenom: 'Fatima',
-    email: 'fatima.benali@qaysaria.com',
-
-    // Paramètres de la Boutique
-    nomBoutique: 'Qaysaria Luxury',
-    description:
-      'Boutique spécialisée dans la haute couture et les accessoires de luxe',
-    categorie: 'Vêtements & Accessoires',
-    telephone: '+212 6 12 34 56 78',
-    adresse: 'Casablanca, Maroc',
-    siteWeb: 'https://www.qaysaria.com',
-    heureOuverture: '09:00',
-    heureFermeture: '18:00',
+  const [data, setData] = useState({
+    prenom:          'فاطمة',
+    nom:             'بنعلي',
+    email:           'fatima.benali@qaisarya.com',
+    nomBoutique:     'قيصرية لوكس',
+    description:     'متجر متخصص في الأزياء الراقية والإكسسوارات الفاخرة',
+    categorie:       'ملابس وإكسسوارات',
+    telephone:       '+212 6 12 34 56 78',
+    siteWeb:         'https://www.qaisarya.com',
+    adresse:         'الدار البيضاء، المغرب',
+    heureOuverture:  '09:00',
+    heureFermeture:  '18:00',
   });
 
-  const handleEditToggle = (field) => {
-    setIsEditing((prev) => ({
-      ...prev,
-      [field]: !prev[field],
-    }));
-  };
-
+  const toggleEdit  = (field) => setEditing(prev => ({ ...prev, [field]: !prev[field] }));
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfileData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSave = (e) => {
     e.preventDefault();
     setIsSaving(true);
-
-    // Simuler l'envoi des données
     setTimeout(() => {
-      console.log('Profil sauvegardé:', profileData);
       setIsSaving(false);
       setSaveSuccess(true);
-      setIsEditing({});
-
-      // Afficher le message de succès pendant 3 secondes
-      setTimeout(() => {
-        setSaveSuccess(false);
-      }, 3000);
+      setEditing({});
+      setTimeout(() => setSaveSuccess(false), 3500);
     }, 1500);
   };
 
-  const renderField = (label, name, value, type = 'text', icon = '✏️') => (
-    <div className="form-field">
-      <label className="field-label">{label}</label>
-      <div className="input-wrapper">
-        {isEditing[name] ? (
+  /* ── حقل قابل للتعديل ── */
+  const Field = ({ label, name, type = 'text' }) => (
+    <div className="pf-field">
+      <label className="pf-field-label">{label}</label>
+      <div className="pf-field-row">
+        {editing[name] ? (
           type === 'textarea' ? (
             <textarea
               name={name}
-              value={value}
+              value={data[name]}
               onChange={handleChange}
-              className="field-input textarea"
-              rows="4"
+              className="pf-input pf-textarea"
+              rows={3}
             />
           ) : (
             <input
               type={type}
               name={name}
-              value={value}
+              value={data[name]}
               onChange={handleChange}
-              className="field-input"
+              className="pf-input"
             />
           )
         ) : (
-          <span className="field-value">{value || 'Non renseigné'}</span>
+          <span className="pf-value">{data[name] || '—'}</span>
         )}
         <button
           type="button"
-          className={`edit-btn ${isEditing[name] ? 'active' : ''}`}
-          onClick={() => handleEditToggle(name)}
-          title={isEditing[name] ? 'Fermer' : 'Éditer'}
+          className={`pf-edit-btn ${editing[name] ? 'active' : ''}`}
+          onClick={() => toggleEdit(name)}
+          title={editing[name] ? 'تأكيد' : 'تعديل'}
         >
-          {isEditing[name] ? '✓' : icon}
+          {editing[name]
+            ? <Check size={14} strokeWidth={3} />
+            : <Pencil size={13} strokeWidth={2} />
+          }
         </button>
       </div>
     </div>
   );
 
   return (
-    <div className="profile-container">
-      {/* Header */}
-      <div className="profile-header">
-        <div className="header-content">
-          <h1 className="page-title">Paramètres du Profil</h1>
-          <p className="page-subtitle">
-            Gérez vos informations personnelles et les paramètres de votre boutique
-          </p>
+    <div className="pf-page" dir="rtl" lang="ar">
+
+      {/* ══ رأس الصفحة ══ */}
+      <div className="pf-header">
+        <div className="pf-header-text">
+          <h1 className="pf-title">إعدادات الملف الشخصي</h1>
+          <p className="pf-subtitle">إدارة بياناتك الشخصية وإعدادات متجرك</p>
         </div>
-        <div className="profile-avatar">
-          <span className="avatar-letter">{profileData.prenom.charAt(0)}</span>
+        <div className="pf-avatar-wrap">
+          <div className="pf-avatar">{data.prenom.charAt(0)}</div>
+          <span className="pf-avatar-badge">✓</span>
         </div>
       </div>
 
-      {/* Message de succès */}
+      {/* ══ بانر النجاح ══ */}
       {saveSuccess && (
-        <div className="success-banner">
-          <span className="success-icon">✓</span>
-          <span className="success-text">Modifications enregistrées avec succès!</span>
+        <div className="pf-success">
+          <CheckCircle2 size={18} strokeWidth={2} />
+          <span>تم حفظ التعديلات بنجاح!</span>
         </div>
       )}
 
-      {/* Formulaire */}
-      <form onSubmit={handleSave} className="profile-form">
-        {/* Section Informations Personnelles */}
-        <section className="form-section">
-          <div className="section-header">
-            <h2 className="section-title">👤 Informations Personnelles</h2>
-            <p className="section-subtitle">Vos informations de compte</p>
+      {/* ══ النموذج ══ */}
+      <form onSubmit={handleSave} className="pf-form">
+
+        {/* ─ معلومات شخصية ─ */}
+        <section className="pf-section">
+          <div className="pf-section-head">
+            <div className="pf-section-icon">
+              <User size={17} strokeWidth={1.8} />
+            </div>
+            <div>
+              <h2 className="pf-section-title">المعلومات الشخصية</h2>
+              <p className="pf-section-sub">بيانات حسابك الشخصي</p>
+            </div>
           </div>
 
-          <div className="section-content">
-            <div className="form-row">
-              {renderField('Prénom', 'prenom', profileData.prenom)}
-              {renderField('Nom', 'nom', profileData.nom)}
+          <div className="pf-section-body">
+            <div className="pf-row-2">
+              <Field label="الاسم الأول"  name="prenom" />
+              <Field label="اسم العائلة"  name="nom"    />
             </div>
-            {renderField('Email', 'email', profileData.email, 'email')}
-          </div>
-        </section>
-
-        {/* Section Paramètres de la Boutique */}
-        <section className="form-section">
-          <div className="section-header">
-            <h2 className="section-title">🏪 Paramètres de la Boutique</h2>
-            <p className="section-subtitle">Informations de votre boutique en ligne</p>
-          </div>
-
-          <div className="section-content">
-            <div className="form-row">
-              {renderField('Nom de la Boutique', 'no', profileData.nomBoutique)}
-              {renderField('Catégorie', 'categorie', profileData.categorie)}
-            </div>
-
-            {renderField(
-              'Description de la Boutique',
-              'description',
-              profileData.description,
-              'textarea'
-            )}
-
-            <div className="form-row">
-              {renderField('Téléphone', 'telephone', profileData.telephone, 'tel')}
-              {renderField('Site Web', 'siteWeb', profileData.siteWeb, 'url')}
-            </div>
-
-            {renderField('Adresse', 'adresse', profileData.adresse)}
-
-            <div className="form-row">
-              {renderField('Heure d\'ouverture', 'heureOuverture', profileData.heureOuverture, 'time')}
-              {renderField('Heure de fermeture', 'heureFermeture', profileData.heureFermeture, 'time')}
-            </div>
+            <Field label="البريد الإلكتروني" name="email" type="email" />
           </div>
         </section>
 
-        {/* Bouton Sauvegarder */}
-        <div className="form-actions">
+        {/* ─ إعدادات المتجر ─ */}
+        <section className="pf-section">
+          <div className="pf-section-head">
+            <div className="pf-section-icon">
+              <Store size={17} strokeWidth={1.8} />
+            </div>
+            <div>
+              <h2 className="pf-section-title">إعدادات المتجر</h2>
+              <p className="pf-section-sub">معلومات متجرك الإلكتروني</p>
+            </div>
+          </div>
+
+          <div className="pf-section-body">
+            <div className="pf-row-2">
+              <Field label="اسم المتجر"  name="nomBoutique" />
+              <Field label="الفئة"        name="categorie"   />
+            </div>
+
+            <Field label="وصف المتجر" name="description" type="textarea" />
+
+            <div className="pf-row-2">
+              <Field label="الهاتف"    name="telephone" type="tel" />
+              <Field label="الموقع الإلكتروني" name="siteWeb" type="url" />
+            </div>
+
+            <Field label="العنوان" name="adresse" />
+
+            <div className="pf-row-2">
+              <Field label="ساعة الفتح"   name="heureOuverture" type="time" />
+              <Field label="ساعة الإغلاق" name="heureFermeture" type="time" />
+            </div>
+          </div>
+        </section>
+
+        {/* ─ زر الحفظ ─ */}
+        <div className="pf-actions">
           <button
             type="submit"
-            className={`btn-save ${isSaving ? 'loading' : ''}`}
+            className={`pf-save-btn ${isSaving ? 'loading' : ''}`}
             disabled={isSaving}
           >
             {isSaving ? (
-              <>
-                <span className="spinner"></span>
-                Sauvegarde en cours...
-              </>
+              <><Loader2 size={16} strokeWidth={2} className="pf-spin" /> جارٍ الحفظ...</>
             ) : (
-              <>
-                <span className="btn-icon">💾</span>
-                Sauvegarder les modifications
-              </>
+              <><Save size={16} strokeWidth={2} /> حفظ التعديلات</>
             )}
           </button>
         </div>
       </form>
 
-      {/* Section de sécurité */}
-      <section className="security-section">
-        <div className="security-header">
-          <h3>🔒 Sécurité</h3>
+      {/* ══ قسم الأمان ══ */}
+      <section className="pf-security">
+        <div className="pf-security-head">
+          <div className="pf-section-icon pf-section-icon--red">
+            <Lock size={17} strokeWidth={1.8} />
+          </div>
+          <div>
+            <h2 className="pf-section-title">الأمان</h2>
+            <p className="pf-section-sub">إدارة أمان حسابك</p>
+          </div>
         </div>
-        <div className="security-content">
-          <div className="security-item">
-            <div className="security-info">
-              <h4>Mot de passe</h4>
-              <p>Modifiez votre mot de passe régulièrement pour sécuriser votre compte</p>
+
+        <div className="pf-security-body">
+
+          <div className="pf-security-item">
+            <div className="pf-security-icon">
+              <ShieldCheck size={20} strokeWidth={1.8} color="#EF3B3C" />
             </div>
-            <button type="button" className="btn-link">
-              Modifier le mot de passe
+            <div className="pf-security-info">
+              <h4>كلمة المرور</h4>
+              <p>قم بتغيير كلمة مرورك بانتظام لحماية حسابك</p>
+            </div>
+            <button type="button" className="pf-link-btn">
+              تغيير كلمة المرور
             </button>
           </div>
-          <div className="security-item border-top">
-            <div className="security-info">
-              <h4>Authentification à deux facteurs</h4>
-              <p>Renforcez la sécurité de votre compte avec l'authentification à deux facteurs</p>
+
+          <div className="pf-security-item pf-security-item--border">
+            <div className="pf-security-icon">
+              <Smartphone size={20} strokeWidth={1.8} color="#EF3B3C" />
             </div>
-            <button type="button" className="btn-link">
-              Activer la 2FA
+            <div className="pf-security-info">
+              <h4>المصادقة الثنائية</h4>
+              <p>عزّز حماية حسابك بالتحقق بخطوتين</p>
+            </div>
+            <button type="button" className="pf-link-btn">
+              تفعيل 2FA
             </button>
           </div>
+
         </div>
       </section>
+
     </div>
   );
 };
 
-export default Profile;
+export default ProfileAR;

@@ -10,7 +10,7 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "acheteur",
+    role: "vendeur",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
@@ -63,11 +63,7 @@ function Register() {
             <div className="form-group">
               <label>Je suis</label>
               <div className="form-type-row">
-                <label className={`form-type-option ${formData.role === 'acheteur' ? 'active' : ''}`}>
-                  <input type="radio" name="role" value="acheteur" checked={formData.role === 'acheteur'} onChange={handleChange} />
-                  <ShoppingBag size={13} strokeWidth={2} />
-                  Acheteur
-                </label>
+                
                 <label className={`form-type-option ${formData.role === 'vendeur' ? 'active' : ''}`}>
                   <input type="radio" name="role" value="vendeur" checked={formData.role === 'vendeur'} onChange={handleChange} />
                   <Store size={13} strokeWidth={2} />
