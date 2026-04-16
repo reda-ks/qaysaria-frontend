@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   User, Store, Lock, Save, Check,
-  Pencil, X, ShieldCheck, Smartphone,
+  Pencil , ShieldCheck, Smartphone,
   Loader2, CheckCircle2
 } from 'lucide-react';
 import '../../../styles/pages css/profile.css';

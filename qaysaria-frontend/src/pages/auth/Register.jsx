@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff, ArrowRight, ShoppingBag, Store } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, Store } from "lucide-react";
 import "../../styles//pages css//auth.css";
 
 function Register() {
