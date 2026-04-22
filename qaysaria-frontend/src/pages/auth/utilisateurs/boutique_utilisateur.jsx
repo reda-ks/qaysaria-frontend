@@ -66,7 +66,9 @@ const BoutiqueUtilisateur = () => {
     </div>
   );
 
-  /* ─── واتساب     khassha tbadl ─── */
+
+  // /* ─── واتساب ─── */
+
   // const handleWhatsApp = (product) => {
   //   const msg = encodeURIComponent(
   //     `مرحباً ! أنا مهتم بـ :\n🛍️ *${product.nom}*\n💰 ${product.prix} درهم\nهل يمكنك مساعدتي ؟`

@@ -47,7 +47,7 @@ const HeaderAR = ({ currentLang, switchLang }) => {
             </svg>
           </button>
 
-          <Link to="/login" style={{ textDecoration: 'none'  }} >
+          <Link to="/تسجيل-الدخول" style={{ textDecoration: 'none'  }} >
             <button className="btn-connexion" style={{ padding:"10px 20px"  }} >تسجيل الدخول</button>
           </Link>
 

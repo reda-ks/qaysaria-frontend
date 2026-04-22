@@ -21,7 +21,9 @@ import Howitworks from './pages/Howitworks/HowitworksFR/Howitworks';
 import HowItWorksAr from './pages/Howitworks/HowitworksAR/Howitworks';
 
 import Login from './pages/auth/Login';
+import LoginAR from './pages/auth/LoginAR';
 import Register from './pages/auth/Register';
+import RegisterAR from './pages/auth/RegisterAR';
 import BoutiqueUtilisateur from './pages/auth/utilisateurs/boutique_utilisateur';
 import Commandes from './pages/auth/utilisateurs/commandes';
 import Support from './pages/auth/utilisateurs/support';
@@ -44,12 +46,17 @@ const ROUTE_MAP = {
   '/contact': '/اتصل-بنا',
   '/qui-sommes-nous': '/من-نحن',
   '/Howitworks': '/كيف-يعمل',
+  '/login': '/تسجيل-الدخول',
+  '/register': '/إنشاء-حساب',
+
   // Arabe vers Français
   '/الرئيسية': '/accueil',
   '/منتجات': '/produits',
   '/اتصل-بنا': '/contact',
   '/من-نحن': '/qui-sommes-nous',
   '/كيف-يعمل': '/Howitworks',
+  '/تسجيل-الدخول': '/login',
+  '/إنشاء-حساب': '/register',
 };
 
 function AppRoutes() {
@@ -68,12 +75,15 @@ function AppRoutes() {
       <Route path="/Howitworks" element={<Howitworks />} />
       <Route path="/كيف-يعمل" element={<HowItWorksAr />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/تسجيل-الدخول" element={<LoginAR />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/إنشاء-حساب" element={<RegisterAR />} />
       <Route path="/boutique-utilisateur" element={<BoutiqueUtilisateur />} />
       <Route path="/commandes" element={<Commandes />} /> 
       <Route path="/support" element={<Support />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/tableau-de-bord" element={<TableauDeBord />} />
+      {/* Redirection automatique vers l'accueil Arabe si route vide */}
       <Route path="/" element={<AccueilAR />} /> 
     </Routes>
   );
@@ -83,14 +93,16 @@ function AppContent() {
   const [language, setLanguage] = useState('ar');
   const location = useLocation();
   const navigate = useNavigate();
-  const isUserRoute = USER_ROUTES.includes(location.pathname);
+  
+  // Vérification si la route actuelle (décodée) fait partie du dashboard
+  const currentDecodedPath = decodeURIComponent(location.pathname);
+  const isUserRoute = USER_ROUTES.includes(currentDecodedPath);
 
   useEffect(() => {
     document.body.dir = language === 'ar' ? "rtl" : "ltr";
   }, [language]);
 
   const toggleLanguage = (lang) => {
-    // decodeURIComponent transforme "%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA" en "منتجات"
     const currentPath = decodeURIComponent(location.pathname);
     const nextPath = ROUTE_MAP[currentPath];
 
@@ -98,21 +110,24 @@ function AppContent() {
 
     if (nextPath) {
       navigate(nextPath);
-    } else {
-      // Si on ne trouve pas (ou si on est sur la racine /), on va à l'accueil
+    } else if (currentPath === '/') {
       navigate(lang === 'ar' ? '/الرئيسية' : '/accueil');
+    } else {
+      // Pour les routes sans traduction explicite (comme le dashboard), on reste sur la même URL
+      console.log("Maintien de la route actuelle pour la langue :", lang);
     }
   };
 
   return (
     <div className={`app-container ${language}`} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {/* Header dynamique */}
       {language === 'fr' ? (
         <Header currentLang={language} switchLang={toggleLanguage} />
       ) : (
         <HeaderAR currentLang={language} switchLang={toggleLanguage} />
       )}
-      
 
+      {/* Contenu Principal avec Sidebar conditionnelle */}
       {isUserRoute ? (
         <div className="user-dashboard-layout">
           <SidebarAR />
@@ -124,6 +139,7 @@ function AppContent() {
         <AppRoutes />
       )}
 
+      {/* Footer dynamique */}
       {language === 'fr' ? <Footer /> : <FooterAR />}
     </div>
   );
