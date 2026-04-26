@@ -1,68 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
-  LayoutGrid, Tag, SlidersHorizontal, Ruler, /*Palette,*/
-  ChevronDown, ChevronRight, RotateCcw, Check
+  LayoutGrid, Tag, SlidersHorizontal, Ruler, Users,
+  ChevronDown, RotateCcw, Check
 } from 'lucide-react';
 import '../styles/composantsCSS/FiltersSidebar.css';
 
-const CATEGORIES = [
-  { id: '',           label: 'Toutes catégories', sub: [] },
-  {
-    id: 'vetements',  label: 'Vêtements', sub: [
-      { id: 'vetements-hommes',  label: 'Hommes'  },
-      { id: 'vetements-femmes',  label: 'Femmes'  },
-      { id: 'vetements-enfants', label: 'Enfants' },
-    ],
-  },
-  {
-    id: 'accessoires', label: 'Accessoires', sub: [
-      { id: 'accessoires-sacs',   label: 'Sacs & Maroquinerie' },
-      { id: 'accessoires-bijoux', label: 'Bijoux & Montres'    },
-      { id: 'accessoires-autres', label: 'Ceintures & Divers'  },
-    ],
-  },
-  {
-    id: 'artisanat',  label: 'Artisanat 🔥', sub: [
-      { id: 'artisanat-zellige',  label: 'Zellige & Céramique' },
-      { id: 'artisanat-cuir',     label: 'Cuir tanné'          },
-      { id: 'artisanat-tapis',    label: 'Tapis & Tissage'     },
-      { id: 'artisanat-bois',     label: 'Bois & Thuya'        },
-      { id: 'artisanat-cuivre',   label: 'Cuivre & Laiton'     },
-    ],
-  },
-  {
-    id: 'chaussures', label: 'Chaussures', sub: [
-      { id: 'chaussures-hommes',    label: 'Hommes'         },
-      { id: 'chaussures-femmes',    label: 'Femmes'         },
-      { id: 'chaussures-enfants',   label: 'Enfants'        },
-      { id: 'chaussures-babouches', label: 'Babouches 🥿'   },
-    ],
-  },
-];
-
-// const MARQUES = [
-//   'Artisan Local', 'Maison Zhor', 'Atlas Craft', 'Tannerie Chouara',
-//   'Souk El Khair', 'Sahara Wool', 'Zellige Fès', 'Poteries Safi',
-// ];
-
-const TAILLES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-
-// const COULEURS = [
-//   { id: 'noir',        label: 'Noir',        hex: '#1a1a1a' },
-//   { id: 'blanc',       label: 'Blanc',       hex: '#f0f0f0' },
-//   { id: 'rouge',       label: 'Rouge',       hex: '#e53935' },
-//   { id: 'bleu',        label: 'Bleu',        hex: '#1e88e5' },
-//   { id: 'vert',        label: 'Vert',        hex: '#43a047' },
-//   { id: 'jaune',       label: 'Jaune',       hex: '#fdd835' },
-//   { id: 'rose',        label: 'Rose',        hex: '#e91e8c' },
-//   { id: 'gris',        label: 'Gris',        hex: '#9e9e9e' },
-//   { id: 'marron',      label: 'Marron',      hex: '#795548' },
-//   { id: 'beige',       label: 'Beige',       hex: '#d7c4a3' },
-//   { id: 'bordeaux',    label: 'Bordeaux',    hex: '#7b1c2e' },
-//   { id: 'multicolore', label: 'Multicolore', hex: 'conic-gradient(#EF3B3C,#fdd835,#43a047,#1e88e5,#EF3B3C)' },
-// ];
-
-/* Collapsible section */
+/* Section rétractable */
 const Section = ({ title, Icon, children, defaultOpen = true }) => {
   const [open, setOpen] = useState(defaultOpen);
   return (
@@ -74,9 +18,8 @@ const Section = ({ title, Icon, children, defaultOpen = true }) => {
         </span>
         <ChevronDown
           size={14}
-          strokeWidth={2}
-          color="#888"
           style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .28s' }}
+          color="#888"
         />
       </button>
       {open && <div className="filter-section-body">{children}</div>}
@@ -85,13 +28,45 @@ const Section = ({ title, Icon, children, defaultOpen = true }) => {
 };
 
 const FiltersSidebar = ({ filters, onFiltersChange }) => {
-  const [expandedCat, setExpandedCat] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [audiencesMetadata, setAudiencesMetadata] = useState([]); // Renommé pour éviter conflit
+  const [tailles, setTailles] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  const API_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:8080/api';
+
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      try {
+        setLoading(true);
+        const results = await Promise.allSettled([
+          axios.get(`${API_BASE_URL}/categories/all`),
+          axios.get(`${API_BASE_URL}/audiences/all`),
+          axios.get(`${API_BASE_URL}/tailles/all`)
+        ]);
+
+        if (results[0].status === 'fulfilled') setCategories(results[0].value.data);
+        if (results[1].status === 'fulfilled') setAudiencesMetadata(results[1].value.data);
+        if (results[2].status === 'fulfilled') setTailles(results[2].value.data);
+
+      } catch (err) {
+        console.error("Erreur métadonnées :", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMetadata();
+  }, [API_BASE_URL]);
+
+  // --- LOGIQUE DE GESTION ---
   const toggle = (key, value) => {
+    // CORRECTION : On s'assure de récupérer la clé "audiences" ou "tailles"
     const current = filters[key] || [];
-    const updated = current.includes(value)
-      ? current.filter((v) => v !== value)
-      : [...current, value];
+    const valString = String(value);
+    const updated = current.includes(valString)
+      ? current.filter((v) => v !== valString)
+      : [...current, valString];
+    
     onFiltersChange({ ...filters, [key]: updated });
   };
 
@@ -99,26 +74,26 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
     onFiltersChange({ ...filters, prix: { ...filters.prix, [bound]: Number(e.target.value) } });
   };
 
-  const handleCategory = (id, parentId = null) => {
-    if (filters.category === id) {
-      onFiltersChange({ ...filters, category: '' });
-      setExpandedCat('');
-      return;
-    }
-    onFiltersChange({ ...filters, category: id });
-    if (parentId) setExpandedCat(parentId);
+  const handleCategory = (id) => {
+    const newCat = filters.category === String(id) ? '' : String(id);
+    onFiltersChange({ ...filters, category: newCat });
   };
 
   const handleReset = () => {
-    onFiltersChange({ category: '', /*marques: [],*/ tailles: []/**, couleurs: [] */, prix: { min: 0, max: 15000 } });
-    setExpandedCat('');
+    onFiltersChange({ 
+        category: '', 
+        tailles: [], 
+        audiences: [], // CORRIGÉ : avec un "e"
+        prix: { min: 0, max: 15000 } 
+    });
   };
 
   const prix = filters.prix || { min: 0, max: 15000 };
 
+  if (loading) return <aside className="filters-sidebar"><div className="filter-loading">Chargement...</div></aside>;
+
   return (
     <aside className="filters-sidebar">
-
       <div className="filters-top">
         <h2 className="filters-title">
           <SlidersHorizontal size={15} strokeWidth={2} color="#1A1A1A" />
@@ -131,7 +106,7 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
       </div>
 
       {/* CATEGORIES */}
-      <Section title="Catégories" Icon={LayoutGrid} defaultOpen={true}>
+      <Section title="Catégories" Icon={LayoutGrid}>
         <ul className="filter-category-list">
           <li>
             <button
@@ -142,128 +117,86 @@ const FiltersSidebar = ({ filters, onFiltersChange }) => {
               {filters.category === '' && <Check size={12} strokeWidth={3} color="#EF3B3C" />}
             </button>
           </li>
-
-          {CATEGORIES.filter(c => c.id !== '').map((cat) => {
-            const isParentActive = filters.category === cat.id || cat.sub.some(s => s.id === filters.category);
-            const isExpanded = expandedCat === cat.id || isParentActive;
-
-            return (
-              <li key={cat.id} className="cat-group">
-                <div className="cat-parent-row">
-                  <button
-                    className={`filter-category-item ${isParentActive ? 'active' : ''}`}
-                    onClick={() => { handleCategory(cat.id); setExpandedCat(isExpanded ? '' : cat.id); }}
-                  >
-                    <span className="cat-label">{cat.label}</span>
-                    <span className="cat-right">
-                      {isParentActive && <Check size={11} strokeWidth={3} color="#EF3B3C" />}
-                      {cat.sub.length > 0 && (
-                        <ChevronRight
-                          size={13}
-                          strokeWidth={2}
-                          color="#888"
-                          style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform .25s' }}
-                        />
-                      )}
-                    </span>
-                  </button>
-                </div>
-
-                {cat.sub.length > 0 && isExpanded && (
-                  <ul className="filter-subcategory-list">
-                    {cat.sub.map((sub) => (
-                      <li key={sub.id}>
-                        <button
-                          className={`filter-subcategory-item ${filters.category === sub.id ? 'active' : ''}`}
-                          onClick={() => handleCategory(sub.id, cat.id)}
-                        >
-                          <span className="sub-dot" />
-                          <span>{sub.label}</span>
-                          {filters.category === sub.id && <Check size={11} strokeWidth={3} color="#EF3B3C" style={{ marginLeft: 'auto' }} />}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
+          {categories.map((cat) => (
+            <li key={cat.id}>
+              <button
+                className={`filter-category-item ${filters.category === String(cat.id) ? 'active' : ''}`}
+                onClick={() => handleCategory(cat.id)}
+              >
+                <span className="cat-label">{cat.name}</span>
+                {filters.category === String(cat.id) && <Check size={12} strokeWidth={3} color="#EF3B3C" />}
+              </button>
+            </li>
+          ))}
         </ul>
+      </Section>
+      
+      {/* AUDIENCE */}
+      <Section title="Audience" Icon={Users}>
+        <div className="filter-audience-list" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        {audiencesMetadata.map((aud) => {
+          const audId = String(aud.id); // "1"
+          const audLabel = aud.name || aud.label; // "Homme"
+          
+          const isActive = (filters.audiences || []).includes(audId);
+          
+          return (
+            <button
+              key={audId}
+              className={`filter-category-item ${isActive ? 'active' : ''}`}
+              onClick={() => toggle('audiences', audId)} // ENVOIE L'ID ICI !
+              style={{ /* ton style... */ }}
+            >
+              <span className="cat-label">{audLabel}</span>
+              {isActive && <Check size={12} strokeWidth={3} color="#EF3B3C" />}
+            </button>
+          );
+        })}
+        </div>
       </Section>
 
       {/* PRIX */}
-      <Section title="Prix (MAD)" Icon={Tag} defaultOpen={true}>
+      <Section title="Prix (MAD)" Icon={Tag}>
         <div className="filter-price">
-          <div className="price-range-display">
-            <span>{prix.min.toLocaleString()} MAD</span>
-            <span>{prix.max.toLocaleString()} MAD</span>
+          <div className="price-range-display" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '12px' }}>
+            <span>{prix.min} MAD</span>
+            <span>{prix.max} MAD</span>
           </div>
           <div className="price-inputs">
-            <label>
-              <span>Min</span>
-              <input type="range" min="0" max="15000" step="50" value={prix.min} onChange={(e) => handlePrix(e, 'min')} className="range-slider" />
-            </label>
-            <label>
-              <span>Max</span>
-              <input type="range" min="0" max="15000" step="50" value={prix.max} onChange={(e) => handlePrix(e, 'max')} className="range-slider" />
-            </label>
+            <input type="range" min="0" max="15000" step="50" value={prix.min} onChange={(e) => handlePrix(e, 'min')} className="range-slider" />
+            <input type="range" min="0" max="15000" step="50" value={prix.max} onChange={(e) => handlePrix(e, 'max')} className="range-slider" />
           </div>
         </div>
       </Section>
 
-      {/* TAILLE */}
+      {/* TAILLES */}
       <Section title="Taille" Icon={Ruler} defaultOpen={false}>
-        <div className="filter-sizes">
-          {TAILLES.map((t) => (
-            <button
-              key={t}
-              className={`size-btn ${(filters.tailles || []).includes(t) ? 'active' : ''}`}
-              onClick={() => toggle('tailles', t)}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
-      </Section>
-
-      {/* COULEURS */}
-      {/* <Section title="Couleurs" Icon={Palette} defaultOpen={false}>
-        <div className="filter-colors">
-          {COULEURS.map((c) => (
-            <button
-              key={c.id}
-              className={`color-btn ${(filters.couleurs || []).includes(c.id) ? 'active' : ''}`}
-              onClick={() => toggle('couleurs', c.id)}
-              title={c.label}
-            >
-              <span
-                className="color-dot"
-                style={{ background: c.hex, border: c.id === 'blanc' ? '1.5px solid #ddd' : 'none' }}
-              />
-              {(filters.couleurs || []).includes(c.id) && (
-                <span className="color-check">
-                  <Check size={10} strokeWidth={3} color="#fff" />
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-
-        <div className="filter-colors-labels">
-          {(filters.couleurs || []).map(id => {
-            const c = COULEURS.find(x => x.id === id);
-            return c ? (
-              <span key={id} className="color-label-tag">
-                {c.label}
-                <button onClick={() => toggle('couleurs', id)}>
-                  <Check size={9} strokeWidth={3} />
-                </button>
-              </span>
-            ) : null;
+        <div className="filter-sizes" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+          {tailles.map((t) => {
+            const tValue = String(t.libelle || t.id);
+            const isActive = (filters.tailles || []).includes(tValue);
+            return (
+              <button
+                key={tValue}
+                className={`size-btn ${isActive ? 'active' : ''}`}
+                onClick={() => toggle('tailles', tValue)}
+                style={{
+                  padding: '8px',
+                  border: '1px solid',
+                  borderColor: isActive ? '#EF3B3C' : '#eee',
+                  borderRadius: '6px',
+                  fontSize: '11px',
+                  background: isActive ? '#fdeeee' : 'white',
+                  color: isActive ? '#EF3B3C' : '#333',
+                  cursor: 'pointer'
+                }}
+              >
+                {tValue}
+              </button>
+            );
           })}
         </div>
-      </Section> */}
-
+      </Section>
     </aside>
   );
 };
