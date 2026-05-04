@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/composantsCSS/composants.css';
 import logo from '../assets/logo.png';
+import { useAuth } from '../context/AuthContext';
+import UserDropdown from './UserDropdown';
 
 const Header = ({ currentLang, switchLang }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isConnected } = useAuth();
 
   return (
     <header className="header">
@@ -47,9 +50,13 @@ const Header = ({ currentLang, switchLang }) => {
             </svg>
           </button>
 
-          <Link to="/login" style={{ textDecoration: 'none' }}>
-            <button className="btn-connexion">Connexion</button>
-          </Link>
+          {isConnected ? (
+            <UserDropdown />
+          ) : (
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              <button className="btn-connexion">Connexion</button>
+            </Link>
+          )}
 
           {/* ── Hamburger (mobile only) ── */}
           <button
@@ -71,9 +78,11 @@ const Header = ({ currentLang, switchLang }) => {
             <li><Link to="/qui-sommes-nous" onClick={() => setMenuOpen(false)}>Qui Sommes Nous?</Link></li>
             <li><Link to="/Howitworks"      onClick={() => setMenuOpen(false)}>Comment ça marche</Link></li>
             <li><Link to="/contact"         onClick={() => setMenuOpen(false)}>Contact</Link></li>
-            <li className="mobile-login">
-              <Link to="/login" onClick={() => setMenuOpen(false)}>Connexion</Link>
-            </li>
+            {!isConnected && (
+              <li className="mobile-login">
+                <Link to="/login" onClick={() => setMenuOpen(false)}>Connexion</Link>
+              </li>
+            )}
           </ul>
         </div>
       )}

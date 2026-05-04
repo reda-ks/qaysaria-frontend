@@ -485,6 +485,20 @@ button { font-family: var(--font-b); cursor: pointer; border: none; }
 }
 .auth-link:hover { color: var(--red-dark); text-decoration: underline; }
 
+/* ════════════════════════════════════════════════════════
+   ERROR MESSAGE
+═══════════════════════════════════════════════════════════ */
+.auth-error {
+  background: #ffebee;
+  border: 1px solid #ef5350;
+  color: #c62828;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
 /* unused old classes — kept for compat */
 .auth-decoration { display: none; }
 .auth-brand      { display: none; }
@@ -557,3 +571,23 @@ button { font-family: var(--font-b); cursor: pointer; border: none; }
 ::-webkit-scrollbar-track { background: var(--g100); }
 ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
 ::selection { background: var(--pink); color: var(--red-deep); }
+
+
+
+/* city select */
+.city-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  font-size: 0.875rem;
+  color: #1e293b;
+  outline: none;
+  cursor: pointer;
+}
+
+.city-select:focus {
+  border-color: #ef4444; /* La couleur rouge du thème */
+  box-shadow: 0 0 0 1px #ef4444;
+}

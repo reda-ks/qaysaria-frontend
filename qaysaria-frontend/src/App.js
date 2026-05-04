@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 
 import Header from './composants/Header';
 import HeaderAR from './composantsAR/HeaderAR';
 import Footer from './composants/Footer';
 import FooterAR from './composantsAR/FooterAR';
-import Sidebar from './composants/Sidebar';
+//import Sidebar from './composants/Sidebar';
 
 import Accueil from './pages/accueil/AccueilFR/accueil';
 import AccueilAR from './pages/accueil/AccueilAR/accueil_ar';
@@ -20,6 +21,7 @@ import HowItWorksAr from './pages/Howitworks/HowitworksAR/Howitworks';
 
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import AuthTest from './pages/auth/AuthTest';
 import BoutiqueUtilisateur from './pages/auth/utilisateurs/boutique_utilisateur';
 import Commandes from './pages/auth/utilisateurs/commandes';
 import Support from './pages/auth/utilisateurs/support';
@@ -65,6 +67,7 @@ function AppRoutes() {
       <Route path="/كيف-يعمل" element={<HowItWorksAr />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/auth-test" element={<AuthTest />} />
       <Route path="/boutique-utilisateur" element={<BoutiqueUtilisateur />} />
       <Route path="/commandes" element={<Commandes />} /> 
       <Route path="/support" element={<Support />} />
@@ -110,7 +113,7 @@ function AppContent() {
 
       {isUserRoute ? (
         <div className="user-dashboard-layout">
-          <Sidebar />
+          {/* <Sidebar /> */}
           <main className="content-area">
             <AppRoutes />
           </main>
@@ -126,9 +129,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </AuthProvider>
   );
 }
 
