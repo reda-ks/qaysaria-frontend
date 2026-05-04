@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import {
-  User, Store, Lock, Save, Check,
-  Pencil , ShieldCheck, Smartphone,
-  Loader2, CheckCircle2
-} from 'lucide-react';
-import '../../../styles/pages css/profile.css';
-
-/* ════════════════════════════════════════════════════════
-   المكوّن الرئيسي
-═══════════════════════════════════════════════════════════ */
-const ProfileAR = () => {
-  const [editing,     setEditing]     = useState({});
-  const [isSaving,    setIsSaving]    = useState(false);
-=======
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 
@@ -21,27 +5,9 @@ const ModernProfile = () => {
   const { user, logout } = useAuth(); // Récupération du user et de la fonction logout
   const [isEditing, setIsEditing] = useState({});
   const [isSaving, setIsSaving] = useState(false);
->>>>>>> frontt-saad-branch
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [activeTab, setActiveTab] = useState('personal');
 
-<<<<<<< HEAD
-  const [data, setData] = useState({
-    prenom:          'فاطمة',
-    nom:             'بنعلي',
-    email:           'fatima.benali@qaisarya.com',
-    nomBoutique:     'قيصرية لوكس',
-    description:     'متجر متخصص في الأزياء الراقية والإكسسوارات الفاخرة',
-    categorie:       'ملابس وإكسسوارات',
-    telephone:       '+212 6 12 34 56 78',
-    siteWeb:         'https://www.qaisarya.com',
-    adresse:         'الدار البيضاء، المغرب',
-    heureOuverture:  '09:00',
-    heureFermeture:  '18:00',
-  });
-
-  const toggleEdit  = (field) => setEditing(prev => ({ ...prev, [field]: !prev[field] }));
-=======
   // État local pour gérer les modifications du formulaire
   const [profileData, setProfileData] = useState({
     nom: '',
@@ -79,7 +45,6 @@ const ModernProfile = () => {
     }));
   };
 
->>>>>>> frontt-saad-branch
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData(prev => ({ ...prev, [name]: value }));
@@ -88,23 +53,6 @@ const ModernProfile = () => {
   const handleSave = (e) => {
     e.preventDefault();
     setIsSaving(true);
-<<<<<<< HEAD
-    setTimeout(() => {
-      setIsSaving(false);
-      setSaveSuccess(true);
-      setEditing({});
-      setTimeout(() => setSaveSuccess(false), 3500);
-    }, 1500);
-  };
-
-  /* ── حقل قابل للتعديل ── */
-  const Field = ({ label, name, type = 'text' }) => (
-    <div className="pf-field">
-      <label className="pf-field-label">{label}</label>
-      <div className="pf-field-row">
-        {editing[name] ? (
-          type === 'textarea' ? (
-=======
 
     // Simulation d'appel API
     setTimeout(() => {
@@ -125,18 +73,12 @@ const ModernProfile = () => {
       <div className="field-container">
         {isEditing[name] ? (
           isTextarea ? (
->>>>>>> frontt-saad-branch
             <textarea
               name={name}
               value={data[name]}
               onChange={handleChange}
-<<<<<<< HEAD
-              className="pf-input pf-textarea"
-              rows={3}
-=======
               className="field-input textarea-input"
               rows="4"
->>>>>>> frontt-saad-branch
             />
           ) : (
             <input
@@ -148,20 +90,6 @@ const ModernProfile = () => {
             />
           )
         ) : (
-<<<<<<< HEAD
-          <span className="pf-value">{data[name] || '—'}</span>
-        )}
-        <button
-          type="button"
-          className={`pf-edit-btn ${editing[name] ? 'active' : ''}`}
-          onClick={() => toggleEdit(name)}
-          title={editing[name] ? 'تأكيد' : 'تعديل'}
-        >
-          {editing[name]
-            ? <Check size={14} strokeWidth={3} />
-            : <Pencil size={13} strokeWidth={2} />
-          }
-=======
           <div className="field-display">
             <span className="field-value">{value || '—'}</span>
           </div>
@@ -182,7 +110,6 @@ const ModernProfile = () => {
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
           )}
->>>>>>> frontt-saad-branch
         </button>
       </div>
     </div>
@@ -191,100 +118,6 @@ const ModernProfile = () => {
   if (!user) return <div className="loading-profile">Chargement...</div>;
 
   return (
-<<<<<<< HEAD
-    <div className="pf-page" dir="rtl" lang="ar">
-
-      {/* ══ رأس الصفحة ══ */}
-      <div className="pf-header">
-        <div className="pf-header-text">
-          <h1 className="pf-title">إعدادات الملف الشخصي</h1>
-          <p className="pf-subtitle">إدارة بياناتك الشخصية وإعدادات متجرك</p>
-        </div>
-        <div className="pf-avatar-wrap">
-          <div className="pf-avatar">{data.prenom.charAt(0)}</div>
-          <span className="pf-avatar-badge">✓</span>
-        </div>
-      </div>
-
-      {/* ══ بانر النجاح ══ */}
-      {saveSuccess && (
-        <div className="pf-success">
-          <CheckCircle2 size={18} strokeWidth={2} />
-          <span>تم حفظ التعديلات بنجاح!</span>
-        </div>
-      )}
-
-      {/* ══ النموذج ══ */}
-      <form onSubmit={handleSave} className="pf-form">
-
-        {/* ─ معلومات شخصية ─ */}
-        <section className="pf-section">
-          <div className="pf-section-head">
-            <div className="pf-section-icon">
-              <User size={17} strokeWidth={1.8} />
-            </div>
-            <div>
-              <h2 className="pf-section-title">المعلومات الشخصية</h2>
-              <p className="pf-section-sub">بيانات حسابك الشخصي</p>
-            </div>
-          </div>
-
-          <div className="pf-section-body">
-            <div className="pf-row-2">
-              <Field label="الاسم الأول"  name="prenom" />
-              <Field label="اسم العائلة"  name="nom"    />
-            </div>
-            <Field label="البريد الإلكتروني" name="email" type="email" />
-          </div>
-        </section>
-
-        {/* ─ إعدادات المتجر ─ */}
-        <section className="pf-section">
-          <div className="pf-section-head">
-            <div className="pf-section-icon">
-              <Store size={17} strokeWidth={1.8} />
-            </div>
-            <div>
-              <h2 className="pf-section-title">إعدادات المتجر</h2>
-              <p className="pf-section-sub">معلومات متجرك الإلكتروني</p>
-            </div>
-          </div>
-
-          <div className="pf-section-body">
-            <div className="pf-row-2">
-              <Field label="اسم المتجر"  name="nomBoutique" />
-              <Field label="الفئة"        name="categorie"   />
-            </div>
-
-            <Field label="وصف المتجر" name="description" type="textarea" />
-
-            <div className="pf-row-2">
-              <Field label="الهاتف"    name="telephone" type="tel" />
-              <Field label="الموقع الإلكتروني" name="siteWeb" type="url" />
-            </div>
-
-            <Field label="العنوان" name="adresse" />
-
-            <div className="pf-row-2">
-              <Field label="ساعة الفتح"   name="heureOuverture" type="time" />
-              <Field label="ساعة الإغلاق" name="heureFermeture" type="time" />
-            </div>
-          </div>
-        </section>
-
-        {/* ─ زر الحفظ ─ */}
-        <div className="pf-actions">
-          <button
-            type="submit"
-            className={`pf-save-btn ${isSaving ? 'loading' : ''}`}
-            disabled={isSaving}
-          >
-            {isSaving ? (
-              <><Loader2 size={16} strokeWidth={2} className="pf-spin" /> جارٍ الحفظ...</>
-            ) : (
-              <><Save size={16} strokeWidth={2} /> حفظ التعديلات</>
-            )}
-=======
     <div className="modern-profile">
       <style>{`
         .modern-profile { background: #F4F6F8; min-height: 100vh; padding: 40px 20px; font-family: 'DM Sans', sans-serif; color: #212326; }
@@ -332,55 +165,9 @@ const ModernProfile = () => {
           </div>
           <button onClick={logout} className="btn-cancel" style={{border: '1px solid #ddd', padding: '10px 20px', borderRadius: '10px', cursor: 'pointer'}}>
             Déconnexion
->>>>>>> frontt-saad-branch
           </button>
         </div>
 
-<<<<<<< HEAD
-      {/* ══ قسم الأمان ══ */}
-      <section className="pf-security">
-        <div className="pf-security-head">
-          <div className="pf-section-icon pf-section-icon--red">
-            <Lock size={17} strokeWidth={1.8} />
-          </div>
-          <div>
-            <h2 className="pf-section-title">الأمان</h2>
-            <p className="pf-section-sub">إدارة أمان حسابك</p>
-          </div>
-        </div>
-
-        <div className="pf-security-body">
-
-          <div className="pf-security-item">
-            <div className="pf-security-icon">
-              <ShieldCheck size={20} strokeWidth={1.8} color="#EF3B3C" />
-            </div>
-            <div className="pf-security-info">
-              <h4>كلمة المرور</h4>
-              <p>قم بتغيير كلمة مرورك بانتظام لحماية حسابك</p>
-            </div>
-            <button type="button" className="pf-link-btn">
-              تغيير كلمة المرور
-            </button>
-          </div>
-
-          <div className="pf-security-item pf-security-item--border">
-            <div className="pf-security-icon">
-              <Smartphone size={20} strokeWidth={1.8} color="#EF3B3C" />
-            </div>
-            <div className="pf-security-info">
-              <h4>المصادقة الثنائية</h4>
-              <p>عزّز حماية حسابك بالتحقق بخطوتين</p>
-            </div>
-            <button type="button" className="pf-link-btn">
-              تفعيل 2FA
-            </button>
-          </div>
-
-        </div>
-      </section>
-
-=======
         {saveSuccess && (
           <div className="success-banner">
             ✨ Vos modifications ont été enregistrées avec succès !
@@ -454,13 +241,8 @@ const ModernProfile = () => {
           </div>
         )}
       </div>
->>>>>>> frontt-saad-branch
     </div>
   );
 };
 
-<<<<<<< HEAD
-export default ProfileAR;
-=======
 export default ModernProfile;
->>>>>>> frontt-saad-branch
