@@ -1,43 +1,75 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import axios from "axios";
 import "../../styles/pages css/auth.css";
 
 function Login() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ phoneNumber: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login:", formData);
-    // TODO: backend
+    setError("");
+    setLoading(true);
+
+    try {
+      const API_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:8080/api';
+      
+      // Appel à l'endpoint de connexion
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+        phoneNumber: formData.phoneNumber,
+        password: formData.password
+      });
+
+      if (response.status === 200) {
+        // On suppose que ton backend renvoie les infos utilisateur et potentiellement un token
+        const userData = response.data; 
+        
+        // Stockage dans le contexte d'authentification
+        login(userData);
+        
+        // Redirection vers le tableau de bord
+        navigate("/tableau-de-bord");
+      }
+    } catch (err) {
+      console.error("Erreur de connexion:", err);
+      const message = err.response?.data?.message || "Numéro de téléphone ou mot de passe incorrect";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="auth-page">
       <div className="auth-shell">
-
-        {/* ── WHITE FORM CARD (left, overlaps panel) ── */}
+        
         <div className="auth-container">
-
           <div className="auth-header">
             <h1 className="auth-title">Connexion</h1>
             <p className="auth-subtitle">Bon retour sur QAISARYA 🇲🇦</p>
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form">
-
+            
+            {/* Champ Téléphone au lieu de Email */}
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="phoneNumber">Numéro de téléphone</label>
               <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="votre@email.com"
-                value={formData.email}
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                placeholder="+212 6..."
+                value={formData.phoneNumber}
                 onChange={handleChange}
                 required
               />
@@ -63,15 +95,15 @@ function Login() {
                   className="toggle-password"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword
-                    ? <EyeOff size={16} strokeWidth={1.8} />
-                    : <Eye    size={16} strokeWidth={1.8} />}
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
             </div>
 
-            <button type="submit" className="btn-submit">
-              Se connecter <ArrowRight size={14} strokeWidth={2.5} />
+            {error && <div className="auth-error" style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '1rem' }}>{error}</div>}
+
+            <button type="submit" className="btn-submit" disabled={loading}>
+              {loading ? "Connexion..." : "Se connecter"} <ArrowRight size={14} strokeWidth={2.5} />
             </button>
 
           </form>
@@ -82,10 +114,8 @@ function Login() {
             Pas encore de compte ?{" "}
             <Link to="/register" className="auth-link">S'inscrire</Link>
           </p>
-
         </div>
 
-        {/* ── RED RIGHT PANEL ── */}
         <div className="auth-panel">
           <div className="auth-panel-dots" />
           <div className="auth-panel-content">

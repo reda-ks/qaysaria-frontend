@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/composantsCSS/composants.css';
 import logo from '../assets/logo.png';
+import { useAuth } from '../context/AuthContext';
+import UserDropdown from './UserDropdown';
 
 const Header = ({ currentLang, switchLang }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isConnected } = useAuth();
 
   return (
     <header className="header">
@@ -47,9 +50,13 @@ const Header = ({ currentLang, switchLang }) => {
             </svg>
           </button>
 
-          <Link to="/login" style={{ textDecoration: 'none' }}>
-            <button className="btn-connexion">Connexion</button>
-          </Link>
+          {isConnected ? (
+            <UserDropdown />
+          ) : (
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              <button className="btn-connexion">Connexion</button>
+            </Link>
+          )}
 
           {/* ── Hamburger (mobile only) ── */}
           <button
@@ -66,6 +73,7 @@ const Header = ({ currentLang, switchLang }) => {
       {menuOpen && (
         <div className="mobile-menu">
           <ul className="mobile-links">
+<<<<<<< HEAD
             <li><Link style={{ fontWeight: 500 }}  to="/accueil"        onClick={() => setMenuOpen(false)}>Accueil</Link></li>
             <li><Link style={{ fontWeight: 500 }}  to="/produits"        onClick={() => setMenuOpen(false)}>Produits</Link></li>
             <li><Link style={{ fontWeight: 500 }}  to="/qui-sommes-nous" onClick={() => setMenuOpen(false)}>Qui Sommes Nous?</Link></li>
@@ -74,6 +82,18 @@ const Header = ({ currentLang, switchLang }) => {
             <li className="mobile-login">
               <Link to="/login" onClick={() => setMenuOpen(false)}>Connexion</Link>
             </li>
+=======
+            <li><Link to="/accueil"        onClick={() => setMenuOpen(false)}>Accueil</Link></li>
+            <li><Link to="/produits"        onClick={() => setMenuOpen(false)}>Produits</Link></li>
+            <li><Link to="/qui-sommes-nous" onClick={() => setMenuOpen(false)}>Qui Sommes Nous?</Link></li>
+            <li><Link to="/Howitworks"      onClick={() => setMenuOpen(false)}>Comment ça marche</Link></li>
+            <li><Link to="/contact"         onClick={() => setMenuOpen(false)}>Contact</Link></li>
+            {!isConnected && (
+              <li className="mobile-login">
+                <Link to="/login" onClick={() => setMenuOpen(false)}>Connexion</Link>
+              </li>
+            )}
+>>>>>>> frontt-saad-branch
           </ul>
         </div>
       )}

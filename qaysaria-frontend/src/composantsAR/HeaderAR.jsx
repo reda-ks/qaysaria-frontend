@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/composantsCSS/composants.css';
 import logo from '../assets/logo.png';
+import { useAuth } from '../context/AuthContext';
+import UserDropdown from './UserDropdownAR';
 
 const HeaderAR = ({ currentLang, switchLang }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isConnected } = useAuth();
 
   return (
     <header className="header" dir="rtl" style={{ padding: '-10px' ,height: '75px' }}>
@@ -47,9 +50,19 @@ const HeaderAR = ({ currentLang, switchLang }) => {
             </svg>
           </button>
 
+<<<<<<< HEAD
           <Link to="/تسجيل-الدخول" style={{ textDecoration: 'none'  }} >
             <button className="btn-connexion" style={{ padding:"10px 20px"  }} >تسجيل الدخول</button>
           </Link>
+=======
+          {isConnected ? (
+            <UserDropdown />
+          ) : (
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              <button className="btn-connexion">تسجيل الدخول</button>
+            </Link>
+          )}
+>>>>>>> frontt-saad-branch
 
           {/* ── Hamburger (mobile only) ── */}
           <button
@@ -65,6 +78,7 @@ const HeaderAR = ({ currentLang, switchLang }) => {
       {/* ── Mobile menu RTL ── */}
       {menuOpen && (
         <div className="mobile-menu mobile-menu--rtl">
+<<<<<<< HEAD
           <ul className="mobile-links" style={{ fontSize: '16px', margin: 0,padding: 0,listStyle: 'none'}}>
             <li  ><Link to="/الرئيسية" onClick={() => setMenuOpen(false)} style={{ fontWeight: 700 ,fontSize: "17px" ,}} >الرئيسية</Link></li>
             <li ><Link to="/منتجات"   onClick={() => setMenuOpen(false)} style={{ fontWeight: 700 ,fontSize: "17px" ,}} >المنتجات</Link></li>
@@ -74,6 +88,19 @@ const HeaderAR = ({ currentLang, switchLang }) => {
            <li className="mobile-login">
               <Link to="/login" onClick={() => setMenuOpen(false)}>تسجيل الدخول</Link>
             </li>
+=======
+          <ul className="mobile-links">
+            <li><Link to="/الرئيسية" onClick={() => setMenuOpen(false)}>الرئيسية</Link></li>
+            <li><Link to="/منتجات"   onClick={() => setMenuOpen(false)}>المنتجات</Link></li>
+            <li><Link to="/من-نحن"   onClick={() => setMenuOpen(false)}>من نحن؟</Link></li>
+            <li><Link to="/كيف-يعمل" onClick={() => setMenuOpen(false)}>كيفية العمل</Link></li>
+            <li><Link to="/اتصل-بنا" onClick={() => setMenuOpen(false)}>اتصل بنا</Link></li>
+            {!isConnected && (
+              <li className="mobile-login">
+                <Link to="/login" onClick={() => setMenuOpen(false)}>تسجيل الدخول</Link>
+              </li>
+            )}
+>>>>>>> frontt-saad-branch
           </ul>
         </div>
       )}

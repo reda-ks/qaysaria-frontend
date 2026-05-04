@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { Eye, EyeOff, ArrowRight, Store } from "lucide-react";
 import "../../styles//pages css//auth.css";
+=======
+import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import axios from 'axios';
+import "../../styles/pages css/auth.css";
+>>>>>>> frontt-saad-branch
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -10,29 +16,78 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
+<<<<<<< HEAD
     role: "vendeur",
+=======
+    city: "", // On laisse vide au départ pour forcer la sélection
+>>>>>>> frontt-saad-branch
   });
+
+  const [cities, setCities] = useState([]);
+  const [loadingCities, setLoadingCities] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
+
+  const API_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:8080/api';
+
+  // 1. Récupération des villes depuis l'API au chargement du composant
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/villes/all`);
+        // On filtre "Morocco" si nécessaire car c'est le pays, pas une ville
+        const list = response.data.filter(v => v.name !== "Morocco");
+        setCities(list);
+        setLoadingCities(false);
+      } catch (err) {
+        console.error("Erreur lors du chargement des villes:", err);
+        setLoadingCities(false);
+      }
+    };
+    fetchCities();
+  }, [API_BASE_URL]);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
       alert("Les mots de passe ne correspondent pas !");
       return;
     }
+    
+    if (!formData.city) {
+      alert("Veuillez sélectionner une ville");
+      return;
+    }
+
     if (!agreeTerms) {
       alert("Veuillez accepter les conditions d'utilisation");
       return;
     }
-    console.log("Register:", formData);
-    // TODO: backend
+
+    const registerData = {
+      name: formData.fullName,
+      phoneNumber: formData.tel,
+      password: formData.password,
+      city: formData.city 
+    };
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/auth/register`, registerData);
+
+      if (response.status === 200 || response.status === 201) {
+        alert("Compte créé avec succès !");
+      }
+    } catch (err) {
+      console.error("Détails erreur:", err.response?.data);
+      const errorMessage = err.response?.data?.message || "Données invalides. Vérifiez tous les champs.";
+      alert(errorMessage);
+    }
   };
 
-  /* Password strength */
   const getStrength = (p) => {
     if (!p) return 0;
     let s = 0;
@@ -42,22 +97,22 @@ function Register() {
     if (/[^A-Za-z0-9]/.test(p)) s++;
     return s;
   };
+  
   const strength = getStrength(formData.password);
   const sClass = strength <= 1 ? 'weak' : strength <= 2 ? 'medium' : 'strong';
+  const requiredStar = <span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>;
 
   return (
     <div className="auth-page">
       <div className="auth-shell">
-
-        {/* ── WHITE FORM CARD ── */}
         <div className="auth-container">
-
           <div className="auth-header">
             <h1 className="auth-title">Créer un compte</h1>
             <p className="auth-subtitle">Rejoignez QAISARYA gratuitement 🇲🇦</p>
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form">
+<<<<<<< HEAD
 
             {/* Role */}
             <div className="form-group">
@@ -73,31 +128,72 @@ function Register() {
             </div>
 
             {/* Name + Phone */}
+=======
+>>>>>>> frontt-saad-branch
             <div className="form-row-2">
               <div className="form-group">
-                <label htmlFor="fullName">Nom complet</label>
-                <input type="text" id="fullName" name="fullName" placeholder="Mohammed Alami" value={formData.fullName} onChange={handleChange} required />
+                <label htmlFor="fullName">Nom complet {requiredStar}</label>
+                <input 
+                  type="text" id="fullName" name="fullName" 
+                  placeholder="Mohammed Alami" 
+                  value={formData.fullName} onChange={handleChange} 
+                  required 
+                />
               </div>
               <div className="form-group">
-                <label htmlFor="tel">Téléphone</label>
-                <input type="tel" id="tel" name="tel" placeholder="+212 6 00 00 00 00" value={formData.tel} onChange={handleChange} required />
+                <label htmlFor="tel">Téléphone {requiredStar}</label>
+                <input 
+                  type="tel" id="tel" name="tel" 
+                  placeholder="+212 6 00 00 00 00" 
+                  value={formData.tel} onChange={handleChange} 
+                  required 
+                />
               </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="votre@email.com" value={formData.email} onChange={handleChange} required />
+              <input 
+                type="email" id="email" name="email" 
+                placeholder="votre@email.com" 
+                value={formData.email} onChange={handleChange} 
+              />
+            </div>
+
+            {/* --- DROPDOWN VILLE --- */}
+            <div className="form-group">
+              <label htmlFor="city">Ville {requiredStar}</label>
+              <select 
+                id="city" 
+                name="city" 
+                value={formData.city} 
+                onChange={handleChange} 
+                required
+                className="city-select"
+              >
+                <option value="">Sélectionnez votre ville</option>
+                {loadingCities ? (
+                  <option disabled>Chargement des villes...</option>
+                ) : (
+                  cities.map((ville, index) => (
+                    <option key={index} value={ville.name}>
+                      {ville.name}
+                    </option>
+                  ))
+                )}
+              </select>
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Mot de passe</label>
+              <label htmlFor="password">Mot de passe {requiredStar}</label>
               <div className="password-input-wrapper">
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password" name="password"
                   placeholder="••••••••"
                   value={formData.password}
-                  onChange={handleChange} required
+                  onChange={handleChange} 
+                  required
                 />
                 <button type="button" className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <EyeOff size={16} strokeWidth={1.8} /> : <Eye size={16} strokeWidth={1.8} />}
@@ -113,13 +209,14 @@ function Register() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="confirmPassword">Confirmer le mot de passe</label>
+              <label htmlFor="confirmPassword">Confirmer le mot de passe {requiredStar}</label>
               <input
                 type={showPassword ? "text" : "password"}
                 id="confirmPassword" name="confirmPassword"
                 placeholder="••••••••"
                 value={formData.confirmPassword}
-                onChange={handleChange} required
+                onChange={handleChange} 
+                required
               />
               {formData.confirmPassword && (
                 <span className={`pwd-match ${formData.password === formData.confirmPassword ? 'ok' : 'err'}`}>
@@ -131,7 +228,7 @@ function Register() {
             <div className="checkbox-group">
               <input type="checkbox" id="terms" checked={agreeTerms} onChange={(e) => setAgreeTerms(e.target.checked)} required />
               <label htmlFor="terms">
-                J'accepte les <a href="/" className="terms-link">CGU</a> et la <a href="/" className="terms-link">politique de confidentialité</a>
+                J'accepte les <a href="/" className="terms-link">CGU</a> et la <a href="/" className="terms-link">politique de confidentialité</a> {requiredStar}
               </label>
             </div>
 
@@ -150,7 +247,6 @@ function Register() {
 
         </div>
 
-        {/* ── RED RIGHT PANEL ── */}
         <div className="auth-panel">
           <div className="auth-panel-dots" />
           <div className="auth-panel-content">

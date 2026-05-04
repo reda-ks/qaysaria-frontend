@@ -62,14 +62,13 @@ main {
   background-color: var(--light-gray);
   min-height: calc(100vh - 80px);
   position: relative;
-  margin-left: 260px;
 }
 
 /* Zone de contenu à droite de la sidebar (fixed) */
 .content-area {
   padding: 30px;
   background-color: var(--light-gray);
-  width: calc(100% - 30px);
+  width: 100%;
   min-height: calc(100vh - 80px);
 }
 
