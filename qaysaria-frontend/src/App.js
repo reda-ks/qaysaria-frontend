@@ -6,11 +6,7 @@ import Header from './composants/Header';
 import HeaderAR from './composantsAR/HeaderAR';
 import Footer from './composants/Footer';
 import FooterAR from './composantsAR/FooterAR';
-<<<<<<< HEAD
-import SidebarAR from './composantsAR/SidebarAR';
-=======
-//import Sidebar from './composants/Sidebar';
->>>>>>> frontt-saad-branch
+
 
 import Accueil from './pages/accueil/AccueilFR/accueil';
 import AccueilAR from './pages/accueil/AccueilAR/accueil_ar';
@@ -28,11 +24,7 @@ import HowItWorksAr from './pages/Howitworks/HowitworksAR/Howitworks';
 import Login from './pages/auth/Login';
 import LoginAR from './pages/auth/LoginAR';
 import Register from './pages/auth/Register';
-<<<<<<< HEAD
-import RegisterAR from './pages/auth/RegisterAR';
-=======
 import AuthTest from './pages/auth/AuthTest';
->>>>>>> frontt-saad-branch
 import BoutiqueUtilisateur from './pages/auth/utilisateurs/boutique_utilisateur';
 import Commandes from './pages/auth/utilisateurs/commandes';
 import Support from './pages/auth/utilisateurs/support';
@@ -86,11 +78,7 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/تسجيل-الدخول" element={<LoginAR />} />
       <Route path="/register" element={<Register />} />
-<<<<<<< HEAD
-      <Route path="/إنشاء-حساب" element={<RegisterAR />} />
-=======
       <Route path="/auth-test" element={<AuthTest />} />
->>>>>>> frontt-saad-branch
       <Route path="/boutique-utilisateur" element={<BoutiqueUtilisateur />} />
       <Route path="/commandes" element={<Commandes />} /> 
       <Route path="/support" element={<Support />} />
@@ -143,11 +131,7 @@ function AppContent() {
       {/* Contenu Principal avec Sidebar conditionnelle */}
       {isUserRoute ? (
         <div className="user-dashboard-layout">
-<<<<<<< HEAD
-          <SidebarAR />
-=======
           {/* <Sidebar /> */}
->>>>>>> frontt-saad-branch
           <main className="content-area">
             <AppRoutes />
           </main>

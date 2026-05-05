@@ -73,16 +73,6 @@ const Header = ({ currentLang, switchLang }) => {
       {menuOpen && (
         <div className="mobile-menu">
           <ul className="mobile-links">
-<<<<<<< HEAD
-            <li><Link style={{ fontWeight: 500 }}  to="/accueil"        onClick={() => setMenuOpen(false)}>Accueil</Link></li>
-            <li><Link style={{ fontWeight: 500 }}  to="/produits"        onClick={() => setMenuOpen(false)}>Produits</Link></li>
-            <li><Link style={{ fontWeight: 500 }}  to="/qui-sommes-nous" onClick={() => setMenuOpen(false)}>Qui Sommes Nous?</Link></li>
-            <li><Link style={{ fontWeight: 500 }}  to="/Howitworks"      onClick={() => setMenuOpen(false)}>Comment ça marche</Link></li>
-            <li><Link style={{ fontWeight: 500 }}  to="/contact"         onClick={() => setMenuOpen(false)}>Contact</Link></li>
-            <li className="mobile-login">
-              <Link to="/login" onClick={() => setMenuOpen(false)}>Connexion</Link>
-            </li>
-=======
             <li><Link to="/accueil"        onClick={() => setMenuOpen(false)}>Accueil</Link></li>
             <li><Link to="/produits"        onClick={() => setMenuOpen(false)}>Produits</Link></li>
             <li><Link to="/qui-sommes-nous" onClick={() => setMenuOpen(false)}>Qui Sommes Nous?</Link></li>
@@ -93,7 +83,6 @@ const Header = ({ currentLang, switchLang }) => {
                 <Link to="/login" onClick={() => setMenuOpen(false)}>Connexion</Link>
               </li>
             )}
->>>>>>> frontt-saad-branch
           </ul>
         </div>
       )}

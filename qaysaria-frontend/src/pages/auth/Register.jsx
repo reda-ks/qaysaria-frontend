@@ -1,13 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-import { Eye, EyeOff, ArrowRight, Store } from "lucide-react";
-import "../../styles//pages css//auth.css";
-=======
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import axios from 'axios';
 import "../../styles/pages css/auth.css";
->>>>>>> frontt-saad-branch
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -16,11 +11,7 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-<<<<<<< HEAD
-    role: "vendeur",
-=======
     city: "", // On laisse vide au départ pour forcer la sélection
->>>>>>> frontt-saad-branch
   });
 
   const [cities, setCities] = useState([]);
@@ -112,24 +103,6 @@ function Register() {
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form">
-<<<<<<< HEAD
-
-            {/* Role */}
-            <div className="form-group">
-              <label>Je suis</label>
-              <div className="form-type-row">
-                
-                <label className={`form-type-option ${formData.role === 'vendeur' ? 'active' : ''}`}>
-                  <input type="radio" name="role" value="vendeur" checked={formData.role === 'vendeur'} onChange={handleChange} />
-                  <Store size={13} strokeWidth={2} />
-                  Commerçant
-                </label>
-              </div>
-            </div>
-
-            {/* Name + Phone */}
-=======
->>>>>>> frontt-saad-branch
             <div className="form-row-2">
               <div className="form-group">
                 <label htmlFor="fullName">Nom complet {requiredStar}</label>

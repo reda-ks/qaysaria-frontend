@@ -47,7 +47,7 @@ const ModernProfile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData(prev => ({ ...prev, [name]: value }));
+  //  setData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSave = (e) => {
@@ -75,7 +75,7 @@ const ModernProfile = () => {
           isTextarea ? (
             <textarea
               name={name}
-              value={data[name]}
+              //value={data[name]}
               onChange={handleChange}
               className="field-input textarea-input"
               rows="4"
@@ -84,7 +84,7 @@ const ModernProfile = () => {
             <input
               type={type}
               name={name}
-              value={data[name]}
+              //value={data[name]}
               onChange={handleChange}
               className="pf-input"
             />
