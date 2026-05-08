@@ -208,3 +208,110 @@
     height: 16px;
   }
 }
+/* ── dropdown menu ── */
+/* Conteneur principal */
+.user-dropdown-container {
+  position: relative; /* Indispensable pour le positionnement du menu */
+  display: inline-block;
+}
+
+/* Bouton Avatar */
+.avatar-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.avatar-img, .avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #6366f1;
+  color: white;
+  font-weight: bold;
+}
+
+/* Le menu lui-même */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 12px); /* Espace sous l'avatar */
+  width: 260px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid #eee;
+  z-index: 10000; /* Priorité maximale */
+  overflow: hidden;
+}
+
+/* En-tête du menu */
+.dropdown-header {
+  padding: 15px;
+  background-color: #fafafa;
+}
+
+.dropdown-user-info {
+  text-align: left; /* Aligné à gauche comme demandé */
+}
+
+.dropdown-name {
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.dropdown-email {
+  font-size: 12px;
+  color: #71717a;
+  margin: 4px 0 0 0;
+}
+
+/* Items du menu */
+.dropdown-nav {
+  padding: 8px 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  color: #3f3f46;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  justify-content: flex-start; /* Aligne icône + texte à gauche */
+  text-align: left; /* Pour le texte */
+}
+
+.dropdown-item:hover {
+  background-color: #f4f4f5;
+  color: #18181b;
+}
+
+.logout-btn {
+  color: #ef4444;
+  margin: 8px 0;
+}
+
+.logout-btn:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #f4f4f5;
+  margin: 0;
+}

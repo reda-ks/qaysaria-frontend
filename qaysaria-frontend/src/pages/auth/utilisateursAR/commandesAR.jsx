@@ -7,77 +7,75 @@ import {
 import '../../../styles/pages css/commandes.css';
 
 /* ════════════════════════════════════════════════════════
-    DONNÉES (DATA)
+   البيانات
 ═══════════════════════════════════════════════════════════ */
 const COMMANDES = [
-  { id: 'CMD-001', client: 'Fatima Benali',      date: '2025-03-01', montant: 1299.99, statut: 'Livré' },
-  { id: 'CMD-002', client: 'Ahmed El Kharji',    date: '2025-03-02', montant: 759.50,  statut: 'En cours' },
-  { id: 'CMD-003', client: 'Sira Mohamed',       date: '2025-03-03', montant: 449.99,  statut: 'En cours' },
-  { id: 'CMD-004', client: 'Hassan Jaber',       date: '2025-02-28', montant: 2199.00, statut: 'Livré' },
-  { id: 'CMD-005', client: 'Zineb El Fassi',     date: '2025-02-25', montant: 899.75,  statut: 'Annulé' },
-  { id: 'CMD-006', client: 'Omar Cherkaoui',     date: '2025-03-04', montant: 599.99,  statut: 'En cours' },
-  { id: 'CMD-007', client: 'Layla Mansouri',     date: '2025-03-05', montant: 1599.50, statut: 'Livré' },
-  { id: 'CMD-008', client: 'Mohcine Rachid',     date: '2025-02-20', montant: 799.99,  statut: 'Annulé' },
+  { id: 'CMD-001', client: 'فاطمة بنعلي',       date: '2025-03-01', montant: 1299.99, statut: 'تم التسليم' },
+  { id: 'CMD-002', client: 'أحمد الخارجي',       date: '2025-03-02', montant: 759.50,  statut: 'قيد التنفيذ' },
+  { id: 'CMD-003', client: 'سيرة محمد',          date: '2025-03-03', montant: 449.99,  statut: 'قيد التنفيذ' },
+  { id: 'CMD-004', client: 'حسن جابر',           date: '2025-02-28', montant: 2199.00, statut: 'تم التسليم' },
+  { id: 'CMD-005', client: 'زينب الفاسي',        date: '2025-02-25', montant: 899.75,  statut: 'ملغى'        },
+  { id: 'CMD-006', client: 'عمر الشرقاوي',       date: '2025-03-04', montant: 599.99,  statut: 'قيد التنفيذ' },
+  { id: 'CMD-007', client: 'ليلى المنصوري',      date: '2025-03-05', montant: 1599.50, statut: 'تم التسليم' },
+  { id: 'CMD-008', client: 'محسن رشيد',          date: '2025-02-20', montant: 799.99,  statut: 'ملغى'        },
 ];
 
 const STATUS_CONFIG = {
-  'Livré':    { cls: 'cmd-badge--green',  Icon: CheckCircle2 },
-  'En cours': { cls: 'cmd-badge--orange', Icon: Clock },
-  'Annulé':   { cls: 'cmd-badge--red',    Icon: XCircle },
+  'تم التسليم': { cls: 'cmd-badge--green',  Icon: CheckCircle2, filterKey: 'تم التسليم' },
+  'قيد التنفيذ': { cls: 'cmd-badge--orange', Icon: Clock,        filterKey: 'قيد التنفيذ' },
+  'ملغى':        { cls: 'cmd-badge--red',    Icon: XCircle,      filterKey: 'ملغى'        },
 };
 
 const FILTERS = [
-  { key: '',         label: 'Tous' },
-  { key: 'En cours', label: 'En cours' },
-  { key: 'Livré',    label: 'Livré' },
-  { key: 'Annulé',   label: 'Annulé' },
+  { key: '',           label: 'الكل'         },
+  { key: 'قيد التنفيذ', label: 'قيد التنفيذ' },
+  { key: 'تم التسليم', label: 'تم التسليم'  },
+  { key: 'ملغى',       label: 'ملغى'         },
 ];
 
 /* ════════════════════════════════════════════════════════
-    COMPOSANT
+   المكوّن
 ═══════════════════════════════════════════════════════════ */
-const Commandes = () => {
+const CommandesAR = () => {
   const [filterStatut, setFilterStatut] = useState('');
   const [search, setSearch]             = useState('');
 
-  /* Filtrage */
+  /* فلترة */
   const filtered = COMMANDES.filter(cmd => {
     const matchStatut = !filterStatut || cmd.statut === filterStatut;
-    const matchSearch = !search || 
-                        cmd.client.toLowerCase().includes(search.toLowerCase()) || 
-                        cmd.id.toLowerCase().includes(search.toLowerCase());
+    const matchSearch = !search || cmd.client.includes(search) || cmd.id.toLowerCase().includes(search.toLowerCase());
     return matchStatut && matchSearch;
   });
 
-  /* Statistiques */
+  /* إحصاءات */
   const stats = [
-    { label: 'Total Commandes', value: COMMANDES.length,                                  Icon: Package,      cls: 'cmd-stat--total'  },
-    { label: 'Livré',           value: COMMANDES.filter(c => c.statut === 'Livré').length,    Icon: CheckCircle2, cls: 'cmd-stat--green'  },
-    { label: 'En cours',        value: COMMANDES.filter(c => c.statut === 'En cours').length, Icon: Clock,        cls: 'cmd-stat--orange' },
-    { label: 'Annulé',          value: COMMANDES.filter(c => c.statut === 'Annulé').length,   Icon: XCircle,      cls: 'cmd-stat--red'    },
+    { label: 'إجمالي الطلبات', value: COMMANDES.length,                                        Icon: Package,      cls: 'cmd-stat--total'  },
+    { label: 'تم التسليم',      value: COMMANDES.filter(c => c.statut === 'تم التسليم').length, Icon: CheckCircle2, cls: 'cmd-stat--green'  },
+    { label: 'قيد التنفيذ',     value: COMMANDES.filter(c => c.statut === 'قيد التنفيذ').length,Icon: Clock,        cls: 'cmd-stat--orange' },
+    { label: 'ملغى',            value: COMMANDES.filter(c => c.statut === 'ملغى').length,        Icon: XCircle,      cls: 'cmd-stat--red'    },
   ];
 
-  /* Chiffre d'affaires */
+  /* مجموع المبيعات */
   const totalRevenu = COMMANDES
-    .filter(c => c.statut === 'Livré')
+    .filter(c => c.statut === 'تم التسليم')
     .reduce((acc, c) => acc + c.montant, 0);
 
   return (
-    <div className="cmdar-page" dir="ltr" lang="fr">
+    <div className="cmdar-page" dir="rtl" lang="ar">
 
-      {/* ══ En-tête ══ */}
+      {/* ══ رأس الصفحة ══ */}
       <div className="cmdar-header">
         <div>
-          <h1 className="cmdar-title">Gestion des Commandes</h1>
-          <p className="cmdar-subtitle">Suivez et gérez l'ensemble de vos commandes</p>
+          <h1 className="cmdar-title">إدارة الطلبات</h1>
+          <p className="cmdar-subtitle">متابعة وإدارة جميع طلباتك</p>
         </div>
         <button className="cmdar-export-btn">
           <FileDown size={15} strokeWidth={2} />
-          Exporter PDF
+          تصدير PDF
         </button>
       </div>
 
-      {/* ══ Statistiques ══ */}
+      {/* ══ الإحصاءات ══ */}
       <div className="cmdar-stats">
         {stats.map(({ label, value, Icon, cls }) => (
           <div key={label} className={`cmdar-stat ${cls}`}>
@@ -91,24 +89,24 @@ const Commandes = () => {
           </div>
         ))}
 
-        {/* Revenu Total */}
+        {/* إجمالي الإيرادات */}
         <div className="cmdar-stat cmdar-stat--revenue">
           <div className="cmdar-stat-icon">
             <TrendingUp size={20} strokeWidth={1.8} />
           </div>
           <div className="cmdar-stat-body">
-            <span className="cmdar-stat-label">Chiffre d'affaires</span>
+            <span className="cmdar-stat-label">إجمالي الإيرادات</span>
             <span className="cmdar-stat-value">
-              {totalRevenu.toLocaleString('fr-FR', { minimumFractionDigits: 2 })}
-              <small> DHS</small>
+              {totalRevenu.toLocaleString('fr-MA', { minimumFractionDigits: 2 })}
+              <small> درهم</small>
             </span>
           </div>
         </div>
       </div>
 
-      {/* ══ Barre d'outils (Filtres + Recherche) ══ */}
+      {/* ══ الفلاتر + البحث ══ */}
       <div className="cmdar-toolbar">
-        {/* Filtres de statut */}
+        {/* أزرار الفلترة */}
         <div className="cmdar-filters">
           {FILTERS.map(({ key, label }) => (
             <button
@@ -124,12 +122,12 @@ const Commandes = () => {
           ))}
         </div>
 
-        {/* Recherche */}
+        {/* البحث */}
         <div className="cmdar-search">
           <Search size={15} strokeWidth={2} color="#888" />
           <input
             type="text"
-            placeholder="Rechercher un client ou N° commande..."
+            placeholder="ابحث عن عميل أو رقم طلب..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="cmdar-search-input"
@@ -137,17 +135,17 @@ const Commandes = () => {
         </div>
       </div>
 
-      {/* ══ Tableau des Commandes ══ */}
+      {/* ══ جدول الطلبات ══ */}
       <div className="cmdar-table-wrap">
         <table className="cmdar-table">
           <thead>
             <tr>
-              <th>N° Commande</th>
-              <th>Client</th>
-              <th>Date</th>
-              <th>Montant</th>
-              <th>Statut</th>
-              <th>Actions</th>
+              <th>رقم الطلب</th>
+              <th>العميل</th>
+              <th>التاريخ</th>
+              <th>المبلغ</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
             </tr>
           </thead>
           <tbody>
@@ -157,12 +155,12 @@ const Commandes = () => {
                 return (
                   <tr key={cmd.id} className="cmdar-row">
 
-                    {/* ID Commande */}
+                    {/* رقم الطلب */}
                     <td>
                       <span className="cmdar-id">{cmd.id}</span>
                     </td>
 
-                    {/* Client */}
+                    {/* العميل */}
                     <td>
                       <div className="cmdar-client">
                         <div className="cmdar-avatar">{cmd.client.charAt(0)}</div>
@@ -170,22 +168,22 @@ const Commandes = () => {
                       </div>
                     </td>
 
-                    {/* Date */}
+                    {/* التاريخ */}
                     <td className="cmdar-date">
-                      {new Date(cmd.date).toLocaleDateString('fr-FR', {
+                      {new Date(cmd.date).toLocaleDateString('ar-MA', {
                         day: '2-digit', month: '2-digit', year: 'numeric'
                       })}
                     </td>
 
-                    {/* Montant */}
+                    {/* المبلغ */}
                     <td>
                       <span className="cmdar-amount">
-                        {cmd.montant.toLocaleString('fr-FR', { minimumFractionDigits: 2 })}
-                        <small> DHS</small>
+                        {cmd.montant.toLocaleString('fr-MA', { minimumFractionDigits: 2 })}
+                        <small> درهم</small>
                       </span>
                     </td>
 
-                    {/* Statut */}
+                    {/* الحالة */}
                     <td>
                       <span className={`cmdar-badge ${cls}`}>
                         {SIcon && <SIcon size={12} strokeWidth={2.5} />}
@@ -193,16 +191,16 @@ const Commandes = () => {
                       </span>
                     </td>
 
-                    {/* Actions */}
+                    {/* الإجراءات */}
                     <td>
                       <div className="cmdar-actions">
-                        <button className="cmdar-action-btn cmdar-action-btn--view" title="Voir les détails">
+                        <button className="cmdar-action-btn cmdar-action-btn--view" title="عرض التفاصيل">
                           <Eye size={15} strokeWidth={2} />
                         </button>
-                        <button className="cmdar-action-btn cmdar-action-btn--edit" title="Modifier">
+                        <button className="cmdar-action-btn cmdar-action-btn--edit" title="تعديل">
                           <Pencil size={15} strokeWidth={2} />
                         </button>
-                        <button className="cmdar-action-btn cmdar-action-btn--delete" title="Supprimer">
+                        <button className="cmdar-action-btn cmdar-action-btn--delete" title="حذف">
                           <Trash2 size={15} strokeWidth={2} />
                         </button>
                       </div>
@@ -215,7 +213,7 @@ const Commandes = () => {
               <tr>
                 <td colSpan="6" className="cmdar-empty-row">
                   <Package size={40} strokeWidth={1.2} color="#D1D1D1" />
-                  <p>Aucune commande correspondante</p>
+                  <p>لا توجد طلبات مطابقة</p>
                 </td>
               </tr>
             )}
@@ -223,10 +221,10 @@ const Commandes = () => {
         </table>
       </div>
 
-      {/* ══ Pied de tableau ══ */}
+      {/* ══ عداد النتائج ══ */}
       {filtered.length > 0 && (
         <div className="cmdar-footer">
-          Affichage de <strong>{filtered.length}</strong> sur <strong>{COMMANDES.length}</strong> commandes
+          عرض <strong>{filtered.length}</strong> من أصل <strong>{COMMANDES.length}</strong> طلب
         </div>
       )}
 
@@ -234,4 +232,4 @@ const Commandes = () => {
   );
 };
 
-export default Commandes;
+export default CommandesAR;

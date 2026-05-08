@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutDashboard, Package, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, Settings, LogOut, HeadphonesIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/composantsCSS/UserDropdown.css';
@@ -33,7 +33,12 @@ const UserDropdownAR = () => {
   };
 
   const menuVariants = {
-    hidden: { opacity: 0, scale: 0.85, y: -10 },
+    hidden: { 
+      opacity: 0, 
+      scale: 0.95, 
+      y: -10,
+      originX: 0 // Important pour RTL : l'animation part du coin en haut à gauche
+    },
     visible: {
       opacity: 1,
       scale: 1,
@@ -42,14 +47,14 @@ const UserDropdownAR = () => {
     },
     exit: {
       opacity: 0,
-      scale: 0.85,
+      scale: 0.95,
       y: -10,
       transition: { duration: 0.15, ease: 'easeIn' },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, x: -10 },
+    hidden: { opacity: 0, x: 15 }, // Animation de glissement vers la droite pour l'arabe
     visible: (i) => ({
       opacity: 1,
       x: 0,
@@ -62,7 +67,7 @@ const UserDropdownAR = () => {
   }
 
   return (
-    <div className="user-dropdown-container" ref={dropdownRef} style={{ direction: 'rtl' }}>
+    <div className="user-dropdown-container" ref={dropdownRef} dir="rtl">
       {/* Avatar Button */}
       <button
         className="avatar-btn"
@@ -70,10 +75,10 @@ const UserDropdownAR = () => {
         title={user.shopName || user.name || 'المستخدم'}
       >
         {user.shopPhoto ? (
-          <img src={user.shopPhoto} alt="صورة المتجر" className="avatar-img" />
+          <img src={user.shopPhoto} alt="الصورة الشخصية" className="avatar-img" />
         ) : (
           <div className="avatar-placeholder">
-            {(user.shopName || user.name || 'ل')[0].toUpperCase()}
+            {(user.shopName || user.name || 'م')[0].toUpperCase()}
           </div>
         )}
       </button>
@@ -83,17 +88,23 @@ const UserDropdownAR = () => {
         {isOpen && (
           <motion.div
             className="dropdown-menu"
-            style={{ direction: 'rtl' }}
             variants={menuVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
+            style={{ 
+                textAlign: 'right',
+                left: 0,      /* Aligné sur le bord gauche du bouton car bouton est à gauche */
+                right: 'auto' 
+            }}
           >
             {/* User Info */}
             <div className="dropdown-header">
               <div className="dropdown-user-info">
-                <p className="dropdown-name">{user.shopName || user.name || 'المستخدم'}</p>
-                <p className="dropdown-email">{user.email || 'user@email.com'}</p>
+                <p className="dropdown-name">{user.name || 'اسم غير مسجل'}</p>
+                <p className="dropdown-email">
+                  {user.phoneNumber || '+212 00 00 00 00'} | {user.city || 'مستخدم'}
+                </p>
               </div>
             </div>
 
@@ -101,22 +112,36 @@ const UserDropdownAR = () => {
 
             {/* Menu Items */}
             <nav className="dropdown-nav">
-              <motion.div custom={0} variants={itemVariants} initial="hidden" animate="visible">
-                <Link to="/tableau-de-bord" onClick={() => setIsOpen(false)} className="dropdown-item">
+              <motion.div custom={0} variants={itemVariants}>
+                <Link to="/tableau-de-bordAR" onClick={() => setIsOpen(false)} className="dropdown-item">
                   <LayoutDashboard size={18} />
-                  <span>لوحة المعلومات</span>
+                  <span>لوحة التحكم</span>
                 </Link>
               </motion.div>
 
-              <motion.div custom={1} variants={itemVariants} initial="hidden" animate="visible">
-                <Link to="/mes-produits" onClick={() => setIsOpen(false)} className="dropdown-item">
+              <motion.div custom={1} variants={itemVariants}>
+                <Link to="/boutique-utilisateurAR" onClick={() => setIsOpen(false)} className="dropdown-item">
                   <Package size={18} />
-                  <span>منتجاتي</span>
+                  <span>متجري</span>
+                </Link>
+              </motion.div>
+                            
+              <motion.div custom={2} variants={itemVariants}>
+                <Link to="/commandesAR" onClick={() => setIsOpen(false)} className="dropdown-item">
+                  <Package size={18} />
+                  <span>الطلبات</span>
                 </Link>
               </motion.div>
 
-              <motion.div custom={2} variants={itemVariants} initial="hidden" animate="visible">
-                <Link to="/parametres" onClick={() => setIsOpen(false)} className="dropdown-item">
+              <motion.div custom={3} variants={itemVariants}>
+                <Link to="/supportAR" onClick={() => setIsOpen(false)} className="dropdown-item">
+                  <HeadphonesIcon size={18} />
+                  <span>الدعم الفني</span>
+                </Link>
+              </motion.div>
+
+              <motion.div custom={4} variants={itemVariants}>
+                <Link to="/profileAR" onClick={() => setIsOpen(false)} className="dropdown-item">
                   <Settings size={18} />
                   <span>الإعدادات</span>
                 </Link>
@@ -126,7 +151,7 @@ const UserDropdownAR = () => {
             <div className="dropdown-divider"></div>
 
             {/* Logout Button */}
-            <motion.div custom={3} variants={itemVariants} initial="hidden" animate="visible">
+            <motion.div custom={5} variants={itemVariants}>
               <button onClick={handleLogout} className="dropdown-item logout-btn">
                 <LogOut size={18} />
                 <span>تسجيل الخروج</span>
