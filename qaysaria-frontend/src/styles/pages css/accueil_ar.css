@@ -43,25 +43,10 @@
 }
 
 /* ── إعادة الضبط ── */
-.ar-home *, .ar-home *::before, .ar-home *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+[dir="rtl"] *, [dir="rtl"] *::before, [dir="rtl"] *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
 }
 
-.ar-home {
-  font-family: var(--ar-font);
-  background: var(--ar-cream);
-  color: var(--ar-g900);
-  overflow-x: hidden;
-}
-/* .ar-home * ,
-.ar-home *::before,
-.ar-home *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 [dir="rtl"] {
   font-family: var(--ar-font);
   background: var(--ar-cream);
@@ -70,12 +55,7 @@
   overflow-x: hidden;
   direction: rtl;
 }
-.ar-home {
-  font-family: var(--ar-font);
-  background: var(--ar-cream);
-  color: var(--ar-g900);
-  overflow-x: hidden;
-} */
+
 /* ════════════════════════════════════════════════════════
    الأزرار — نفس الفرنسية
 ═══════════════════════════════════════════════════════════ */
@@ -419,71 +399,285 @@
   .ar-shops-grid { grid-template-columns: repeat(2,1fr); gap: 14px; }
 }
 
+/* ════════════════════════════════════════════════════════
+   📱 768px — تابلت صغير / موبايل كبير
+═══════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  :root { --ar-gap: 18px; }
+  :root { --ar-gap: 16px; }
 
-  .ar-hero-left { padding: 60px var(--ar-gap) 28px; }
-  .ar-hero-title { font-size: 2.2rem; }
-  .ar-hero-buttons { flex-direction: column; align-items: center; gap: 10px; }
-  .ar-hero-buttons .ar-btn { width: 100%; max-width: 340px; }
-  .ar-hero-stats { grid-template-columns: repeat(3,1fr); width: 100%; max-width: 420px; }
-  .ar-stat-item { padding: 12px 8px; }
-  .ar-stat-number { font-size: 1.2rem; }
-  .ar-hero-right { height: 220px; padding-bottom: 36px; }
+  /* ── HERO ── */
+  .ar-hero-section::before {
+    clip-path: none;
+    background: linear-gradient(170deg, var(--ar-red) 0%, var(--ar-red-dark) 55%, var(--ar-red-deep) 100%);
+  }
+  .ar-hero-section::after { display: none; }
 
-  .ar-featured-section { padding: 32px 0; }
-  .ar-featured-inner { grid-template-columns: 1fr; gap: 10px; }
-  .ar-featured-col--center { grid-column: auto; order: 0; }
-  .ar-featured-card--tall { flex-direction: column; }
-  .ar-featured-card--tall .ar-featured-img { width: 100%; height: 240px; min-height: unset; }
-  .ar-featured-col--left, .ar-featured-col--right { flex-direction: row; gap: 10px; }
-  .ar-featured-card--sm { flex: 1; min-width: 0; }
-  .ar-featured-card--sm .ar-featured-img { height: 150px; }
-  .ar-featured-bottom { flex-direction: column; align-items: flex-end; gap: 8px; }
-  .ar-btn-wa--sm { width: 100%; justify-content: center; }
+  /* محتوى الهيرو: عمود واحد، مركزي */
+  .ar-hero-content {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    text-align: center;
+  }
 
-  .ar-categories-section { padding: 48px 0 60px; }
-  .ar-category-block { margin-bottom: 44px; }
-  .ar-category-header { flex-direction: column; align-items: flex-end; gap: 12px; }
-  .ar-category-link { align-self: flex-end; }
-  .ar-category-title { font-size: 1.4rem; }
-  .ar-shops-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
-  .ar-shop-image { height: 160px; }
-  .ar-shop-name { font-size: .85rem; }
-  .ar-shop-footer { flex-direction: row-reverse; flex-wrap: wrap; align-items: center; gap: 8px; }
-  .ar-btn-wa--card { width: 100%; justify-content: center; }
+  .ar-hero-left {
+    padding: 52px var(--ar-gap) 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-  .ar-modal-content { padding: 36px 22px; }
-  .ar-modal-title { font-size: 1.5rem; }
+  .ar-hero-tag  { font-size: .72rem; padding: 6px 14px; }
+  .ar-hero-title { font-size: clamp(1.8rem, 6vw, 2.4rem); margin-bottom: 12px; }
+  .ar-hero-description {
+    font-size: .92rem;
+    max-width: 480px;
+    margin: 0 auto 24px;
+  }
+
+  /* أزرار CTA — عمود كامل العرض، ملموسة */
+  .ar-hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    max-width: 340px;
+    margin-bottom: 28px;
+  }
+  .ar-hero-buttons .ar-btn {
+    width: 100%;
+    padding: 16px 24px;  /* أكبر للمس */
+    font-size: .9rem;
+    justify-content: center;
+    border-radius: 10px;
+  }
+
+  /* إحصاءات — 3 أعمدة متساوية */
+  .ar-hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ar-stat-item  { padding: 12px 6px; }
+  .ar-stat-number { font-size: 1.1rem; }
+  .ar-stat-label  { font-size: .58rem; }
+
+  /* صورة الهيرو — مخفية على الموبايل لتوفير المساحة */
+  .ar-hero-right { display: none; }
+
+  /* ── FEATURED — بطاقة بارزة + تمرير أفقي ── */
+  .ar-featured-section { padding: 28px 0; }
+  .ar-titre-top { font-size: 1.2rem; margin-bottom: 18px; padding: 0 var(--ar-gap); }
+
+  /* تحويل الشبكة لـ scroll أفقي سلس */
+  .ar-featured-inner {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding: 4px var(--ar-gap) 16px;
+    scrollbar-width: none;
+    /* لا نحتاج grid هنا */
+    grid-template-columns: unset;
+  }
+  .ar-featured-inner::-webkit-scrollbar { display: none; }
+
+  .ar-featured-col {
+    flex-direction: column !important;
+    gap: 12px;
+    min-width: 220px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  .ar-featured-col--center {
+    min-width: 260px;
+    order: -1 !important;
+    grid-column: unset !important;
+  }
+
+  /* بطاقة طويلة → عمودية */
+  .ar-featured-card--tall {
+    flex-direction: column !important;
+    min-height: auto;
+  }
+  .ar-featured-card--tall .ar-featured-img {
+    width: 100% !important;
+    height: 200px !important;
+    min-height: unset;
+    flex-shrink: unset;
+  }
+
+  .ar-featured-card--sm .ar-featured-img { height: 160px; }
+
+  /* أزرار الطلب داخل البطاقة */
+  .ar-featured-bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+  .ar-btn-wa--sm {
+    width: auto !important;
+    padding: 9px 14px;
+    font-size: .74rem;
+    white-space: nowrap;
+  }
+
+  /* ── CATEGORIES ── */
+  .ar-categories-section { padding: 36px 0 52px; }
+  .ar-category-block { margin-bottom: 36px; padding: 0 var(--ar-gap); }
+
+  .ar-category-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .ar-category-title { font-size: 1.15rem; }
+  .ar-category-label { font-size: .6rem; }
+  .ar-category-link {
+    font-size: .72rem;
+    padding: 7px 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* شبكة 2 أعمدة — كحد أقصى */
+  .ar-shops-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* بطاقة المنتج */
+  .ar-shop-image { height: 150px; }
+  .ar-shop-content { padding: 10px 12px 12px; gap: 6px; }
+  .ar-shop-name { font-size: .82rem; line-height: 1.35; }
+  .ar-shop-description {
+    font-size: .74rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .ar-shop-price { font-size: .92rem; }
+  .ar-shop-footer {
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+  /* زر واتساب: أيقونة فقط على الموبايل */
+  .ar-btn-wa--card {
+    width: auto !important;
+    padding: 9px 12px;
+    font-size: .72rem;
+    justify-content: center;
+  }
+
+  /* ── مودال ── */
+  .ar-modal-overlay { padding: 16px; align-items: flex-end; }
+  .ar-modal-content {
+    padding: 28px 20px 32px;
+    border-radius: 20px 20px 12px 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .ar-modal-title { font-size: 1.35rem; }
+  .ar-modal-text  { font-size: .86rem; margin-bottom: 22px; }
   .ar-modal-buttons { flex-direction: column; gap: 10px; }
-  .ar-modal-buttons .ar-btn { width: 100%; }
+  .ar-modal-buttons .ar-btn {
+    width: 100%;
+    padding: 15px 24px;
+    font-size: .88rem;
+  }
 }
 
-@media (max-width: 600px) {
-  .ar-hero-title { font-size: 1.95rem; }
-  .ar-featured-col--left, .ar-featured-col--right { flex-direction: column; }
-  .ar-featured-card--sm .ar-featured-img { height: 180px; }
-  .ar-shops-grid { grid-template-columns: 1fr; gap: 12px; }
-  .ar-shop-image { height: 200px; }
-}
-
+/* ════════════════════════════════════════════════════════
+   📱 480px — هاتف قياسي
+═══════════════════════════════════════════════════════════ */
 @media (max-width: 480px) {
   :root { --ar-gap: 14px; }
-  .ar-hero-left { padding: 52px var(--ar-gap) 24px; }
-  .ar-hero-title { font-size: 1.75rem; }
-  .ar-hero-stats { grid-template-columns: repeat(2,1fr); max-width: 300px; }
-  .ar-featured-section { padding: 24px 0; }
-  .ar-featured-info { padding: 12px 14px 14px; }
-  .ar-shop-image { height: 180px; }
-  .ar-modal-content { padding: 30px 18px; margin: 12px; }
+
+  /* HERO */
+  .ar-hero-left { padding: 44px var(--ar-gap) 20px; }
+  .ar-hero-title { font-size: clamp(1.55rem, 7vw, 1.9rem); }
+  .ar-hero-description { font-size: .86rem; }
+  .ar-hero-buttons { max-width: 100%; }
+  .ar-hero-buttons .ar-btn { padding: 15px 20px; font-size: .86rem; }
+
+  /* الإحصاءات — 3 في صف */
+  .ar-hero-stats { max-width: 100%; border-radius: 10px; }
+  .ar-stat-item  { padding: 10px 4px; }
+  .ar-stat-number { font-size: 1rem; }
+  .ar-stat-label  { font-size: .54rem; }
+
+  /* FEATURED */
+  .ar-featured-section { padding: 20px 0; }
+  .ar-titre-top { font-size: 1.05rem; margin-bottom: 14px; }
+
+  .ar-featured-col { min-width: 200px; }
+  .ar-featured-col--center { min-width: 240px; }
+  .ar-featured-card--sm .ar-featured-img { height: 140px; }
+  .ar-featured-card--tall .ar-featured-img { height: 180px !important; }
+  .ar-featured-info { padding: 10px 12px 12px; gap: 5px; }
+  .ar-featured-name { font-size: .84rem; }
+  .ar-featured-price { font-size: .95rem; }
+
+  /* CATEGORIES */
+  .ar-categories-section { padding: 28px 0 44px; }
+  .ar-category-block { margin-bottom: 28px; }
+  .ar-category-header { margin-bottom: 14px; }
+  .ar-category-title { font-size: 1rem; }
+
+  /* شبكة 2 أعمدة */
+  .ar-shops-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .ar-shop-image { height: 130px; }
+  .ar-shop-content { padding: 8px 10px 10px; }
+  .ar-shop-name { font-size: .78rem; }
+  .ar-shop-description { display: none; } /* مخفي لتوفير المساحة */
+  .ar-shop-category-tag { font-size: .58rem; }
+  .ar-shop-price { font-size: .88rem; }
+  .ar-shop-footer { gap: 4px; }
+  .ar-btn-wa--card { padding: 7px 10px; font-size: .68rem; }
+
+  .ar-modal-overlay { padding: 0; }
+  .ar-modal-content { padding: 24px 16px 28px; border-radius: 20px 20px 0 0; margin: 0; }
 }
 
+/* ════════════════════════════════════════════════════════
+   📱 360px — هاتف صغير (Galaxy S, iPhone SE)
+═══════════════════════════════════════════════════════════ */
 @media (max-width: 360px) {
   :root { --ar-gap: 12px; }
-  .ar-hero-title { font-size: 1.55rem; }
-  .ar-shops-grid .ar-shop-name { font-size: .82rem; }
-  .ar-category-title { font-size: 1.15rem; }
-  .ar-category-link { font-size: .72rem; padding: 8px 14px; }
+
+  .ar-hero-title  { font-size: 1.4rem; }
+  .ar-hero-description { font-size: .82rem; }
+  .ar-hero-buttons .ar-btn { padding: 13px 16px; font-size: .82rem; }
+
+  .ar-stat-number { font-size: .9rem; }
+  .ar-stat-label  { font-size: .5rem; }
+
+  .ar-titre-top { font-size: .95rem; }
+
+  .ar-featured-col { min-width: 175px; }
+  .ar-featured-card--sm .ar-featured-img { height: 120px; }
+  .ar-featured-name { font-size: .78rem; }
+
+  .ar-shops-grid { gap: 6px; }
+  .ar-shop-image { height: 115px; }
+  .ar-shop-name  { font-size: .72rem; }
+  .ar-shop-price { font-size: .8rem; }
+  .ar-btn-wa--card { padding: 6px 8px; font-size: .64rem; }
+
+  .ar-category-title { font-size: .95rem; }
+  .ar-category-link  { font-size: .68rem; padding: 6px 10px; }
 }
 
 /* ── شريط التمرير ── */

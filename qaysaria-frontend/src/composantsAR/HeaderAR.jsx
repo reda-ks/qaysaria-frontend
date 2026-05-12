@@ -10,18 +10,18 @@ const HeaderAR = ({ currentLang, switchLang }) => {
   const { isConnected } = useAuth();
 
   return (
-    <header className="header" dir="rtl" style={{ padding: '-10px' ,height: '75px' }}>
+    <header className="header" dir="rtl">
       <nav className="navbar">
 
         <div className="navbar-brand">
-          <Link to="/الرئيسية" className="navbar-logo" style={{  margin: 0,padding: 0}}>
+          <Link to="/الرئيسية" className="navbar-logo" >
             <img src={logo} alt="شعار قيسارية" className="logo-img" />
             <span>قيسارية</span>
           </Link>
         </div>
 
-        <div className="navbar-center" style={{ padding: '-10px' }}>
-          <ul className="nav-links" style={{ fontSize: '16px', margin: 0,padding: 0,listStyle: 'none'}}>
+        <div className="navbar-center" >
+          <ul className="nav-links" >
             <li><Link style={{ fontWeight: 700 ,fontSize: "17px" ,}} to="/الرئيسية">الرئيسية</Link></li>
             <li><Link style={{ fontWeight: 700 ,fontSize: "17px" ,}} to="/منتجات">المنتجات</Link></li>
             <li><Link style={{ fontWeight: 700 ,fontSize: "17px" ,}} to="/من-نحن">من نحن؟</Link></li>
@@ -50,19 +50,15 @@ const HeaderAR = ({ currentLang, switchLang }) => {
             </svg>
           </button>
 
-<<<<<<< HEAD
-          <Link to="/تسجيل-الدخول" style={{ textDecoration: 'none'  }} >
-            <button className="btn-connexion" style={{ padding:"10px 20px"  }} >تسجيل الدخول</button>
-          </Link>
-=======
+          
+
           {isConnected ? (
             <UserDropdown />
           ) : (
-            <Link to="/login" style={{ textDecoration: 'none' }}>
-              <button className="btn-connexion">تسجيل الدخول</button>
-            </Link>
+            <Link to="/تسجيل-الدخول" style={{ textDecoration: 'none'  }} >
+            <button className="btn-connexion" style={{ padding:"10px 20px" ,marginLeft:"10px"  }} >تسجيل الدخول</button>
+          </Link>
           )}
->>>>>>> frontt-saad-branch
 
           {/* ── Hamburger (mobile only) ── */}
           <button
@@ -78,7 +74,7 @@ const HeaderAR = ({ currentLang, switchLang }) => {
       {/* ── Mobile menu RTL ── */}
       {menuOpen && (
         <div className="mobile-menu mobile-menu--rtl">
-<<<<<<< HEAD
+
           <ul className="mobile-links" style={{ fontSize: '16px', margin: 0,padding: 0,listStyle: 'none'}}>
             <li  ><Link to="/الرئيسية" onClick={() => setMenuOpen(false)} style={{ fontWeight: 700 ,fontSize: "17px" ,}} >الرئيسية</Link></li>
             <li ><Link to="/منتجات"   onClick={() => setMenuOpen(false)} style={{ fontWeight: 700 ,fontSize: "17px" ,}} >المنتجات</Link></li>
@@ -88,7 +84,8 @@ const HeaderAR = ({ currentLang, switchLang }) => {
            <li className="mobile-login">
               <Link to="/login" onClick={() => setMenuOpen(false)}>تسجيل الدخول</Link>
             </li>
-=======
+          </ul>
+        
           <ul className="mobile-links">
             <li><Link to="/الرئيسية" onClick={() => setMenuOpen(false)}>الرئيسية</Link></li>
             <li><Link to="/منتجات"   onClick={() => setMenuOpen(false)}>المنتجات</Link></li>
@@ -100,7 +97,6 @@ const HeaderAR = ({ currentLang, switchLang }) => {
                 <Link to="/login" onClick={() => setMenuOpen(false)}>تسجيل الدخول</Link>
               </li>
             )}
->>>>>>> frontt-saad-branch
           </ul>
         </div>
       )}

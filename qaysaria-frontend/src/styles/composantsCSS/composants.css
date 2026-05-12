@@ -23,6 +23,7 @@
   margin-left: 0 !important;
   padding-left: 0 !important;
   border-bottom: 1px solid var(--soft-gray);
+  position: relative;
 }
 [dir="rtl"].header {
   height: 80px; /* change this value as you want */
@@ -35,8 +36,7 @@
   gap: 40px;
   padding: 15px 40px;
   width: 100%;
-  margin: 0 !important;
-  margin-left: 0 !important;
+  margin: 10px !important;
 }
 
 .navbar-brand {
@@ -239,10 +239,16 @@
    ============================================ */
 
 .mobile-menu {
+  position: absolute;       /* ✅ important */
+  top: 100%;                /* ✅ يظهر تحت الهيدر */
+  left: 10px;
+  width: 100%;
   background-color: var(--white, #fff);
   border-top: 1px solid var(--soft-gray, #E1E3E5);
   box-shadow: 0 8px 20px rgba(0,0,0,.08);
   animation: mobileMenuIn 0.22s ease;
+  z-index: 999;             /* ✅ فوق المحتوى */
+
 }
 
 @keyframes mobileMenuIn {
@@ -363,18 +369,35 @@
 
 /* 480px — logo texte caché */
 @media (max-width: 480px) {
-  .navbar { padding: 10px 14px; }
 
-  /* Garder seulement le logo image */
-  .navbar-logo span { display: none; }
-  .logo-img { height: 32px; }
+  .navbar {
+    display: flex !important;          /* change grid → flex */
+    justify-content: space-between;    /* logo left, menu right */
+    align-items: center;
+    padding: 10px 15px;
+    gap: 10px;
+  }
 
-  /* Lang switcher plus compact */
-  .lang-switcher { margin-right: 4px; }
-  .lang-switcher span { padding: 4px 8px; font-size: 11px; }
+  .navbar-brand {
+    flex: 0 0 auto;
+  }
 
-  /* Search plus petit */
-  .search-button { width: 34px; height: 34px; }
+  .navbar-right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Hide big logo text */
+  .navbar-logo span {
+    display: none;
+  }
+
+  .logo-img {
+    height: 32px;
+  }
+
 }
 
 /* 360px — cacher la recherche */
@@ -632,3 +655,4 @@
     font-size: 12px;
   }
 }
+/* ------------------------------------------ */
