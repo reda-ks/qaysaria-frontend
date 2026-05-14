@@ -45,10 +45,10 @@ const ModernProfile = () => {
     }));
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-  //  setData(prev => ({ ...prev, [name]: value }));
-  };
+   const handleChange = (e) => {
+     //const { name, value } = e.target;
+   //  setData(prev => ({ ...prev, [name]: value }));
+   };
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -84,7 +84,7 @@ const ModernProfile = () => {
             <input
               type={type}
               name={name}
-              //value={data[name]}
+             // value={data[name]}
               onChange={handleChange}
               className="pf-input"
             />

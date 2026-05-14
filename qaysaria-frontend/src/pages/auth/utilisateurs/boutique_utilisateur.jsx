@@ -1,49 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  MapPin, Phone, Star, Instagram, Facebook,
-  Twitter, MessageCircle, SlidersHorizontal,
-  RotateCcw, Package, ShoppingBag, Tag, Ruler, PlusCircle
+  MapPin, Phone, Star, Instagram, /*Facebook,
+  Twitter,*/ MessageCircle, SlidersHorizontal,
+  RotateCcw, Package, ShoppingBag, Tag, Ruler, PlusCircle, Loader2
 } from 'lucide-react';
+import axios from 'axios';
+import { useAuth } from '../../../context/AuthContext';
 import '../../../styles/pages css/boutique_utilisateur.css';
 
 const BoutiqueUtilisateur = () => {
+  const { user } = useAuth();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [filters, setFilters] = useState({
     category: '',
     maxPrice: 5000,
     size: '',
   });
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
 
-  /* ─── DONNÉES DE LA BOUTIQUE ─── */
-  const boutique = {
-    nom: 'Kissariat Luxe',
-    localisation: 'Casablanca',
-    telephone: '+212 6 12 34 56 78',
-    note: 4,
-    reseaux: {
-      instagram: 'https://instagram.com',
-      facebook:  'https://facebook.com',
-      twitter:   'https://twitter.com',
-      whatsapp:  'https://wa.me/212612345678',
-    },
-  };
+  // 1. Récupération des produits depuis l'API
+  useEffect(() => {
+    const fetchBoutiqueProducts = async () => {
+      // Correction : Utilisation de user.boutiqueId (depuis ton AuthResponse DTO)
+      if (!user?.boutiqueId) {
+        console.warn("En attente du boutiqueId de l'utilisateur...");
+        return;
+      }
 
-  /* ─── PRODUITS ─── */
-  const produits = [
-    { id: 1, nom: 'Djellaba Homme de Luxe',   categorie: 'Vêtements',    prix: 850,  taille: 'M',  image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=320&fit=crop' },
-    { id: 2, nom: 'Sac en Cuir Traditionnel', categorie: 'Accessoires', prix: 580,  taille: '',   image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=320&fit=crop' },
-    { id: 3, nom: 'Caftan de Soirée Brodé',   categorie: 'Vêtements',    prix: 1400, taille: 'L',  image: 'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=400&h=320&fit=crop' },
-    { id: 4, nom: 'Bijoux Dorés',             categorie: 'Accessoires', prix: 320,  taille: '',   image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&h=320&fit=crop' },
-    { id: 5, nom: 'Pantalon Classique',       categorie: 'Vêtements',    prix: 420,  taille: 'M',  image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=320&fit=crop' },
-    { id: 6, nom: 'Ceinture Faite Main',      categorie: 'Accessoires', prix: 210,  taille: '',   image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=320&fit=crop' },
-    { id: 7, nom: 'Veste Moderne Élégante',   categorie: 'Vêtements',    prix: 760,  taille: 'S',  image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&h=320&fit=crop' },
-    { id: 8, nom: 'Montre de Luxe',           categorie: 'Accessoires', prix: 1290, taille: '',   image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=320&fit=crop' },
-  ];
+      try {
+        setLoading(true);
+        const response = await axios.get(`${API_BASE_URL}/products/productsboutiques`, {
+          params: { boutiqueId: user.boutiqueId }
+        });
+        
+        console.log("Produits récupérés:", response.data);
+        setProducts(response.data);
+        setError(null);
+      } catch (err) {
+        console.error("Erreur API détaillée:", err);
+        setError("Impossible de charger les produits de votre boutique.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  /* ─── FILTRAGE ─── */
-  const filtered = produits.filter(p => {
-    if (filters.category && p.categorie !== filters.category) return false;
-    if (p.prix > filters.maxPrice) return false;
-    if (filters.size && p.taille && p.taille !== filters.size) return false;
+    fetchBoutiqueProducts();
+  }, [user?.boutiqueId, API_BASE_URL]);
+
+  /* ─── FILTRAGE DES DONNÉES (Adapté au JSON de l'API) ─── */
+  const filtered = products.filter(p => {
+    // Correction : Utilisation des noms de champs API (p.category, p.price)
+    if (filters.category && p.category !== filters.category) return false;
+    if (p.price > filters.maxPrice) return false;
+    
+    // Note: p.tailles est une liste dans ton JSON, on vérifie si la taille choisie est dedans
+    if (filters.size && p.tailles && !p.tailles.includes(filters.size)) return false;
+    
     return true;
   });
 
@@ -66,74 +81,72 @@ const BoutiqueUtilisateur = () => {
     </div>
   );
 
+  // Écran de chargement si le AuthContext n'a pas encore fini
+  if (!user) {
+    return (
+      <div className="bu-loading-full">
+        <Loader2 className="animate-spin" size={32} />
+        <p>Chargement de votre session...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="bu-page" dir="ltr" lang="fr">
 
-      {/* ══ HEADER DE LA BOUTIQUE ══ */}
+      {/* ══ HEADER DE LA BOUTIQUE (Infos du User / AuthResponse) ══ */}
       <div className="bu-header">
         <div className="bu-header-inner">
-
-          {/* Logo + Infos */}
           <div className="bu-profile">
             <div className="bu-avatar-wrap">
-              <div className="bu-avatar">K</div>
+              <div className="bu-avatar">
+                {user.name ? user.name[0].toUpperCase() : 'B'}
+              </div>
               <span className="bu-avatar-badge">✓</span>
             </div>
             <div className="bu-info">
-              <h1 className="bu-name">{boutique.nom}</h1>
+              <h1 className="bu-name">{user.name || "Ma Boutique"}</h1>
               <div className="bu-meta">
                 <span className="bu-meta-item">
-                  <MapPin size={13} strokeWidth={2} /> {boutique.localisation}
+                  <MapPin size={13} strokeWidth={2} /> {user.city || "Maroc"}
                 </span>
                 <span className="bu-meta-item">
-                  <Phone size={13} strokeWidth={2} /> {boutique.telephone}
+                  <Phone size={13} strokeWidth={2} /> {user.phoneNumber || "N/A"}
                 </span>
               </div>
-              <Stars note={boutique.note} />
+              <Stars note={4} />
             </div>
           </div>
 
-          {/* Réseaux Sociaux */}
           <div className="bu-socials">
-            <a href={boutique.reseaux.whatsapp} className="bu-social bu-social--wa" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-              <MessageCircle size={17} strokeWidth={2} />
-            </a>
-            <a href={boutique.reseaux.instagram} className="bu-social" target="_blank" rel="noopener noreferrer" title="Instagram">
+            {user.phoneNumber && (
+              <a href={`https://wa.me/${user.phoneNumber}`} className="bu-social bu-social--wa" target="_blank" rel="noopener noreferrer">
+                <MessageCircle size={17} strokeWidth={2} />
+              </a>
+            )}
+            <a href="https://www.instagram.com" className="bu-social" target="_blank" rel="noopener noreferrer">
               <Instagram size={17} strokeWidth={1.8} />
             </a>
-            <a href={boutique.reseaux.facebook} className="bu-social" target="_blank" rel="noopener noreferrer" title="Facebook">
-              <Facebook size={17} strokeWidth={1.8} />
-            </a>
-            <a href={boutique.reseaux.twitter} className="bu-social" target="_blank" rel="noopener noreferrer" title="Twitter">
-              <Twitter size={17} strokeWidth={1.8} />
-            </a>
           </div>
-
         </div>
       </div>
 
-      {/* ══ CONTENU PRINCIPAL ══ */}
       <div className="bu-body">
-
         {/* ── FILTRES — GAUCHE ── */}
         <aside className="bu-filters">
-
           <div className="bu-filters-top">
             <h3 className="bu-filters-title">
               <SlidersHorizontal size={15} strokeWidth={2} color="#EF3B3C" />
               Filtres
             </h3>
             <button className="bu-filters-reset" onClick={handleReset}>
-              <RotateCcw size={11} strokeWidth={2.5} />
-              Réinitialiser
+              <RotateCcw size={11} strokeWidth={2.5} /> Réinitialiser
             </button>
           </div>
 
           {/* Catégorie */}
           <div className="bu-filter-group">
-            <label className="bu-filter-label">
-              <Tag size={13} strokeWidth={2} /> Catégorie
-            </label>
+            <label className="bu-filter-label"><Tag size={13} /> Catégorie</label>
             <div className="bu-filter-options">
               {['', 'Vêtements', 'Accessoires'].map(cat => (
                 <button
@@ -149,9 +162,7 @@ const BoutiqueUtilisateur = () => {
 
           {/* Prix */}
           <div className="bu-filter-group">
-            <label className="bu-filter-label">
-              <Tag size={13} strokeWidth={2} /> Prix Maximum
-            </label>
+            <label className="bu-filter-label"><Tag size={13} /> Prix Maximum</label>
             <div className="bu-price-display">
               <span>0 DH</span>
               <span className="bu-price-max">{filters.maxPrice.toLocaleString()} DH</span>
@@ -159,7 +170,7 @@ const BoutiqueUtilisateur = () => {
             <input
               type="range"
               className="bu-range"
-              min="0" max="5000" step="50"
+              min="0" max="10000" step="100"
               value={filters.maxPrice}
               onChange={e => setFilters(f => ({ ...f, maxPrice: +e.target.value }))}
             />
@@ -167,9 +178,7 @@ const BoutiqueUtilisateur = () => {
 
           {/* Taille */}
           <div className="bu-filter-group">
-            <label className="bu-filter-label">
-              <Ruler size={13} strokeWidth={2} /> Taille
-            </label>
+            <label className="bu-filter-label"><Ruler size={13} /> Taille</label>
             <div className="bu-filter-options bu-filter-options--sizes">
               {['', 'S', 'M', 'L', 'XL'].map(s => (
                 <button
@@ -182,43 +191,54 @@ const BoutiqueUtilisateur = () => {
               ))}
             </div>
           </div>
-
         </aside>
 
         {/* ── PRODUITS — DROITE ── */}
         <main className="bu-products">
-          
           <div className="bu-products-bar">
             <h2 className="bu-products-title">
-              <ShoppingBag size={18} strokeWidth={1.8} />
-              Nos Produits
+              <ShoppingBag size={18} strokeWidth={1.8} /> Nos Produits
             </h2>
             <span className="bu-products-count">
               <strong>{filtered.length}</strong> produit{filtered.length > 1 ? 's' : ''}
             </span>
             <div className="bu-actions">
               <button className="tdb-quick-btn">
-                <PlusCircle size={17} strokeWidth={2} />
-                Ajouter un Produit
+                <PlusCircle size={17} strokeWidth={2} /> Ajouter un Produit
               </button>
             </div>
           </div>
 
-          {filtered.length > 0 ? (
+          {loading ? (
+            <div className="bu-status-container" style={{ padding: '60px', textAlign: 'center' }}>
+              <Loader2 className="animate-spin" size={48} color="#EF3B3C" />
+              <p style={{ marginTop: '15px', color: '#666' }}>Chargement de votre catalogue...</p>
+            </div>
+          ) : error ? (
+            <div className="bu-empty">
+               <Package size={48} strokeWidth={1.2} color="#EF3B3C" />
+               <h3>Oups !</h3>
+               <p>{error}</p>
+            </div>
+          ) : filtered.length > 0 ? (
             <div className="bu-grid">
               {filtered.map(p => (
                 <div key={p.id} className="bu-card">
                   <div className="bu-card-img-wrap">
-                    <img src={p.image} alt={p.nom} className="bu-card-img" />
+                    <img 
+                      src={p.imageUrl || 'https://via.placeholder.com/400x320?text=Produit'} 
+                      alt={p.name} 
+                      className="bu-card-img" 
+                    />
                   </div>
                   <div className="bu-card-body">
-                    <span className="bu-card-cat">{p.categorie}</span>
-                    <h3 className="bu-card-name">{p.nom}</h3>
+                    <span className="bu-card-cat">{p.category}</span>
+                    <h3 className="bu-card-name">{p.name}</h3>
                     <div className="bu-card-footer">
-                       <span className="bu-card-price">{p.prix} DH</span>
-                       {p.taille && (
-                        <span className="bu-card-size">Taille: {p.taille}</span>
-                      )}
+                        <span className="bu-card-price">{p.price} DH</span>
+                        {p.tailles && p.tailles.length > 0 && (
+                          <span className="bu-card-size">T: {p.tailles.join(', ')}</span>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -228,13 +248,12 @@ const BoutiqueUtilisateur = () => {
             <div className="bu-empty">
               <Package size={48} strokeWidth={1.2} color="#D1D1D1" />
               <h3>Aucun produit trouvé</h3>
-              <p>Essayez de modifier les filtres pour obtenir d'autres résultats</p>
+              <p>Essayez de modifier les filtres ou ajoutez votre premier produit.</p>
               <button className="bu-empty-btn" onClick={handleReset}>
                 Réinitialiser les filtres
               </button>
             </div>
           )}
-
         </main>
       </div>
     </div>

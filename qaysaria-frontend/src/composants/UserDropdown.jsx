@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutDashboard, Package, Settings, LogOut, HeadphonesIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Correction : ajout de useNavigate
 import { useAuth } from '../context/AuthContext';
 import '../styles/composantsCSS/UserDropdown.css';
 
@@ -9,8 +9,11 @@ const UserDropdown = () => {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  
+  // 1. Initialisation du hook navigate
+  const navigate = useNavigate(); 
 
-  // Détection de la direction pour l'alignement
+  // 2. Détection de la direction (LTR pour le français)
   const isRTL = document.body.dir === 'rtl';
 
   useEffect(() => {
@@ -23,13 +26,30 @@ const UserDropdown = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
 
-  const handleLogout = () => {
-    logout();
-    setIsOpen(false);
+  // 3. Fonction handleLogout avec redirection vers l'accueil
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setIsOpen(false);
+      
+      // Redirection après déconnexion
+      if (isRTL) {
+        navigate('/الرئيسية'); 
+      } else {
+        navigate('/'); // Ou '/accueil' selon votre route
+      }
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    }
   };
 
   const menuVariants = {
-    hidden: { opacity: 0, scale: 0.95, y: -10 },
+    hidden: { 
+      opacity: 0, 
+      scale: 0.95, 
+      y: -10,
+      originX: isRTL ? 0 : 1 
+    },
     visible: { 
       opacity: 1, 
       scale: 1, 
@@ -48,11 +68,7 @@ const UserDropdown = () => {
 
   return (
     <div className="user-dropdown-container" ref={dropdownRef}>
-      {/* Bouton Avatar */}
-      <button
-        className="avatar-btn"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <button className="avatar-btn" onClick={() => setIsOpen(!isOpen)}>
         {user.shopPhoto ? (
           <img src={user.shopPhoto} alt="Avatar" className="avatar-img" />
         ) : (
@@ -62,7 +78,6 @@ const UserDropdown = () => {
         )}
       </button>
 
-      {/* Menu Déroulant */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -71,43 +86,48 @@ const UserDropdown = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            /* Aligne à gauche si Arabe (RTL), à droite si Français (LTR) */
             style={{ 
-                left: isRTL ? 0 : 'auto', 
-                right: isRTL ? 'auto' : 0 
+              right: isRTL ? 'auto' : 0, 
+              left: isRTL ? 0 : 'auto' 
             }}
           >
             <div className="dropdown-header">
-              <div className="dropdown-user-info">
-                <p className="dropdown-name">{user.name || (isRTL ? 'اسم غير مسجل' : 'Nom inconnu')}</p>
-                <p className="dropdown-email">
-                  {user.phoneNumber || '+212 00 00 00 00'} | {user.city || (isRTL ? 'مستخدم' : 'Utilisateur')}
-                </p>
+              <div className="dropdown-user-info" style={{ textAlign: isRTL ? 'right' : 'left' }}>
+                <p className="dropdown-name">{user.name || 'Utilisateur'}</p>
+                <p className="dropdown-email">{user.phoneNumber || '+212 000 000'}</p>
               </div>
             </div>
 
             <div className="dropdown-divider"></div>
 
             <nav className="dropdown-nav">
-              {[
-                { to: isRTL ? "/tableau-de-bordAR" : "/tableau-de-bord", icon: <LayoutDashboard size={18} />, label: isRTL ? "لوحة التحكم" : "Tableau de bord" },
-                { to: isRTL ? "/boutique-utilisateurAR" : "/boutique-utilisateur", icon: <Package size={18} />, label: isRTL ? "متجري" : "Ma Boutique" },
-                { to: isRTL ? "/commandesAR" : "/commandes", icon: <Package size={18} />, label: isRTL ? "الطلبات" : "Commandes" },
-                { to: isRTL ? "/supportAR" : "/support", icon: <HeadphonesIcon size={18} />, label: isRTL ? "الدعم" : "Support" },
-                { to: isRTL ? "/profileAR" : "/profile", icon: <Settings size={18} />, label: isRTL ? "الإعدادات" : "Paramètres" },
-              ].map((item, i) => (
-                <Link key={i} to={item.to} onClick={() => setIsOpen(false)} className="dropdown-item">
-                  {item.icon}
-                  <span>{item.label}</span>
-                </Link>
-              ))}
+              <Link to="/tableau-de-bord" className="dropdown-item" onClick={() => setIsOpen(false)}>
+                <LayoutDashboard size={18} />
+                <span>Tableau de bord</span>
+              </Link>
+              <Link to="/boutique-utilisateur" className="dropdown-item" onClick={() => setIsOpen(false)}>
+                <Package size={18} />
+                <span>Ma Boutique</span>
+              </Link>
+              <Link to="/commandes" className="dropdown-item" onClick={() => setIsOpen(false)}>
+                <Package size={18} />
+                <span>Commandes</span>
+              </Link>
+              <Link to="/support" className="dropdown-item" onClick={() => setIsOpen(false)}>
+                <HeadphonesIcon size={18} />
+                <span>Support</span>
+              </Link>
+              <Link to="/profile" className="dropdown-item" onClick={() => setIsOpen(false)}>
+                <Settings size={18} />
+                <span>Paramètres</span>
+              </Link>
             </nav>
 
             <div className="dropdown-divider"></div>
 
             <button onClick={handleLogout} className="dropdown-item logout-btn">
               <LogOut size={18} />
-              <span>{isRTL ? "تسجيل الخروج" : "Déconnexion"}</span>
+              <span>Déconnexion</span>
             </button>
           </motion.div>
         )}
