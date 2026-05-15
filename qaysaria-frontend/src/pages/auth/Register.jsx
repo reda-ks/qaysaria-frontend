@@ -120,6 +120,7 @@ function Register() {
             </div>
 
             {/* Name + Phone */}
+
             <div className="form-row-2">
               <div className="form-group">
                 <label htmlFor="fullName">Nom complet {requiredStar}</label>

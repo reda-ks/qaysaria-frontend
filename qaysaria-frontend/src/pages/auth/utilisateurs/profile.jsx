@@ -247,6 +247,121 @@ import { useAuth } from '../../../context/AuthContext';
 
 // export default ModernProfile;
 const ModernProfile = () => {
+  const { user, logout } = useAuth(); // Récupération du user et de la fonction logout
+  const [isEditing, setIsEditing] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [activeTab, setActiveTab] = useState('personal');
+
+  // État local pour gérer les modifications du formulaire
+  const [profileData, setProfileData] = useState({
+    nom: '',
+    telephone: '',
+    nomBoutique: '',
+    description: '',
+    adresse: '',
+    siteWeb: '',
+    heureOuverture: '',
+    heureFermeture: '',
+    city: ''
+  });
+
+  // Initialisation des données quand l'utilisateur est chargé
+  useEffect(() => {
+    if (user) {
+      setProfileData({
+        nom: user.name || '',
+        telephone: user.phoneNumber || '',
+        nomBoutique: user.shopName || '',
+        description: user.shopDescription || '',
+        adresse: user.shopAddress || '',
+        siteWeb: user.shopWebsite || '',
+        heureOuverture: user.shopOpeningTime || '09:00',
+        heureFermeture: user.shopClosingTime || '18:00',
+        city: user.city || ''
+      });
+    }
+  }, [user]);
+
+  const handleEditToggle = (field) => {
+    setIsEditing((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    setIsSaving(true);
+
+    // Simulation d'appel API
+    setTimeout(() => {
+      console.log('Profil sauvegardé localement:', profileData);
+      setIsSaving(false);
+      setSaveSuccess(true);
+      setIsEditing({});
+
+      setTimeout(() => {
+        setSaveSuccess(false);
+      }, 3000);
+    }, 1500);
+  };
+
+  const renderField = (label, name, value, type = 'text', isTextarea = false) => (
+    <div className="modern-field">
+      <label className="field-label">{label}</label>
+      <div className="field-container">
+        {isEditing[name] ? (
+          isTextarea ? (
+            <textarea
+              name={name}
+              //value={data[name]}
+              onChange={handleChange}
+              className="field-input textarea-input"
+              rows="4"
+            />
+          ) : (
+            <input
+              type={type}
+              name={name}
+              //value={data[name]}
+              onChange={handleChange}
+              className="pf-input"
+            />
+          )
+        ) : (
+          <div className="field-display">
+            <span className="field-value">{value || '—'}</span>
+          </div>
+        )}
+        <button
+          type="button"
+          className={`edit-toggle ${isEditing[name] ? 'active' : ''}`}
+          onClick={() => handleEditToggle(name)}
+          title={isEditing[name] ? 'Valider' : 'Modifier'}
+        >
+          {isEditing[name] ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+
+  if (!user) return <div className="loading-profile">Chargement...</div>;
+
   return (
     <div style={{ padding: '40px', textAlign: 'center', fontSize: '1.2rem', color: '#555' }}>
       <h2>Profil Utilisateur</h2>

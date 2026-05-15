@@ -84,6 +84,7 @@ const Header = ({ currentLang, switchLang }) => {
             <li className="mobile-login">
               <Link to="/login" onClick={() => setMenuOpen(false)}>Connexion</Link>
             </li>
+
             <li><Link to="/accueil"        onClick={() => setMenuOpen(false)}>Accueil</Link></li>
             <li><Link to="/produits"        onClick={() => setMenuOpen(false)}>Produits</Link></li>
             <li><Link to="/tenue-mariage"        onClick={() => setMenuOpen(false)}>tenue de mariage</Link></li>
