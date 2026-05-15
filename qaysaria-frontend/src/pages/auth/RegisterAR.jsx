@@ -1,38 +1,80 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff, ArrowLeft, ShoppingBag, Store } from "lucide-react"; // Utilisation de ArrowLeft pour le sens arabe
+import { Eye, EyeOff, ArrowLeft } from "lucide-react"; // Using ArrowLeft for RTL flow
+import axios from 'axios';
 import "../../styles/pages css/auth.css";
 
-function Register() {
+function RegisterAR() {
   const [formData, setFormData] = useState({
     fullName: "",
     tel: "",
     email: "",
     password: "",
     confirmPassword: "",
-    role: "acheteur",
+    city: "", 
   });
+
+  const [cities, setCities] = useState([]);
+  const [loadingCities, setLoadingCities] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
+
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/villes`);
+        const list = response.data.filter(v => v.name !== "Morocco");
+        setCities(list);
+        setLoadingCities(false);
+      } catch (err) {
+        console.error("Erreur lors du chargement des villes:", err);
+        setLoadingCities(false);
+      }
+    };
+    fetchCities();
+  }, [API_BASE_URL]);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
       alert("كلمات المرور غير متطابقة!");
       return;
     }
+    
+    if (!formData.city) {
+      alert("يرجى اختيار المدينة");
+      return;
+    }
+
     if (!agreeTerms) {
       alert("يرجى الموافقة على شروط الاستخدام");
       return;
     }
-    console.log("Register:", formData);
-    // TODO: backend
+
+    const registerData = {
+      name: formData.fullName,
+      phoneNumber: formData.tel,
+      password: formData.password,
+      city: formData.city 
+    };
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/auth/register`, registerData);
+      if (response.status === 200 || response.status === 201) {
+        alert("تم إنشاء الحساب بنجاح!");
+      }
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || "بيانات غير صالحة. يرجى التحقق من جميع الحقول.";
+      alert(errorMessage);
+    }
   };
 
-  /* Password strength */
   const getStrength = (p) => {
     if (!p) return 0;
     let s = 0;
@@ -42,74 +84,92 @@ function Register() {
     if (/[^A-Za-z0-9]/.test(p)) s++;
     return s;
   };
+  
   const strength = getStrength(formData.password);
   const sClass = strength <= 1 ? 'weak' : strength <= 2 ? 'medium' : 'strong';
+  // Star on the left for Arabic labels
+  const requiredStar = <span style={{ color: '#ef4444', marginRight: '4px' }}>*</span>;
 
   return (
     <div className="auth-page" dir="rtl">
       <div className="auth-shell">
-
-        {/* ── WHITE FORM CARD ── */}
         <div className="auth-container">
-
           <div className="auth-header">
             <h1 className="auth-title">إنشاء حساب</h1>
             <p className="auth-subtitle">انضم إلى قيسارية مجاناً 🇲🇦</p>
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form">
-
-            {/* Role */}
-            <div className="form-group">
-              <label style={{ display: 'block', marginBottom: '8px' }}>أنا عبارة عن</label>
-              <div className="form-type-row" style={{ flexDirection: 'row-reverse' }}>
-                <label className={`form-type-option ${formData.role === 'acheteur' ? 'active' : ''}`}>
-                  <input type="radio" name="role" value="acheteur" checked={formData.role === 'acheteur'} onChange={handleChange} />
-                  <ShoppingBag size={13} strokeWidth={2} />
-                  <span>مشتري</span>
-                </label>
-                <label className={`form-type-option ${formData.role === 'vendeur' ? 'active' : ''}`}>
-                  <input type="radio" name="role" value="vendeur" checked={formData.role === 'vendeur'} onChange={handleChange} />
-                  <Store size={13} strokeWidth={2} />
-                  <span>تاجر</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Name + Phone */}
             <div className="form-row-2">
               <div className="form-group">
-                <label htmlFor="fullName">الاسم الكامل</label>
-                <input type="text" id="fullName" name="fullName" placeholder="محمد العلمي" value={formData.fullName} onChange={handleChange} required style={{ textAlign: 'right' }} />
+                <label htmlFor="fullName">الاسم الكامل {requiredStar}</label>
+                <input 
+                  type="text" id="fullName" name="fullName" 
+                  placeholder="محمد العلمي" 
+                  value={formData.fullName} onChange={handleChange} 
+                  required 
+                />
               </div>
               <div className="form-group">
-                <label htmlFor="tel">رقم الهاتف</label>
-                <input type="tel" id="tel" name="tel" placeholder="+212 6 00 00 00 00" value={formData.tel} onChange={handleChange} required style={{ textAlign: 'left', direction: 'ltr' }} />
+                <label htmlFor="tel">رقم الهاتف {requiredStar}</label>
+                <input 
+                  type="tel" id="tel" name="tel" 
+                  placeholder="+212 6 00 00 00 00" 
+                  value={formData.tel} onChange={handleChange} 
+                  required 
+                />
               </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="email">البريد الإلكتروني</label>
-              <input type="email" id="email" name="email" placeholder="votre@email.com" value={formData.email} onChange={handleChange} required style={{ textAlign: 'right' }} />
+              <input 
+                type="email" id="email" name="email" 
+                placeholder="votre@email.com" 
+                value={formData.email} onChange={handleChange} 
+              />
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">كلمة المرور</label>
+              <label htmlFor="city">المدينة {requiredStar}</label>
+              <select 
+                id="city" 
+                name="city" 
+                value={formData.city} 
+                onChange={handleChange} 
+                required
+                className="city-select"
+              >
+                <option value="">اختر مدينتك</option>
+                {loadingCities ? (
+                  <option disabled>جاري تحميل المدن...</option>
+                ) : (
+                  cities.map((ville, index) => (
+                    <option key={index} value={ville.name}>
+                      {ville.name}
+                    </option>
+                  ))
+                )}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">كلمة المرور {requiredStar}</label>
               <div className="password-input-wrapper">
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password" name="password"
                   placeholder="••••••••"
                   value={formData.password}
-                  onChange={handleChange} required
-                  style={{ textAlign: 'right', paddingLeft: '40px', paddingRight: '12px' }}
+                  onChange={handleChange} 
+                  required
                 />
-                <button type="button" className="toggle-password" onClick={() => setShowPassword(!showPassword)} style={{ left: '10px', right: 'auto' }}>
+                <button type="button" className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <EyeOff size={16} strokeWidth={1.8} /> : <Eye size={16} strokeWidth={1.8} />}
                 </button>
               </div>
               {formData.password && (
-                <div className="password-strength" style={{ flexDirection: 'row-reverse' }}>
+                <div className="password-strength">
                   {[1,2,3,4].map(n => (
                     <div key={n} className={`strength-bar ${strength >= n ? sClass : ''}`} />
                   ))}
@@ -118,31 +178,31 @@ function Register() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="confirmPassword">تأكيد كلمة المرور</label>
+              <label htmlFor="confirmPassword">تأكيد كلمة المرور {requiredStar}</label>
               <input
                 type={showPassword ? "text" : "password"}
                 id="confirmPassword" name="confirmPassword"
                 placeholder="••••••••"
                 value={formData.confirmPassword}
-                onChange={handleChange} required
-                style={{ textAlign: 'right' }}
+                onChange={handleChange} 
+                required
               />
               {formData.confirmPassword && (
-                <span className={`pwd-match ${formData.password === formData.confirmPassword ? 'ok' : 'err'}`} style={{ display: 'block', marginTop: '5px' }}>
-                  {formData.password === formData.confirmPassword ? '✓ كلمات المرور متطابقة' : '✗ كلمات المرور غير متطابقة'}
+                <span className={`pwd-match ${formData.password === formData.confirmPassword ? 'ok' : 'err'}`}>
+                  {formData.password === formData.confirmPassword ? '✓ كلمات المرور متطابقة' : '✗ غير متطابقة'}
                 </span>
               )}
             </div>
 
-            <div className="checkbox-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div className="checkbox-group">
               <input type="checkbox" id="terms" checked={agreeTerms} onChange={(e) => setAgreeTerms(e.target.checked)} required />
-              <label htmlFor="terms" style={{ fontSize: '13px' }}>
-                أوافق على <a href="/" className="terms-link">شروط الاستخدام</a> و <a href="/" className="terms-link">سياسة الخصوصية</a>
+              <label htmlFor="terms">
+                أوافق على <a href="/" className="terms-link">شروط الاستخدام</a> و <a href="/" className="terms-link">سياسة الخصوصية</a> {requiredStar}
               </label>
             </div>
 
             <button type="submit" className="btn-submit">
-               إنشاء الحساب <ArrowLeft size={14} strokeWidth={2.5} style={{ marginRight: '8px' }} />
+              إنشاء حسابي <ArrowLeft size={14} strokeWidth={2.5} style={{marginRight: '8px'}} />
             </button>
 
           </form>
@@ -151,24 +211,23 @@ function Register() {
 
           <p className="auth-footer">
             لديك حساب بالفعل؟{" "}
-            <Link to="/login" className="auth-link">تسجيل الدخول</Link>
+            <Link to="/تسجيل-الدخول" className="auth-link">تسجيل الدخول</Link>
           </p>
 
         </div>
 
-        {/* ── RED RIGHT PANEL ── */}
         <div className="auth-panel">
           <div className="auth-panel-dots" />
           <div className="auth-panel-content">
             <div className="auth-panel-logo">قيسارية</div>
-            <div className="auth-panel-welcome">عضو معنا؟</div>
+            <div className="auth-panel-welcome">عضو بالفعل؟</div>
             <p className="auth-panel-tagline">
-              سجل دخولك للوصول إلى<br />
-              مساحتك الخاصة والاستمتاع<br />
-              بكل مميزات متاجرنا.
+              قم بتسجيل الدخول للوصول<br />
+              إلى مساحتك الخاصة والاستفادة<br />
+              من جميع متاجرنا.
             </p>
-            <Link to="/login" className="auth-panel-cta">
-              تسجيل الدخول <ArrowLeft size={13} strokeWidth={2.5} style={{ marginRight: '8px' }} />
+            <Link to="/تسجيل-الدخول" className="auth-panel-cta">
+              تسجيل الدخول <ArrowLeft size={13} strokeWidth={2.5} style={{marginRight: '5px'}} />
             </Link>
           </div>
         </div>
@@ -178,4 +237,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterAR;

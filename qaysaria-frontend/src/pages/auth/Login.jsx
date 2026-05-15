@@ -22,7 +22,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const API_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:8080/api';
+      const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
       
       // Appel à l'endpoint de connexion
       const response = await axios.post(`${API_BASE_URL}/auth/login`, {

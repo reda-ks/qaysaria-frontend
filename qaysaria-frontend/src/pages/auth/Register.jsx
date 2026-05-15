@@ -21,13 +21,13 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
 
-  const API_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:8080/api';
+   const API_BASE_URL = process.env.REACT_APP_API_URL ||  'http://localhost:8080/api';
 
   // 1. Récupération des villes depuis l'API au chargement du composant
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/villes/all`);
+        const response = await axios.get(`${API_BASE_URL}/villes`);
         // On filtre "Morocco" si nécessaire car c'est le pays, pas une ville
         const list = response.data.filter(v => v.name !== "Morocco");
         setCities(list);
@@ -101,7 +101,7 @@ function Register() {
         <div className="auth-container">
           <div className="auth-header">
             <h1 className="auth-title">Créer un compte</h1>
-            <p className="auth-subtitle">Rejoignez QAISARYA gratuitement 🇲🇦</p>
+            <p className="auth-subtitle">Rejoignez QAYSARIA gratuitement 🇲🇦</p>
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form">
@@ -241,7 +241,7 @@ function Register() {
         <div className="auth-panel">
           <div className="auth-panel-dots" />
           <div className="auth-panel-content">
-            <div className="auth-panel-logo">QAISARYA</div>
+            <div className="auth-panel-logo">QAYSARIA</div>
             <div className="auth-panel-welcome">Déjà membre ?</div>
             <p className="auth-panel-tagline">
               Connectez-vous pour accéder<br />
