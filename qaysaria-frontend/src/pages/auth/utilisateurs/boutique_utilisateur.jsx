@@ -12,7 +12,7 @@ import '../../../styles/pages css/boutique_utilisateur_enhanced.css';
 
 
   const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-
+  
 const BoutiqueUtilisateur = () => {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
