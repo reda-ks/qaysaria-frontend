@@ -71,7 +71,7 @@ const UserDropdownAR = () => {
             <div className="dropdown-header">
               <div className="dropdown-user-info">
                 <p className="dropdown-name">{user.name || 'اسم غير مسجل'}</p>
-                <p className="dropdown-email">{user.phoneNumber || '+212 000 000'}</p>
+                <p className="dropdown-email">{user.phoneNumber  || '+212 000 000'}</p>
               </div>
             </div>
 

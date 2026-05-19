@@ -10,8 +10,7 @@ import { useAuth } from '../../../context/AuthContext';
 import '../../../styles/pages css/boutique_utilisateur.css';
 import '../../../styles/pages css/boutique_utilisateur_enhanced.css';
 
-
-  const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   
 const BoutiqueUtilisateur = () => {
   const { user } = useAuth();
@@ -28,7 +27,6 @@ const BoutiqueUtilisateur = () => {
     maxPrice: 5000,
     size: '',
   });
-
 
   // États pour la modal
   const [showModal, setShowModal] = useState(false);
@@ -49,44 +47,57 @@ const BoutiqueUtilisateur = () => {
     tailles: [],
   });
 
-  const API_BASE_URL = 'http://localhost:8080/api' || process.env.REACT_APP_API_URL  ;
-
-
+  const API_BASE_URL = 'http://localhost:8080/api' || process.env.REACT_APP_API_URL;
 
   // ════════════════════════════════════════════════════════════════
   // 1. RÉCUPÉRER LES CATÉGORIES ET TAILLES AU CHARGEMENT
   // ════════════════════════════════════════════════════════════════
-  useEffect(() => {
-    const fetchConfigData = async () => {
-      try {
-        setLoadingConfig(true);
-        setLoadingCategories(true);
-        
-        const [resCat, resTailles] = await Promise.all([
-          axios.get(`${API_BASE_URL}/categories/all`),
-          axios.get(`${API_BASE_URL}/tailles/all`)
-        ]);
+ useEffect(() => {
+  const fetchConfigData = async () => {
+    try {
+      setLoadingConfig(true);
+      setLoadingCategories(true);
+      
+      const [resCat, resTailles] = await Promise.all([
+        axios.get(`${API_BASE_URL}/categories/all`),
+        axios.get(`${API_BASE_URL}/tailles/all`)
+      ]);
 
-        // 1. Catégories
-        const categoriesArray = resCat.data.map(cat => typeof cat === 'object' ? (cat.name || cat.label) : cat);
-        setCategories(categoriesArray);
-        
-        // 2. Tailles API
-        const taillesFromAPI = resTailles.data.map(t => typeof t === 'object' ? (t.libelle || t.libelle) : t);
-        setTaillesList(taillesFromAPI.length > 0 ? taillesFromAPI : SIZES);
+      // 1. Catégories : On garde les objets complets { id, name }
+      const categoriesArray = resCat.data.map(cat => {
+        if (typeof cat === 'object' && cat !== null) {
+          return {
+            id: cat.id,
+            name: cat.name || cat.label
+          };
+        }
+        // Cas de secours si l'API renvoyait déjà du texte brut
+        return { id: cat, name: cat };
+      });
+      setCategories(categoriesArray);
+      
+      // 2. Tailles API
+      const taillesFromAPI = resTailles.data.map(t => typeof t === 'object' ? (t.libelle || t.libelle) : t);
+      setTaillesList(taillesFromAPI.length > 0 ? taillesFromAPI : SIZES);
 
-      } catch (err) {
-        console.error("Erreur chargement config:", err);
-        setCategories(['Vêtements', 'Accessoires', 'Chaussures', 'Autre']);
-        setTaillesList(SIZES);
-      } finally {
-        setLoadingConfig(false);
-        setLoadingCategories(false);
-      }
-    };
+    } catch (err) {
+      console.error("Erreur chargement config:", err);
+      // Mode de secours si l'API plante : on crée des faux ID temporaires pour que React fonctionne
+      setCategories([
+        { id: 1, name: 'Vêtements' },
+        { id: 2, name: 'Accessoires' },
+        { id: 3, name: 'Chaussures' },
+        { id: 4, name: 'Autre' }
+      ]);
+      setTaillesList(SIZES);
+    } finally {
+      setLoadingConfig(false);
+      setLoadingCategories(false);
+    }
+  };
 
-    fetchConfigData();
-  }, [API_BASE_URL]);
+  fetchConfigData();
+}, [API_BASE_URL]);
 
   // ════════════════════════════════════════════════════════════════
   // 2. RÉCUPÉRATION DES PRODUITS DEPUIS L'API
@@ -144,7 +155,7 @@ const BoutiqueUtilisateur = () => {
       name: '',
       description: '',
       price: '',
-      category: categories.length > 0 ? categories[0] : '', // ✅ Utiliser la première catégorie
+      category: categories.length > 0 ? categories[0].id : '', // ✅ Utiliser la première catégorie
       quantity: '',
       tailles: [],
     });
@@ -182,7 +193,7 @@ const BoutiqueUtilisateur = () => {
       name: '',
       description: '',
       price: '',
-      category: categories.length > 0 ? categories[0] : '',
+      category: categories.length > 0 ? categories[0].id : '',
       quantity: '',
       tailles: [],
     });
@@ -252,7 +263,7 @@ const BoutiqueUtilisateur = () => {
   };
 
   // ════════════════════════════════════════════════════════════════
-  // 12. CRÉER OU MODIFIER PRODUIT
+  // 12. CRÉER OU MODIFIER PRODUIT (BASÉ SUR LA NOUVELLE CONFIG JAVA)
   // ════════════════════════════════════════════════════════════════
   const handleSubmitProduct = async (e) => {
     e.preventDefault();
@@ -261,39 +272,54 @@ const BoutiqueUtilisateur = () => {
     setSubmitting(true);
     try {
       const formDataMultipart = new FormData();
-      formDataMultipart.append('name', formData.name);
-      formDataMultipart.append('description', formData.description);
-      formDataMultipart.append('price', formData.price);
-      formDataMultipart.append('category', formData.category);
-      formDataMultipart.append('quantity', formData.quantity || 0);
-      formDataMultipart.append('boutiqueId', user.boutiqueId);
-      formDataMultipart.append('tailles', JSON.stringify(formData.tailles)); // <--- IMPORTANT
 
+      // 1. On construit l'objet complet attendu par CreateProductRequest
+      const productDto = {
+        name: formData.name,
+        description: formData.description,
+        price: formData.price,
+        categoryId: formData.category,
+        quantity: formData.quantity || 0,
+        tailles: formData.tailles
+      };
+
+      // 2. CRUCIAL : On encapsule le JSON dans un Blob de type 'application/json'
+      const dataBlob = new Blob([JSON.stringify(productDto)], { type: 'application/json' });
+      formDataMultipart.append('data', dataBlob);
+
+      // 3. On ajoute l'image si elle existe
       if (imageFile) {
         formDataMultipart.append('image', imageFile);
       }
 
-      if (editingProduct) {
-        // MODIFICATION - PUT /api/products/{id}
-        await axios.put(`${API_BASE_URL}/products/${editingProduct.id}`, formDataMultipart, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-          params: { boutiqueId: user.boutiqueId }
-        });
-        setSuccessMessage('Produit modifié avec succès !');
-      } else {
-        // CRÉATION - POST /api/products
-        await axios.post(`${API_BASE_URL}/products`, formDataMultipart, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-          params: { boutiqueId: user.boutiqueId }
-        });
-        setSuccessMessage('Produit créé avec succès !');
-      }
+      // 4. Envoi de la requête (Laisser Axios gérer automatiquement le multipart boundary !)
+      // Récupérez votre token (adaptez selon l'endroit où vous le stockez : localStorage, cookies, ou user.token)
+const token = user?.token; 
 
-      // Recharger la liste
+if (editingProduct) {
+  // MODIFICATION - PUT /api/products/{id}
+  await axios.put(`${API_BASE_URL}/products/${editingProduct.id}`, formDataMultipart, {
+    params: { boutiqueId: user.boutiqueId },
+    headers: {
+      'Authorization': `Bearer ${token}` // ◄ FORCE LE TOKEN ICI
+    }
+  });
+  setSuccessMessage('Produit modifié avec succès !');
+} else {
+  // CRÉATION - POST /api/products
+  await axios.post(`${API_BASE_URL}/products`, formDataMultipart, {
+    params: { boutiqueId: user.boutiqueId },
+    headers: {
+      'Authorization': `Bearer ${token}` // ◄ FORCE LE TOKEN ICI
+    }
+  });
+  setSuccessMessage('Produit créé avec succès !');
+}
+
+      // Recharger la liste après succès
       setTimeout(() => {
         closeModal();
         setSuccessMessage(null);
-        // Recharger les produits après création/modification
         const fetchBoutiqueProducts = async () => {
           try {
             const response = await axios.get(`${API_BASE_URL}/products/productsboutiques`, {
@@ -321,14 +347,12 @@ const BoutiqueUtilisateur = () => {
   // ════════════════════════════════════════════════════════════════
   const handleDeleteProduct = async (productId) => {
     try {
-      // DELETE /api/products/{id}?boutiqueId={boutiqueId}
       await axios.delete(`${API_BASE_URL}/products/${productId}`, {
         params: { boutiqueId: user.boutiqueId }
       });
       setDeleteConfirm(null);
       setSuccessMessage('Produit supprimé avec succès !');
       
-      // Recharger la liste après suppression
       setTimeout(() => {
         setSuccessMessage(null);
         const fetchBoutiqueProducts = async () => {
@@ -369,7 +393,6 @@ const BoutiqueUtilisateur = () => {
     </div>
   );
 
-  // Écran de chargement si le AuthContext n'a pas encore fini
   if (!user) {
     return (
       <div className="bu-loading-full">
@@ -381,7 +404,6 @@ const BoutiqueUtilisateur = () => {
 
   return (
     <div className="bu-page" dir="ltr" lang="fr">
-      {/* MESSAGE DE SUCCÈS */}
       {successMessage && (
         <div className="bu-toast bu-toast--success">
           <CheckCircle size={18} />
@@ -389,7 +411,6 @@ const BoutiqueUtilisateur = () => {
         </div>
       )}
 
-      {/* MESSAGE D'ERREUR GLOBAL */}
       {formError && !showModal && (
         <div className="bu-toast bu-toast--error">
           <AlertCircle size={18} />
@@ -397,11 +418,9 @@ const BoutiqueUtilisateur = () => {
         </div>
       )}
 
-      {/* ══ MODAL AJOUT/MODIFICATION ══ */}
       {showModal && (
         <div className="bu-modal-overlay" onClick={closeModal}>
           <div className="bu-modal" onClick={(e) => e.stopPropagation()}>
-            {/* Header Modal */}
             <div className="bu-modal-header">
               <h2>{editingProduct ? 'Modifier le produit' : 'Ajouter un produit'}</h2>
               <button className="bu-modal-close" onClick={closeModal}>
@@ -409,9 +428,7 @@ const BoutiqueUtilisateur = () => {
               </button>
             </div>
 
-            {/* Contenu Modal */}
             <form onSubmit={handleSubmitProduct} className="bu-modal-form">
-              {/* Erreur du formulaire */}
               {formError && (
                 <div className="bu-form-error">
                   <AlertCircle size={16} />
@@ -419,7 +436,6 @@ const BoutiqueUtilisateur = () => {
                 </div>
               )}
 
-              {/* Upload Image */}
               <div className="bu-form-group">
                 <label className="bu-form-label">
                   <Upload size={16} /> Image du produit *
@@ -461,7 +477,6 @@ const BoutiqueUtilisateur = () => {
                 </div>
               </div>
 
-              {/* Nom */}
               <div className="bu-form-group">
                 <label htmlFor="name" className="bu-form-label">Nom du produit *</label>
                 <input
@@ -476,7 +491,6 @@ const BoutiqueUtilisateur = () => {
                 />
               </div>
 
-              {/* Description */}
               <div className="bu-form-group">
                 <label htmlFor="description" className="bu-form-label">Description</label>
                 <textarea
@@ -491,7 +505,6 @@ const BoutiqueUtilisateur = () => {
                 />
               </div>
 
-              {/* Grille 2 colonnes: Prix + Catégorie */}
               <div className="bu-form-row">
                 <div className="bu-form-group">
                   <label htmlFor="price" className="bu-form-label">Prix (DH) *</label>
@@ -517,14 +530,13 @@ const BoutiqueUtilisateur = () => {
                     onChange={handleInputChange}
                     className="bu-form-select"
                   >
-                    {/* ✅ AFFICHER LES CATÉGORIES DYNAMIQUES */}
                     {loadingCategories ? (
                       <option value="">Chargement des catégories...</option>
                     ) : categories.length > 0 ? (
                       categories.map((cat, idx) => (
-                        <option key={idx} value={cat}>
-                          {cat}
-                        </option>
+                      <option key={cat.id || idx} value={cat.id}>
+                               {cat.name}
+                             </option>
                       ))
                     ) : (
                       <option value="">Aucune catégorie disponible</option>
@@ -533,7 +545,6 @@ const BoutiqueUtilisateur = () => {
                 </div>
               </div>
 
-              {/* Quantité */}
               <div className="bu-form-group">
                 <label htmlFor="quantity" className="bu-form-label">Quantité en stock</label>
                 <input
@@ -548,12 +559,9 @@ const BoutiqueUtilisateur = () => {
                 />
               </div>
 
-              {/* Tailles */}
-              {/* Tailles dans la Modal */}
               <div className="bu-form-group">
                 <label className="bu-form-label">Tailles disponibles</label>
                 <div className="bu-sizes-grid">
-                  {/* ✅ On utilise taillesList au lieu de SIZES */}
                   {taillesList.map(size => (
                     <button
                       key={size}
@@ -567,7 +575,6 @@ const BoutiqueUtilisateur = () => {
                 </div>
               </div>
 
-              {/* Boutons d'action */}
               <div className="bu-modal-actions">
                 <button
                   type="button"
@@ -597,7 +604,6 @@ const BoutiqueUtilisateur = () => {
         </div>
       )}
 
-      {/* ══ MODAL CONFIRMATION SUPPRESSION ══ */}
       {deleteConfirm && (
         <div className="bu-modal-overlay" onClick={() => setDeleteConfirm(null)}>
           <div className="bu-modal bu-modal--small" onClick={(e) => e.stopPropagation()}>
@@ -625,7 +631,6 @@ const BoutiqueUtilisateur = () => {
         </div>
       )}
 
-      {/* ══ HEADER DE LA BOUTIQUE ══ */}
       <div className="bu-header">
         <div className="bu-header-inner">
           <div className="bu-profile">
@@ -663,7 +668,6 @@ const BoutiqueUtilisateur = () => {
       </div>
 
       <div className="bu-body">
-        {/* ── FILTRES — GAUCHE ── */}
         <aside className="bu-filters">
           <div className="bu-filters-top">
             <h3 className="bu-filters-title">
@@ -675,11 +679,9 @@ const BoutiqueUtilisateur = () => {
             </button>
           </div>
 
-          {/* Catégorie - AFFICHER LES CATÉGORIES DYNAMIQUES */}
           <div className="bu-filter-group">
             <label className="bu-filter-label"><Tag size={13} /> Catégorie</label>
             <div className="bu-filter-options">
-              {/* ✅ BOUTON "TOUT" */}
               <button
                 className={`bu-filter-chip ${filters.category === '' ? 'active' : ''}`}
                 onClick={() => setFilters(f => ({ ...f, category: '' }))}
@@ -687,26 +689,25 @@ const BoutiqueUtilisateur = () => {
                 Tout
               </button>
               
-              {/* ✅ AFFICHER TOUTES LES CATÉGORIES DEPUIS L'API */}
               {loadingCategories ? (
                 <button className="bu-filter-chip" disabled>
                   Chargement...
                 </button>
               ) : (
-                categories.map((cat, idx) => (
-                  <button
-                    key={idx}
-                    className={`bu-filter-chip ${filters.category === cat ? 'active' : ''}`}
-                    onClick={() => setFilters(f => ({ ...f, category: cat }))}
-                  >
-                    {cat}
-                  </button>
-                ))
+// ✅ MAINTENANT : On compare l'ID et on affiche le nom !
+categories.map((cat, idx) => (
+  <button
+    key={cat.id || idx}
+    className={`bu-filter-chip ${filters.category === cat.id ? 'active' : ''}`}
+    onClick={() => setFilters(f => ({ ...f, category: cat.id }))}
+  >
+    {cat.name}
+  </button>
+))
               )}
             </div>
           </div>
 
-          {/* Prix */}
           <div className="bu-filter-group">
             <label className="bu-filter-label"><Tag size={13} /> Prix Maximum</label>
             <div className="bu-price-display">
@@ -722,7 +723,6 @@ const BoutiqueUtilisateur = () => {
             />
           </div>
 
-          {/* Taille - Sidebar Filtre */}
           <div className="bu-filter-group">
             <label className="bu-filter-label"><Ruler size={13} /> Taille</label>
             <div className="bu-filter-options bu-filter-options--sizes">
@@ -745,7 +745,6 @@ const BoutiqueUtilisateur = () => {
           </div>
         </aside>
 
-        {/* ── PRODUITS — DROITE ── */}
         <main className="bu-products">
           <div className="bu-products-bar">
             <h2 className="bu-products-title">
@@ -782,7 +781,6 @@ const BoutiqueUtilisateur = () => {
                       alt={p.name} 
                       className="bu-card-img" 
                     />
-                    {/* Actions overlay au hover */}
                     <div className="bu-card-overlay">
                       <button
                         className="bu-card-action bu-card-action--edit"
