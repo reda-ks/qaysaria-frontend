@@ -17,9 +17,11 @@ const BoutiqueUtilisateur = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]); // ✅ État pour les catégories
   const [taillesList, setTaillesList] = useState([]); // Pour stocker les tailles de l'API
+  const [audiences, setAudiences] = useState([]); // ✅ État pour les audiences
   const [loading, setLoading] = useState(true);
   const [/*loadingConfig*/, setLoadingConfig] = useState(true);
   const [loadingCategories, setLoadingCategories] = useState(true); // ✅ Loading catégories
+  const [loadingAudiences, setLoadingAudiences] = useState(true); // ✅ Loading audiences
   const [error, setError] = useState(null);
 
   const [filters, setFilters] = useState({
@@ -45,22 +47,25 @@ const BoutiqueUtilisateur = () => {
     category: '',
     quantity: '',
     tailles: [],
+    audience: '',
   });
 
   const API_BASE_URL = 'http://localhost:8080/api' || process.env.REACT_APP_API_URL;
 
   // ════════════════════════════════════════════════════════════════
-  // 1. RÉCUPÉRER LES CATÉGORIES ET TAILLES AU CHARGEMENT
+  // 1. RÉCUPÉRER LES CATÉGORIES, TAILLES ET AUDIENCES AU CHARGEMENT
   // ════════════════════════════════════════════════════════════════
  useEffect(() => {
   const fetchConfigData = async () => {
     try {
       setLoadingConfig(true);
       setLoadingCategories(true);
+      setLoadingAudiences(true);
       
-      const [resCat, resTailles] = await Promise.all([
+      const [resCat, resTailles, resAudiences] = await Promise.all([
         axios.get(`${API_BASE_URL}/categories/all`),
-        axios.get(`${API_BASE_URL}/tailles/all`)
+        axios.get(`${API_BASE_URL}/tailles/all`),
+        axios.get(`${API_BASE_URL}/audiences/all`)
       ]);
 
       // 1. Catégories : On garde les objets complets { id, name }
@@ -71,7 +76,6 @@ const BoutiqueUtilisateur = () => {
             name: cat.name || cat.label
           };
         }
-        // Cas de secours si l'API renvoyait déjà du texte brut
         return { id: cat, name: cat };
       });
       setCategories(categoriesArray);
@@ -80,9 +84,21 @@ const BoutiqueUtilisateur = () => {
       const taillesFromAPI = resTailles.data.map(t => typeof t === 'object' ? (t.libelle || t.libelle) : t);
       setTaillesList(taillesFromAPI.length > 0 ? taillesFromAPI : SIZES);
 
+      // 3. Audiences API
+      const audiencesArray = resAudiences.data.map(aud => {
+        if (typeof aud === 'object' && aud !== null) {
+          return {
+            id: aud.id,
+            name: aud.name || aud.label
+          };
+        }
+        return { id: aud, name: aud };
+      });
+      setAudiences(audiencesArray);
+
     } catch (err) {
       console.error("Erreur chargement config:", err);
-      // Mode de secours si l'API plante : on crée des faux ID temporaires pour que React fonctionne
+      // Mode de secours si l'API plante
       setCategories([
         { id: 1, name: 'Vêtements' },
         { id: 2, name: 'Accessoires' },
@@ -90,9 +106,15 @@ const BoutiqueUtilisateur = () => {
         { id: 4, name: 'Autre' }
       ]);
       setTaillesList(SIZES);
+      setAudiences([
+        { id: 1, name: 'Hommes' },
+        { id: 2, name: 'Femmes' },
+        { id: 3, name: 'Enfants' }
+      ]);
     } finally {
       setLoadingConfig(false);
       setLoadingCategories(false);
+      setLoadingAudiences(false);
     }
   };
 
@@ -158,6 +180,7 @@ const BoutiqueUtilisateur = () => {
       category: categories.length > 0 ? categories[0].id : '', // ✅ Utiliser la première catégorie
       quantity: '',
       tailles: [],
+      audience: audiences.length > 0 ? audiences[0].id : '', // ✅ Utiliser la première audience
     });
     setImageFile(null);
     setImagePreview(null);
@@ -168,21 +191,49 @@ const BoutiqueUtilisateur = () => {
   // ════════════════════════════════════════════════════════════════
   // 6. MODAL - OUVRIR POUR ÉDITER
   // ════════════════════════════════════════════════════════════════
-  const openEditModal = (product) => {
-    setEditingProduct(product);
-    setFormData({
-      name: product.name,
-      description: product.description || '',
-      price: product.price,
-      category: product.category,
-      quantity: product.quantity || '',
-      tailles: product.tailles || [],
-    });
-    setImagePreview(product.imageUrl);
-    setImageFile(null);
-    setFormError(null);
-    setShowModal(true);
-  };
+    const openEditModal = (product) => {
+      setEditingProduct(product);
+    
+      // 1. Trouver l'ID numérique correspondant à la catégorie du produit
+      let categoryIdFound = '';
+
+      if (product.category) {
+        if (typeof product.category === 'object') {
+          categoryIdFound = product.category.id;
+        } else if (typeof product.category === 'string') {
+          // Si l'API renvoie juste la chaîne "Chaussures", on cherche l'objet correspondant dans notre tableau 'categories'
+          const match = categories.find(cat => cat.name === product.category);
+          categoryIdFound = match ? match.id : '';
+        }
+      }
+    
+      // 2. Trouver l'ID d'audience correspondant
+      let audienceIdFound = '';
+      if (product.audience) {
+        if (typeof product.audience === 'object') {
+          audienceIdFound = product.audience.id;
+        } else if (typeof product.audience === 'string') {
+          const matchAud = audiences.find(aud => aud.name === product.audience);
+          audienceIdFound = matchAud ? matchAud.id : '';
+        }
+      }
+
+      // 3. Remplir le formulaire avec les IDs trouvés
+      setFormData({
+        name: product.name,
+        description: product.description || '',
+        price: product.price,
+        category: categoryIdFound, // ◄ Ici, on stocke obligatoirement l'ID (ex: 3)
+        quantity: product.quantity || '',
+        tailles: product.tailles || [],
+        audience: audienceIdFound,
+      });
+    
+      setImagePreview(product.imageUrl);
+      setImageFile(null);
+      setFormError(null);
+      setShowModal(true);
+    };
 
   // ════════════════════════════════════════════════════════════════
   // 7. MODAL - FERMER
@@ -196,6 +247,7 @@ const BoutiqueUtilisateur = () => {
       category: categories.length > 0 ? categories[0].id : '',
       quantity: '',
       tailles: [],
+      audience: audiences.length > 0 ? audiences[0].id : '',
     });
     setImageFile(null);
     setImagePreview(null);
@@ -278,9 +330,10 @@ const BoutiqueUtilisateur = () => {
         name: formData.name,
         description: formData.description,
         price: formData.price,
-        categoryId: formData.category,
+        categoryId: formData.category? Number(formData.category) : null,
         quantity: formData.quantity || 0,
-        tailles: formData.tailles
+        tailles: formData.tailles,
+        audienceId: formData.audience? Number(formData.audience) : null
       };
 
       // 2. CRUCIAL : On encapsule le JSON dans un Blob de type 'application/json'
@@ -522,6 +575,29 @@ if (editingProduct) {
                 </div>
 
                 <div className="bu-form-group">
+                  <label htmlFor="audience" className="bu-form-label">Audience *</label>
+                  <select
+                    id="audience"
+                    name="audience"
+                    value={formData.audience}
+                    onChange={handleInputChange}
+                    className="bu-form-select"
+                  >
+                    {loadingAudiences ? (
+                      <option value="">Chargement des audiences...</option>
+                    ) : audiences.length > 0 ? (
+                      audiences.map((aud, idx) => (
+                        <option key={aud.id || idx} value={aud.id}>
+                          {aud.name}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="">Aucune audience disponible</option>
+                    )}
+                  </select>
+                </div>
+
+                <div className="bu-form-group">
                   <label htmlFor="category" className="bu-form-label">Catégorie *</label>
                   <select
                     id="category"
@@ -694,16 +770,16 @@ if (editingProduct) {
                   Chargement...
                 </button>
               ) : (
-// ✅ MAINTENANT : On compare l'ID et on affiche le nom !
-categories.map((cat, idx) => (
-  <button
-    key={cat.id || idx}
-    className={`bu-filter-chip ${filters.category === cat.id ? 'active' : ''}`}
-    onClick={() => setFilters(f => ({ ...f, category: cat.id }))}
-  >
-    {cat.name}
-  </button>
-))
+              // ✅ MAINTENANT : On compare l'ID et on affiche le nom !
+              categories.map((cat, idx) => (
+                <button
+                  key={cat.id || idx}
+                  className={`bu-filter-chip ${filters.category === cat.id ? 'active' : ''}`}
+                  onClick={() => setFilters(f => ({ ...f, category: cat.id }))}
+                >
+                  {cat.name}
+                </button>
+              ))
               )}
             </div>
           </div>
