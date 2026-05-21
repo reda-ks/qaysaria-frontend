@@ -11,7 +11,7 @@
    HEADER STYLING — ORIGINAL (inchangé)
    ============================================ */
 
-.header {
+/* .header {
   background-color: var(--white);
   box-shadow: var(--shadow-sm);
   position: sticky;
@@ -26,7 +26,38 @@
   position: relative;
 }
 [dir="rtl"].header {
-  height: 80px; /* change this value as you want */
+  height: 80px; 
+} */
+ /* Wrapper sticky — contient header + mobile-menu */
+.header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+/* Header lui-même : plus de position sticky ici */
+.header {
+  background-color: var(--white);
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--soft-gray);
+  /* ✅ position: relative retiré — c'est header-wrapper qui joue ce rôle */
+}
+
+/* Le mobile-menu reste absolute par rapport au wrapper */
+.mobile-menu {
+  position: absolute;
+  top: 100%;   /* juste sous le .header */
+  left: 0;
+  width: 100%;
+  background-color: var(--white);
+  border-top: 1px solid var(--soft-gray);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+  animation: mobileMenuIn 0.22s ease;
+  z-index: 999;
 }
 
 .navbar {
@@ -355,7 +386,9 @@
   .hamburger-btn {
     display: flex;
   }
-
+#hamburger-btn {
+    margin-left: 20px;
+  }
   /* Cacher le bouton Connexion desktop (remplacé dans le menu mobile) */
   .btn-connexion {
     display: none;
@@ -395,7 +428,7 @@
   }
 
   .logo-img {
-    height: 32px;
+    height: 42px;
   }
 
 }
