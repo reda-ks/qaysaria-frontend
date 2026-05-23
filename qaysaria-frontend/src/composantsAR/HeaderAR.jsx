@@ -26,6 +26,7 @@ const HeaderAR = ({ currentLang, switchLang }) => {
             <ul className="nav-links">
               <li><Link style={{ fontWeight: 700, fontSize: '17px' }} to="/الرئيسية">الرئيسية</Link></li>
               <li><Link style={{ fontWeight: 700, fontSize: '17px' }} to="/منتجات">المنتجات</Link></li>
+              <li><Link style={{ fontWeight: 700, fontSize: '17px' }} to="/ملابس-الزفاف">ملابس الزفاف</Link></li>
               <li><Link style={{ fontWeight: 700, fontSize: '17px' }} to="/من-نحن">من نحن؟</Link></li>
               <li><Link style={{ fontWeight: 700, fontSize: '17px' }} to="/كيف-يعمل">كيفية العمل</Link></li>
               <li><Link style={{ fontWeight: 700, fontSize: '17px' }} to="/اتصل-بنا">اتصل بنا</Link></li>
@@ -69,6 +70,7 @@ const HeaderAR = ({ currentLang, switchLang }) => {
           <ul className="mobile-links" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
             <li><Link to="/الرئيسية" onClick={() => setMenuOpen(false)} style={{ fontWeight: 700, fontSize: '17px' }}>الرئيسية</Link></li>
             <li><Link to="/منتجات"   onClick={() => setMenuOpen(false)} style={{ fontWeight: 700, fontSize: '17px' }}>المنتجات</Link></li>
+            <li><Link to="/ملابس-الزفاف"   onClick={() => setMenuOpen(false)} style={{ fontWeight: 700, fontSize: '17px' }}>ملابس الزفاف</Link></li>
             <li><Link to="/من-نحن"   onClick={() => setMenuOpen(false)} style={{ fontWeight: 700, fontSize: '17px' }}>من نحن؟</Link></li>
             <li><Link to="/كيف-يعمل" onClick={() => setMenuOpen(false)} style={{ fontWeight: 700, fontSize: '17px' }}>كيفية العمل</Link></li>
             <li><Link to="/اتصل-بنا" onClick={() => setMenuOpen(false)} style={{ fontWeight: 700, fontSize: '17px' }}>اتصل بنا</Link></li>

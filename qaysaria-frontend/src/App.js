@@ -21,6 +21,9 @@ import QuiSommesNous from './pages/quisommesnous/QuiSommesNousFR/QuiSommesNous';
 import QuiSommesNousAr from './pages/quisommesnous/QuiSommesNousAR/QuiSommesNous';
 import Howitworks from './pages/Howitworks/HowitworksFR/Howitworks';
 import HowItWorksAr from './pages/Howitworks/HowitworksAR/Howitworks';
+import TenueMariage from './pages/location/locationFR/Location';
+import TenueMariageAR from './pages/location/locationAR/Location';
+
 
 /* ─── AUTHENTIFICATION ─── */
 import Login from './pages/auth/Login';
@@ -56,6 +59,7 @@ const ROUTE_MAP = {
   '/Howitworks': '/كيف-يعمل',
   '/login': '/تسجيل-الدخول',
   '/register': '/إنشاء-حساب',
+  'TenueMariage': '/ملابس-الزفاف',
   '/tableau-de-bord': '/tableau-de-bordAR',
   '/boutique-utilisateur': '/boutique-utilisateurAR',
   '/commandes': '/commandesAR',
@@ -70,11 +74,13 @@ const ROUTE_MAP = {
   '/كيف-يعمل': '/Howitworks',
   '/تسجيل-الدخول': '/login',
   '/إنشاء-حساب': '/register',
+  '/ملابس-الزفاف': '/TenueMariage',
   '/tableau-de-bordAR': '/tableau-de-bord',
   '/boutique-utilisateurAR': '/boutique-utilisateur',
   '/commandesAR': '/commandes',
   '/supportAR': '/support',
   '/profileAR': '/profile',
+  
 };
 
 function AppRoutes() {
@@ -87,6 +93,7 @@ function AppRoutes() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/qui-sommes-nous" element={<QuiSommesNous />} />
       <Route path="/Howitworks" element={<Howitworks />} />
+      <Route path="/tenue-mariage" element={<TenueMariage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/tableau-de-bord" element={<TableauDeBord />} />
@@ -109,6 +116,7 @@ function AppRoutes() {
       <Route path="/commandesAR" element={<CommandesAR />} />
       <Route path="/supportAR" element={<SupportAR />} />
       <Route path="/profileAR" element={<ProfileAR />} />
+      <Route path="/ملابس-الزفاف" element={<TenueMariageAR />} />
 
       <Route path="/auth-test" element={<AuthTest />} />
       <Route path="/" element={<AccueilAR />} /> 

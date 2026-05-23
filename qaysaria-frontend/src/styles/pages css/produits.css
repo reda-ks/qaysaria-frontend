@@ -134,7 +134,7 @@ button { font-family: var(--font-b); cursor: pointer; border: none; }
 .produits-search-wrap {
   max-width: var(--max-w);
   margin: -24px auto 0;
-  padding: 0 var(--gap);
+  padding: 0 50px;
   position: relative;
   z-index: 10;
 }
