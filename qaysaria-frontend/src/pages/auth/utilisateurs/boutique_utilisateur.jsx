@@ -155,7 +155,10 @@ const BoutiqueUtilisateur = () => {
   // 3. FILTRAGE DES PRODUITS
   // ════════════════════════════════════════════════════════════════
   const filtered = products.filter(p => {
-    if (filters.category && p.category !== filters.category) return false;
+     if (filters.category) {
+    let productCatId = p.category?.id || categories.find(cat => cat.name === p.category)?.id || p.category;
+    if (String(productCatId) !== String(filters.category)) return false;
+  }
     if (p.price > filters.maxPrice) return false;
     if (filters.size && p.tailles && !p.tailles.includes(filters.size)) return false;
     return true;
