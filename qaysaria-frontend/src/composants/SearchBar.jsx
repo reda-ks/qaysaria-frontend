@@ -47,7 +47,6 @@ const SearchBar = ({ value, onChange, onSearch }) => {
   return (
     <div className={`searchbar-wrapper ${focused ? 'focused' : ''}`}>
       <div className="searchbar-inner">
-        <span className="searchbar-icon">🔍</span>
         <input
           ref={inputRef}
           className="searchbar-input"

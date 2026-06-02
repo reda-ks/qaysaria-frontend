@@ -35,12 +35,7 @@ const VILLES_AR = {
   fes: 'فاس', rabat: 'الرباط', tanger: 'طنجة', agadir: 'أكادير',
   errachidia: 'الراشيدية', khenifra: 'خنيفرة', safi: 'آسفي',
 };
-// const COULEUR_AR = {
-//   beige: 'بيج', bordeaux: 'بوردو', marron: 'بني', rouge: 'أحمر',
-//   camel: 'كمل', or: 'ذهبي', noir: 'أسود', blanc: 'أبيض',
-//   gris: 'رمادي', multicolore: 'متعدد الألوان', cuivre: 'نحاسي',
-//   bleu: 'أزرق', vert: 'أخضر', violet: 'بنفسجي',
-// };
+
 
 /* ─── Products Data ── */
 const allShops = [
@@ -289,9 +284,9 @@ const ProduitsAr = () => {
             <div className="ar-produits-grid">
               {paginated.map((product) => (
                 <div className="ar-p-card"
-  onClick={() => navigate(`/منتج/${product.id}`)}
-  style={{ cursor: 'pointer' }}
->
+                  onClick={() => navigate(`/منتج/${product.id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
 
                   <div className="ar-p-card-img-wrap">
                     <img src={product.image} alt={product.nom} className="ar-p-card-img" loading="lazy" />

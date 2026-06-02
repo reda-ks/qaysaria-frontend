@@ -6,10 +6,10 @@ const FooterAR = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="footer" dir="rtl">
+    <footer className="footer"  style={{backgroundColor: "black" ,padding:"10px"}} dir="rtl">
       <div className="footer-content">
         {/* Column 1: Brand */}
-        <div className="footer-column">
+        <div className="footer-column" >
           <h3 className="footer-title">قيسارية</h3>
           <p className="footer-description">
             منصة التجارة الإلكترونية المغربية التي تجمع ملايين المشترين مع بائعين موثوقين من جميع أنحاء المغرب.
