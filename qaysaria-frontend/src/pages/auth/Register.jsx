@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowRight, Store } from "lucide-react";
 import "../../styles//pages css//auth.css";
 import axios from 'axios';
@@ -20,7 +20,7 @@ function Register() {
   const [loadingCities, setLoadingCities] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
-
+  const navigate = useNavigate();
    const API_BASE_URL = process.env.REACT_APP_API_URL ||  'http://localhost:8080/api';
 
   // 1. Récupération des villes depuis l'API au chargement du composant
@@ -73,6 +73,7 @@ function Register() {
 
       if (response.status === 200 || response.status === 201) {
         alert("Compte créé avec succès !");
+        navigate("/login");
       }
     } catch (err) {
       console.error("Détails erreur:", err.response?.data);

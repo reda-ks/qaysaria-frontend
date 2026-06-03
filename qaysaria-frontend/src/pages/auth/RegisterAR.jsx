@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react"; // Using ArrowLeft for RTL flow
 import axios from 'axios';
 import "../../styles/pages css/auth.css";
@@ -18,7 +18,7 @@ function RegisterAR() {
   const [loadingCities, setLoadingCities] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
-
+  const navigate = useNavigate();
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
 
   useEffect(() => {
@@ -68,6 +68,7 @@ function RegisterAR() {
       const response = await axios.post(`${API_BASE_URL}/auth/register`, registerData);
       if (response.status === 200 || response.status === 201) {
         alert("تم إنشاء الحساب بنجاح!");
+        navigate("/تسجيل-الدخول");
       }
     } catch (err) {
       const errorMessage = err.response?.data?.message || "بيانات غير صالحة. يرجى التحقق من جميع الحقول.";

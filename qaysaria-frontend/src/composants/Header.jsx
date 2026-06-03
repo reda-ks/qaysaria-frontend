@@ -27,12 +27,12 @@ const Header = ({ currentLang, switchLang }) => {
 
           <div className="navbar-center">
             <ul className="nav-links">
-              <li><Link style={{ fontWeight: 500 }} to="/accueil">Accueil</Link></li>
-              <li><Link style={{ fontWeight: 500 }} to="/produits">Produits</Link></li>
-              <li><Link style={{ fontWeight: 500 }} to="/tenue-mariage">Tenue de mariage</Link></li>
-              <li><Link style={{ fontWeight: 500 }} to="/qui-sommes-nous">Qui Sommes Nous ?</Link></li>
-              <li><Link style={{ fontWeight: 500 }} to="/Howitworks">Comment ça marche</Link></li>
-              <li><Link style={{ fontWeight: 500 }} to="/contact">Contact</Link></li>
+              <li><Link style={{ fontWeight: 300 , fontSize: 13 }} to="/accueil">Accueil</Link></li>
+              <li><Link style={{ fontWeight: 300 , fontSize: 13 }} to="/produits">Produits</Link></li>
+              <li><Link style={{ fontWeight: 300 , fontSize: 13 }} to="/tenue-mariage">Tenue de mariage</Link></li>
+              <li><Link style={{ fontWeight: 300 , fontSize: 13 }} to="/qui-sommes-nous">Qui Sommes Nous ?</Link></li>
+              <li><Link style={{ fontWeight: 300 , fontSize: 13 }} to="/Howitworks">Comment ça marche</Link></li>
+              <li><Link style={{ fontWeight: 300 , fontSize: 13 }} to="/contact">Contact</Link></li>
             </ul>
           </div>
 
@@ -69,12 +69,12 @@ const Header = ({ currentLang, switchLang }) => {
       {menuOpen && (
         <div className="mobile-menu">
           <ul className="mobile-links">
-            <li><Link style={{ fontWeight: 500 }} to="/accueil"         onClick={() => setMenuOpen(false)}>Accueil</Link></li>
-            <li><Link style={{ fontWeight: 500 }} to="/produits"        onClick={() => setMenuOpen(false)}>Produits</Link></li>
-            <li><Link style={{ fontWeight: 500 }} to="/tenue-mariage"   onClick={() => setMenuOpen(false)}>Tenue de mariage</Link></li>
-            <li><Link style={{ fontWeight: 500 }} to="/qui-sommes-nous" onClick={() => setMenuOpen(false)}>Qui Sommes Nous ?</Link></li>
-            <li><Link style={{ fontWeight: 500 }} to="/Howitworks"      onClick={() => setMenuOpen(false)}>Comment ça marche</Link></li>
-            <li><Link style={{ fontWeight: 500 }} to="/contact"         onClick={() => setMenuOpen(false)}>Contact</Link></li>
+            <li><Link style={{ fontWeight: 300 }} to="/accueil"         onClick={() => setMenuOpen(false)}>Accueil</Link></li>
+            <li><Link style={{ fontWeight: 300 }} to="/produits"        onClick={() => setMenuOpen(false)}>Produits</Link></li>
+            <li><Link style={{ fontWeight: 300 }} to="/tenue-mariage"   onClick={() => setMenuOpen(false)}>Tenue de mariage</Link></li>
+            <li><Link style={{ fontWeight: 300 }} to="/qui-sommes-nous" onClick={() => setMenuOpen(false)}>Qui Sommes Nous ?</Link></li>
+            <li><Link style={{ fontWeight: 300 }} to="/Howitworks"      onClick={() => setMenuOpen(false)}>Comment ça marche</Link></li>
+            <li><Link style={{ fontWeight: 300 }} to="/contact"         onClick={() => setMenuOpen(false)}>Contact</Link></li>
             {!isConnected && (
               <li className="mobile-login">
                 <Link to="/login" onClick={() => setMenuOpen(false)}>Connexion</Link>
